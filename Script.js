@@ -2,11 +2,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const closeMobileMenuButton = document.getElementById('close-mobile-menu');
     const mobileMenu = document.getElementById('mobile-menu');
-    const mainHeader = document.getElementById('mainHeader'); // Get the header element to calculate its height
-    const navLinks = document.querySelectorAll('nav ul li a'); // All navigation links
-    const sections = document.querySelectorAll('main section[id], footer[id]'); // All main sections and footer with an ID
+    const desktopNav = document.getElementById('desktop-nav');
+    const mainHeader = document.getElementById('mainHeader');
+    const navLinks = document.querySelectorAll('nav ul li a');
+    const sections = document.querySelectorAll('main section[id], footer[id]');
+    const projectBoxes = document.querySelectorAll('[id^="project"][id$="-box"]');
+    const projectCountDisplay = document.getElementById('project-count-display');
+    const yearsExperienceDisplay = document.getElementById('years-experience-display');
+    const experienceDurationElements = document.querySelectorAll('.experience-duration-display'); // Select all elements with this class
 
-    // Debounce function to limit how often a function runs
+    // Debounce function
     function debounce(func, delay) {
         let timeout;
         return function(...args) {
@@ -19,56 +24,120 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to set the active navigation link based on the current section ID
     function setActiveNavLink(currentSectionId) {
         navLinks.forEach(link => {
-            // Remove active styles from all links first
-            link.classList.remove('scale-110', 'font-bold', 'text-teal-400');
-            // Re-apply default inactive styles (e.g., text-gray-300)
-            link.classList.add('text-gray-300');
+            link.classList.remove('scale-110', 'font-bold', 'text-teal-600');
+            link.classList.add('text-gray-700');
         });
 
         let activeLink = null;
-        if (currentSectionId === "") { // Special case for the "Home" link (href="#")
-            activeLink = document.querySelector('nav ul li a[href="#"]');
+        if (currentSectionId === "") {
+            activeLink = document.querySelector('#desktop-nav ul li a[href="#"]');
         } else {
-            // Find the link whose href matches the current section's ID
-            activeLink = document.querySelector(`nav ul li a[href="#${currentSectionId}"]`);
+            activeLink = document.querySelector(`#desktop-nav ul li a[href="#${currentSectionId}"]`);
         }
 
         if (activeLink) {
-            // Apply active styles to the found link
-            activeLink.classList.add('scale-110', 'font-bold', 'text-teal-400');
-            // Remove inactive text color from the active link
-            activeLink.classList.remove('text-gray-300');
+            activeLink.classList.add('scale-110', 'font-bold', 'text-teal-600');
+            activeLink.classList.remove('text-gray-700');
         }
     }
 
     // Function to update the active link based on scroll position
     const updateActiveLinkOnScroll = () => {
-        const headerHeight = mainHeader.offsetHeight; // Get the dynamic height of the fixed header
-        let currentActiveSectionId = ''; // Default to empty string for 'Home'
+        const headerHeight = mainHeader.offsetHeight;
+        let currentActiveSectionId = '';
 
-        // Check if at the very top of the page (before the first section)
-        // Adjust the threshold by the header height to account for the fixed header
         if (window.scrollY < sections[0].offsetTop - headerHeight) {
-            currentActiveSectionId = ''; // Corresponds to the "Home" link (href="#")
+            currentActiveSectionId = '';
         } else {
-            // Iterate through each section to find which one is currently in view
-            // We iterate in reverse to prioritize sections closer to the top of the viewport
             for (let i = sections.length - 1; i >= 0; i--) {
                 const section = sections[i];
-                // Calculate the section's top position relative to the viewport, accounting for the fixed header
-                const sectionTop = section.offsetTop - headerHeight - 1; // Subtract 1 for a small buffer
+                const sectionTop = section.offsetTop - headerHeight - 100;
 
-                // If the current scroll position is at or past the section's adjusted top,
-                // and before the next section, then this section is active.
                 if (window.scrollY >= sectionTop) {
                     currentActiveSectionId = section.id;
-                    break; // Found the active section, stop checking
+                    break;
                 }
             }
         }
-        // Set the active link using the determined section ID
         setActiveNavLink(currentActiveSectionId);
     };
+
+    // Function to handle header/nav styling on scroll (centering, padding)
+    const handleScrollNavStyling = () => {
+        if (window.scrollY > 50) {
+            desktopNav.classList.remove('md:justify-end');
+            desktopNav.classList.add('md:justify-center');
+            mainHeader.classList.remove('py-3');
+            mainHeader.classList.add('py-2');
+        } else {
+            desktopNav.classList.remove('md:justify-center');
+            desktopNav.classList.add('md:justify-end');
+            mainHeader.classList.remove('py-2');
+            mainHeader.classList.add('py-3');
+        }
+    };
+
+    // Function to update the project count dynamically
+    const updateProjectCount = () => {
+        if (projectCountDisplay) {
+            const totalProjects = document.querySelectorAll('#section_projects [id$="-box"]').length;
+            projectCountDisplay.textContent = `${totalProjects}+`;
+        }
+    };
+
+    // Helper to format date to "Month Year"
+    const formatDateToMonthYear = (date) => {
+        const options = { year: 'numeric', month: 'long' };
+        return date.toLocaleDateString('en-US', options);
+    };
+
+    // Helper to calculate months difference
+    const getMonthsDifference = (d1, d2) => {
+        let months = (d2.getFullYear() - d1.getFullYear()) * 12;
+        months -= d1.getMonth();
+        months += d2.getMonth();
+        // If end day is before start day in the last month, decrement month count
+        if (d2.getDate() < d1.getDate()) {
+            months--;
+        }
+        return Math.max(0, months); // Ensure it's not negative
+    };
+
+
+    // Function to calculate and update experience duration for ALL entries
+    const updateAllExperienceDurationsAndSummaries = () => {
+        let totalOverallMonths = 0;
+        const currentDate = new Date();
+
+        experienceDurationElements.forEach(element => {
+            const startDateString = element.dataset.startDate;
+            const endDateString = element.dataset.endDate; // Optional end date
+
+            const startDate = new Date(startDateString);
+            let endDate = endDateString ? new Date(endDateString) : currentDate;
+            let displayEndDateString = endDateString ? formatDateToMonthYear(endDate) : 'Present';
+
+            const monthsDiff = getMonthsDifference(startDate, endDate);
+            totalOverallMonths += monthsDiff;
+
+            const startMonthYear = formatDateToMonthYear(startDate);
+            let durationText = "";
+
+            if (endDateString) {
+                durationText = `${startMonthYear} - ${displayEndDateString} (${monthsDiff} Months)`;
+            } else {
+                durationText = `${startMonthYear} - ${displayEndDateString} (approx. ${monthsDiff} Months)`;
+            }
+            element.textContent = durationText;
+        });
+
+        // Update overall years experience in About Me section
+        if (yearsExperienceDisplay) {
+            const yearsDecimal = (totalOverallMonths / 12).toFixed(1);
+            yearsExperienceDisplay.textContent = `${yearsDecimal}+`;
+        }
+    };
+
 
     // --- Mobile Menu Toggle ---
     mobileMenuButton.addEventListener('click', () => {
@@ -85,27 +154,76 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Close mobile menu and update active link when a navigation link is clicked
     mobileMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
+        link.addEventListener('click', (event) => {
             mobileMenu.classList.remove('translate-x-0');
             mobileMenu.classList.add('translate-x-full');
             document.body.style.overflow = '';
-            // Immediately update the active link based on the clicked link's href
-            const targetId = link.getAttribute('href').substring(1); // Remove '#'
-            setActiveNavLink(targetId);
+            const targetId = link.getAttribute('href').substring(1);
+            setTimeout(() => setActiveNavLink(targetId), 300);
         });
     });
 
-    // For desktop navigation links (assuming they also cause a scroll jump)
-    document.querySelectorAll('nav.md\\:flex ul li a').forEach(link => {
-        link.addEventListener('click', () => {
-            const targetId = link.getAttribute('href').substring(1); // Remove '#'
-            setActiveNavLink(targetId);
+    // For desktop navigation links (update active state on click)
+    document.querySelectorAll('#desktop-nav ul li a').forEach(link => {
+        link.addEventListener('click', (event) => {
+            const targetId = link.getAttribute('href').substring(1);
+            setTimeout(() => setActiveNavLink(targetId), 300);
         });
     });
 
-    // Initialize the active link when the page first loads
+    // --- Project "Show More/Less" functionality ---
+    const toggleDescription = (button, descriptionElement, expand) => {
+        if (expand) {
+            descriptionElement.classList.add('expanded');
+            button.textContent = 'Show Less';
+        } else {
+            descriptionElement.classList.remove('expanded');
+            button.textContent = 'Show More';
+        }
+        setTimeout(updateActiveLinkOnScroll, 300);
+    };
+
+    document.querySelectorAll('.show-more-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const targetId = button.dataset.target;
+            const descriptionElement = document.getElementById(targetId);
+            const isExpanded = descriptionElement.classList.contains('expanded');
+            toggleDescription(button, descriptionElement, !isExpanded);
+        });
+    });
+
+    // --- Auto-close on mouse leave for project descriptions ---
+    projectBoxes.forEach(box => {
+        let collapseTimeout;
+
+        box.addEventListener('mouseenter', () => {
+            clearTimeout(collapseTimeout);
+        });
+
+        box.addEventListener('mouseleave', () => {
+            const descriptionElement = box.querySelector('.project-description');
+            const showMoreBtn = box.querySelector('.show-more-btn');
+
+            if (descriptionElement && descriptionElement.classList.contains('expanded')) {
+                collapseTimeout = setTimeout(() => {
+                    toggleDescription(showMoreBtn, descriptionElement, false);
+                }, 500);
+            }
+        });
+    });
+
+    // Initial calls on load
+    handleScrollNavStyling();
     updateActiveLinkOnScroll();
+    updateProjectCount();
+    updateAllExperienceDurationsAndSummaries(); // Call the new comprehensive update function
 
-    // Add a debounced scroll event listener to update active links
-    window.addEventListener('scroll', debounce(updateActiveLinkOnScroll, 50)); // Check every 50ms
+    // Add scroll event listeners with debounce for performance
+    window.addEventListener('scroll', debounce(() => {
+        handleScrollNavStyling();
+        updateActiveLinkOnScroll();
+    }, 50));
+
+    // Optional: Update experience duration periodically to keep it perfectly accurate
+    setInterval(updateAllExperienceDurationsAndSummaries, 1000 * 60 * 60 * 24); // Every 24 hours
 });
