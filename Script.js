@@ -4,121 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenu = document.getElementById('mobile-menu');
     const desktopNav = document.getElementById('desktop-nav');
     const mainHeader = document.getElementById('mainHeader');
-    const mainContent = document.getElementById('main-content'); // New: Get the main content area
-    const navLinks = document.querySelectorAll('nav ul li a');
+    const portfolioTitle = document.getElementById('portfolioTitle'); // Get reference to the new p tag
+    const navLinks = document.querySelectorAll('#desktop-nav ul li a'); // Target desktop nav links specifically
     const sections = document.querySelectorAll('main section[id], footer[id]');
-    const projectBoxes = document.querySelectorAll('[id^="project"][id$="-box"]');
     const projectCountDisplay = document.getElementById('project-count-display');
     const yearsExperienceDisplay = document.getElementById('years-experience-display');
     const experienceDurationElements = document.querySelectorAll('.experience-duration-display');
-    const contactForm = document.getElementById('contact-form');
-    const formMessage = document.getElementById('form-message');
-
-    // Theme Toggle elements
-    const desktopThemeToggle = document.getElementById("desktop-theme-toggle");
-    const desktopSunIcon = document.getElementById("desktop-sun-icon");
-    const desktopMoonIcon = document.getElementById("desktop-moon-icon");
-
-    const mobileThemeToggle = document.getElementById("mobile-theme-toggle");
-    const mobileSunIcon = document.getElementById("mobile-sun-icon");
-    const mobileMoonIcon = document.getElementById("mobile-moon-icon");
-
-    // =======================
-    // Dark Mode Logic
-    // =======================
-    function applyTheme(theme) {
-        if (theme === "dark") {
-            document.documentElement.classList.add("dark");
-            // Update desktop icons
-            if (desktopSunIcon && desktopMoonIcon) {
-                desktopMoonIcon.classList.add("hidden");
-                desktopSunIcon.classList.remove("hidden");
-            }
-            // Update mobile icons
-            if (mobileSunIcon && mobileMoonIcon) {
-                mobileMoonIcon.classList.add("hidden");
-                mobileSunIcon.classList.remove("hidden");
-            }
-        } else {
-            document.documentElement.classList.remove("dark");
-            // Update desktop icons
-            if (desktopSunIcon && desktopMoonIcon) {
-                desktopSunIcon.classList.add("hidden");
-                desktopMoonIcon.classList.remove("hidden");
-            }
-            // Update mobile icons
-            if (mobileSunIcon && mobileMoonIcon) {
-                mobileSunIcon.classList.add("hidden");
-                mobileMoonIcon.classList.remove("hidden");
-            }
-        }
-        localStorage.setItem("theme", theme);
-    }
-
-    // Function to toggle theme
-    function toggleTheme() {
-        if (document.documentElement.classList.contains("dark")) {
-            applyTheme("light");
-        } else {
-            applyTheme("dark");
-        }
-    }
-
-    // Set initial theme on page load based on localStorage or system preference
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-        applyTheme(savedTheme);
-    } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        applyTheme("dark");
-    } else {
-        applyTheme("light");
-    }
-
-    // Event listeners for both theme toggle buttons
-    if (desktopThemeToggle) {
-        desktopThemeToggle.addEventListener("click", toggleTheme);
-    }
-    if (mobileThemeToggle) {
-        mobileThemeToggle.addEventListener("click", toggleTheme);
-    }
-
-    // =======================
-    // Mobile Menu Toggle
-    // =======================
-    if (mobileMenuButton && mobileMenu) {
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.remove('translate-x-full');
-            mobileMenu.classList.add('translate-x-0');
-            document.body.style.overflow = 'hidden';
-        });
-    }
-
-    if (closeMobileMenuButton && mobileMenu) {
-        closeMobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.remove('translate-x-0');
-            mobileMenu.classList.add('translate-x-full');
-            document.body.style.overflow = '';
-        });
-    }
-
-    // Close mobile menu and update active link when a navigation link is clicked
-    mobileMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', (event) => {
-            mobileMenu.classList.remove('translate-x-0');
-            mobileMenu.classList.add('translate-x-full');
-            document.body.style.overflow = '';
-            const targetId = link.getAttribute('href').substring(1);
-            setTimeout(() => setActiveNavLink(targetId), 300);
-        });
-    });
-
-    // =======================
-    // Scroll Animations (AOS)
-    // =======================
-    AOS.init({
-        duration: 800,
-        once: true,
-    });
 
     // Debounce function
     function debounce(func, delay) {
@@ -133,8 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to set the active navigation link based on the current section ID
     function setActiveNavLink(currentSectionId) {
         navLinks.forEach(link => {
-            link.classList.remove('scale-110', 'font-bold', 'text-teal-600', 'dark:text-teal-400');
-            link.classList.add('text-gray-700', 'dark:text-gray-300');
+            link.classList.remove('scale-110', 'font-bold', 'text-emerald-700');
+            link.classList.add('text-gray-900');
         });
 
         let activeLink = null;
@@ -145,8 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (activeLink) {
-            activeLink.classList.add('scale-110', 'font-bold', 'text-teal-600', 'dark:text-teal-400');
-            activeLink.classList.remove('text-gray-700', 'dark:text-gray-300');
+            activeLink.classList.add('scale-110', 'font-bold', 'text-emerald-700');
+            activeLink.classList.remove('text-gray-900');
         }
     }
 
@@ -155,16 +46,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const headerHeight = mainHeader.offsetHeight;
         let currentActiveSectionId = '';
 
-        // Adjusted logic for Home section (section before the first explicit section ID)
-        // If scrolled past the first section, or if the first section is the first element with an ID
-        // we check from the bottom up. Otherwise, default to home.
-        if (sections.length > 0 && window.scrollY < sections[0].offsetTop - headerHeight) {
-            currentActiveSectionId = ''; // Corresponds to the "Home" link
+        // Check if we are at the very top of the page, above the first section
+        // This is important for activating the 'Home' link correctly
+        if (window.scrollY < sections[0].offsetTop - headerHeight - 100) { // Added buffer
+            currentActiveSectionId = ''; // Represents the "Home" section
         } else {
             for (let i = sections.length - 1; i >= 0; i--) {
                 const section = sections[i];
-                // Adjust buffer to be slightly less than header height for a smoother transition
-                const sectionTop = section.offsetTop - headerHeight - 1; // Small buffer like 1px
+                // Ensure section has an ID to prevent errors
+                if (!section.id) continue;
+
+                const sectionTop = section.offsetTop - headerHeight - 100; // Adjusted for fixed header and buffer
 
                 if (window.scrollY >= sectionTop) {
                     currentActiveSectionId = section.id;
@@ -175,18 +67,39 @@ document.addEventListener('DOMContentLoaded', () => {
         setActiveNavLink(currentActiveSectionId);
     };
 
-    // Function to handle header/nav styling on scroll (centering, padding)
+    // Function to handle header/nav styling on scroll (centering, padding, font size)
     const handleScrollNavStyling = () => {
         if (window.scrollY > 50) {
             desktopNav.classList.remove('md:justify-end');
             desktopNav.classList.add('md:justify-center');
-            mainHeader.classList.remove('py-3');
-            mainHeader.classList.add('py-2');
+            // Shrink header padding on scroll
+            mainHeader.classList.remove('py-3', 'sm:py-4');
+            mainHeader.classList.add('py-2', 'sm:py-3');
+
+            // Shrink nav link font sizes on scroll
+            navLinks.forEach(link => {
+                link.classList.remove('text-base', 'sm:text-lg');
+                link.classList.add('text-sm', 'sm:text-base');
+            });
+            // Shrink portfolio title font size on scroll
+            portfolioTitle.classList.remove('text-base', 'sm:text-lg');
+            portfolioTitle.classList.add('text-sm', 'sm:text-base');
+
         } else {
             desktopNav.classList.remove('md:justify-center');
             desktopNav.classList.add('md:justify-end');
-            mainHeader.classList.remove('py-2');
-            mainHeader.classList.add('py-3');
+            // Restore initial larger header padding
+            mainHeader.classList.remove('py-2', 'sm:py-3');
+            mainHeader.classList.add('py-3', 'sm:py-4');
+
+            // Restore initial larger nav link font sizes
+            navLinks.forEach(link => {
+                link.classList.remove('text-sm', 'sm:text-base');
+                link.classList.add('text-base', 'sm:text-lg');
+            });
+            // Restore initial larger portfolio title font size
+            portfolioTitle.classList.remove('text-sm', 'sm:text-base');
+            portfolioTitle.classList.add('text-base', 'sm:text-lg');
         }
     };
 
@@ -200,7 +113,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Helper to format date to "Month Year"
     const formatDateToMonthYear = (date) => {
-        const options = { year: 'numeric', month: 'long' };
+        const options = {
+            year: 'numeric',
+            month: 'long'
+        };
         return date.toLocaleDateString('en-US', options);
     };
 
@@ -214,7 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return Math.max(0, months);
     };
-
 
     // Function to calculate and update experience duration for ALL entries
     const updateAllExperienceDurationsAndSummaries = () => {
@@ -250,6 +165,30 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
+    // --- Mobile Menu Toggle ---
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.remove('translate-x-full');
+        mobileMenu.classList.add('translate-x-0');
+        document.body.style.overflow = 'hidden';
+    });
+
+    closeMobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.remove('translate-x-0');
+        mobileMenu.classList.add('translate-x-full');
+        document.body.style.overflow = '';
+    });
+
+    // Close mobile menu and update active link when a navigation link is clicked
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', (event) => {
+            mobileMenu.classList.remove('translate-x-0');
+            mobileMenu.classList.add('translate-x-full');
+            document.body.style.overflow = '';
+            const targetId = link.getAttribute('href').substring(1);
+            setTimeout(() => setActiveNavLink(targetId), 300);
+        });
+    });
+
     // For desktop navigation links (update active state on click)
     document.querySelectorAll('#desktop-nav ul li a').forEach(link => {
         link.addEventListener('click', (event) => {
@@ -267,6 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
             descriptionElement.classList.remove('expanded');
             button.textContent = 'Show More';
         }
+        // Recalculate active nav link after content change
         setTimeout(updateActiveLinkOnScroll, 300);
     };
 
@@ -279,93 +219,43 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Auto-close on mouse leave for project descriptions ---
-    projectBoxes.forEach(box => {
-        let collapseTimeout;
+    // --- Scroll-triggered Animations (Intersection Observer) ---
+    const animatedElements = document.querySelectorAll('.scroll-animate');
 
-        box.addEventListener('mouseenter', () => {
-            clearTimeout(collapseTimeout);
-        });
-
-        box.addEventListener('mouseleave', () => {
-            const descriptionElement = box.querySelector('.project-description');
-            const showMoreBtn = box.querySelector('.show-more-btn');
-
-            if (descriptionElement && showMoreBtn && descriptionElement.classList.contains('expanded')) {
-                collapseTimeout = setTimeout(() => {
-                    toggleDescription(showMoreBtn, descriptionElement, false);
-                }, 500);
-            }
-        });
-    });
-
-    // --- Contact Form Submission ---
-    if (contactForm) {
-        contactForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
-
-            const formData = new FormData(contactForm);
-            const object = {};
-            formData.forEach((value, key) => {
-                object[key] = value;
-            });
-            const json = JSON.stringify(object);
-
-            formMessage.textContent = 'Sending...';
-            formMessage.classList.remove('text-green-600', 'text-red-600');
-            formMessage.classList.add('text-gray-700', 'dark:text-gray-300');
-
-            try {
-                const response = await fetch(contactForm.action, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: json
-                });
-
-                if (response.ok) {
-                    formMessage.textContent = 'Message sent successfully!';
-                    formMessage.classList.remove('text-red-600', 'dark:text-gray-300');
-                    formMessage.classList.add('text-green-600');
-                    contactForm.reset();
-                } else {
-                    const errorData = await response.json();
-                    formMessage.textContent = `Error: ${errorData.errors ? errorData.errors.map(e => e.message).join(', ') : 'Something went wrong.'}`;
-                    formMessage.classList.remove('text-green-600', 'dark:text-gray-300');
-                    formMessage.classList.add('text-red-600');
-                }
-            } catch (error) {
-                console.error('Submission error:', error);
-                formMessage.textContent = 'Network error. Please try again.';
-                formMessage.classList.remove('text-green-600', 'dark:text-gray-300');
-                formMessage.classList.add('text-red-600');
-            }
-        });
-    }
-
-    // Function to dynamically adjust margin-top of main content
-    const adjustMainContentPadding = () => {
-        if (mainHeader && mainContent) {
-            mainContent.style.marginTop = mainHeader.offsetHeight + 'px';
-        }
+    const observerOptions = {
+        root: null, // viewport
+        rootMargin: '0px',
+        threshold: 0.1 // 10% of the element must be visible
     };
 
+    const observerCallback = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                // Optional: Stop observing after animation to run only once
+                observer.unobserve(entry.target);
+            }
+        });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    animatedElements.forEach(element => {
+        observer.observe(element);
+    });
+
     // Initial calls on load
-    adjustMainContentPadding(); // Call this immediately on load
-    handleScrollNavStyling();
+    handleScrollNavStyling(); // Call initially to set correct state
     updateActiveLinkOnScroll();
     updateProjectCount();
     updateAllExperienceDurationsAndSummaries();
 
-    // Add event listeners for performance
+    // Add scroll event listeners with debounce for performance
     window.addEventListener('scroll', debounce(() => {
         handleScrollNavStyling();
         updateActiveLinkOnScroll();
     }, 50));
-    window.addEventListener('resize', debounce(adjustMainContentPadding, 100)); // Adjust padding on resize
 
-    // Optional: Update experience duration periodically to keep it perfectly accurate
+    // Update experience duration once every 24 hours (daily check)
     setInterval(updateAllExperienceDurationsAndSummaries, 1000 * 60 * 60 * 24);
 });

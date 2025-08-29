@@ -5,78 +5,85 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio</title>
-    <meta name="description" content="Ritesh Brahmachari - Full Stack Developer & UI/UX Designer. Explore my projects, skills, education, and experience.">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://yourportfolio.com/"> <!-- Replace with your actual portfolio URL -->
-    <meta property="og:title" content="Ritesh Brahmachari - Portfolio">
-    <meta property="og:description" content="Full Stack Developer & UI/UX Designer passionate about creating beautiful, functional web experiences.">
-    <meta property="og:image" content="https://yourportfolio.com/image/profile_image/pic.jpg"> <!-- Replace with a relevant image URL for social sharing -->
-
-    <!-- Favicon Link -->
-    <link rel="icon" type="image/x-icon" href="./image/favicon_io/favicon.ico">
-
-    <!-- Tailwind CSS link - Now pointing to your local compiled CSS -->
-    <!-- You MUST set up a Tailwind CSS build process (PostCSS or CLI) to generate css/output.css -->
-    <link rel="stylesheet" href="css/output.css">
-    
+    <!-- Add your Tailwind CSS CDN or build output link here -->
+    <!-- For demonstration, assume Tailwind is properly configured -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom font import if not using Tailwind's default */
         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: "Poppins", sans-serif;
-            /* Removed padding-top here as it will be applied to <main> */
         }
+
+        /* All styling is now directly applied with Tailwind classes. */
 
         /* Custom styles for project description show/hide smooth transition */
         .project-description {
-            max-height: 4.5rem; /* Approximately 3 lines of text with default leading-normal (1.5 * 1.5rem = 2.25rem line-height, 3 lines = 4.5rem) */
+            max-height: 4.5rem;
+            /* Approximately 3 lines of text with default leading-normal (1.5 * 1.5rem = 2.25rem line-height, 3 lines = 4.5rem) */
             overflow: hidden;
             transition: max-height 0.3s ease-in-out;
+            /* Smooth transition for max-height */
         }
 
         .project-description.expanded {
-            max-height: 500px; /* A large enough value to show all content without explicitly calculating scrollHeight */
+            max-height: 500px;
+            /* A large enough value to show all content without explicitly calculating scrollHeight */
         }
+
+       /* --- Scroll Animation Styles --- */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(40px); /* Slightly more distance for fluid motion */
+            transition: opacity 0.9s ease-in-out, transform 0.9s ease-in-out;
+        }
+
+        .scroll-animate.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Desktop Nav Link Entrance Animation --- */
+        #desktop-nav .nav-item {
+            opacity: 0;
+            transform: translateX(25px); /* a bit more offset */
+            transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+        }
+
+        #mainHeader.is-visible #desktop-nav .nav-item {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Staggered effect for each nav item */
+        #mainHeader.is-visible #desktop-nav .nav-item:nth-child(1) { transition-delay: 0.1s; }
+        #mainHeader.is-visible #desktop-nav .nav-item:nth-child(2) { transition-delay: 0.2s; }
+        #mainHeader.is-visible #desktop-nav .nav-item:nth-child(3) { transition-delay: 0.3s; }
+        #mainHeader.is-visible #desktop-nav .nav-item:nth-child(4) { transition-delay: 0.4s; }
+        #mainHeader.is-visible #desktop-nav .nav-item:nth-child(5) { transition-delay: 0.5s; }
+        #mainHeader.is-visible #desktop-nav .nav-item:nth-child(6) { transition-delay: 0.6s; }
+        #mainHeader.is-visible #desktop-nav .nav-item:nth-child(7) { transition-delay: 0.7s; }
+        /* --- End Desktop Nav Link Entrance Animation --- */
+
     </style>
-
-    <!-- AOS Library CSS -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-    <!-- Google Analytics (Global Site Tag) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script> <!-- Replace G-XXXXXXXXXX with your Measurement ID -->
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX'); // Replace G-XXXXXXXXXX with your Measurement ID
-    </script>
 </head>
 
-<body class="overflow-x-hidden bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-200">
+<body class="overflow-x-hidden bg-white text-gray-900 break-words">
     <header id="mainHeader"
-        class="fixed top-0 left-0 w-full z-[1000] px-4 py-3 sm:px-8 sm:py-4 flex items-center bg-gray-50 shadow-md dark:bg-gray-800 dark:shadow-lg dark:shadow-gray-700 transition-all duration-300">
-        <h2 class="text-teal-600 dark:text-teal-400 font-semibold text-lg sm:text-xl flex-shrink-0">
+        class="fixed top-0 left-0 w-full z-[1000] px-4 py-3 sm:py-4 flex items-center bg-gray-50 shadow-md transition-all duration-300 scroll-animate">
+        <p id="portfolioTitle" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });"
+            class="text-emerald-700 font-semibold text-base sm:text-lg flex-shrink-0 cursor-pointer transition-all duration-300">
             Portfolio
-        </h2>
+        </p>
 
-        <!-- Mobile Menu Button (Hamburger Icon) and Mobile Theme Toggle -->
+        <!-- Mobile Menu Button (Hamburger Icon) -->
         <div class="md:hidden flex items-center ml-auto">
-            <button id="mobile-theme-toggle" aria-label="Toggle dark mode"
-                class="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 mr-2">
-                <svg id="mobile-sun-icon" class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 00-.707-.707l-.707-.707a1 1 0 00-1.414 1.414l.707.707a1 1 0 001.414-.707zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-10.607.464l-.707.707a1 1 0 001.414 1.414l.707-.707a1 1 0 00-1.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                        clip-rule="evenodd" fill-rule="evenodd"></path>
-                </svg>
-                <svg id="mobile-moon-icon" class="w-5 h-5 dark:hidden" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-                </svg>
-            </button>
-            <button id="mobile-menu-button" class="text-gray-700 dark:text-gray-300 focus:outline-none">
+            <button id="mobile-menu-button" class="text-gray-900 focus:outline-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
@@ -89,54 +96,41 @@
         <nav id="desktop-nav"
             class="hidden md:flex md:flex-grow md:justify-end items-center space-x-4 lg:space-x-8 transition-all duration-300 ml-auto">
             <ul class="flex space-x-2 sm:space-x-4">
-                <li>
+                <li class="nav-item">
                     <a href="#"
-                        class="inline-block px-1 py-1 text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-transform duration-300 hover:scale-105">Home</a>
+                        class="inline-block px-1 py-1 text-base sm:text-lg font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Home</a>
                 </li>
-                <li>
+                <li class="nav-item">
                     <a href="#section2"
-                        class="inline-block px-1 py-1 text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-transform duration-300 hover:scale-105">About</a>
+                        class="inline-block px-1 py-1 text-base sm:text-lg font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">About</a>
                 </li>
-                <li>
+                <li class="nav-item">
                     <a href="#section3"
-                        class="inline-block px-1 py-1 text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-transform duration-300 hover:scale-105">Skills</a>
+                        class="inline-block px-1 py-1 text-base sm:text-lg font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Skills</a>
                 </li>
-                <li>
+                <li class="nav-item">
                     <a href="#section_projects"
-                        class="inline-block px-1 py-1 text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-transform duration-300 hover:scale-105">Projects</a>
+                        class="inline-block px-1 py-1 text-base sm:text-lg font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Projects</a>
                 </li>
-                <li>
+                <li class="nav-item">
                     <a href="#section4"
-                        class="inline-block px-1 py-1 text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-transform duration-300 hover:scale-105">Education</a>
+                        class="inline-block px-1 py-1 text-base sm:text-lg font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Education</a>
                 </li>
-                <li>
+                <li class="nav-item">
                     <a href="#section5"
-                        class="inline-block px-1 py-1 text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-transform duration-300 hover:scale-105">Experience</a>
+                        class="inline-block px-1 py-1 text-base sm:text-lg font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Experience</a>
                 </li>
-                <li>
+                <li class="nav-item">
                     <a href="#section6"
-                        class="inline-block px-1 py-1 text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-transform duration-300 hover:scale-105">Contact</a>
+                        class="inline-block px-1 py-1 text-base sm:text-lg font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Contact</a>
                 </li>
             </ul>
-            <!-- Desktop Dark Mode Toggle -->
-            <button id="desktop-theme-toggle" aria-label="Toggle dark mode"
-                class="hidden md:block ml-4 p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
-                <svg id="desktop-sun-icon" class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 00-.707-.707l-.707-.707a1 1 0 00-1.414 1.414l.707.707a1 1 0 001.414-.707zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-10.607.464l-.707.707a1 1 0 001.414 1.414l.707-.707a1 1 0 00-1.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                        clip-rule="evenodd" fill-rule="evenodd"></path>
-                </svg>
-                <svg id="desktop-moon-icon" class="w-5 h-5 dark:hidden" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-                </svg>
-            </button>
         </nav>
 
         <!-- Mobile Menu Overlay (hidden by default, toggled by JS) -->
         <div id="mobile-menu"
-            class="md:hidden fixed top-0 left-0 w-full h-full bg-white dark:bg-gray-900 z-[1001] flex flex-col items-center justify-center space-y-6 transform translate-x-full transition-transform duration-300 ease-in-out">
-            <button id="close-mobile-menu" class="absolute top-4 right-4 text-gray-700 dark:text-gray-300 focus:outline-none">
+            class="md:hidden fixed top-0 left-0 w-full h-full bg-white z-[999] flex flex-col items-center justify-center space-y-6 transform translate-x-full transition-transform duration-300 ease-in-out">
+            <button id="close-mobile-menu" class="absolute top-4 right-4 text-gray-900 focus:outline-none">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
@@ -144,19 +138,19 @@
                 </svg>
             </button>
             <ul class="flex flex-col items-center space-y-4">
-                <li><a href="#" class="text-lg font-semibold text-gray-800 dark:text-gray-200 hover:text-teal-600 dark:hover:text-teal-400">Home</a></li>
-                <li><a href="#section2" class="text-lg font-semibold text-gray-800 dark:text-gray-200 hover:text-teal-600 dark:hover:text-teal-400">About</a>
+                <li><a href="#" class="text-lg font-semibold text-gray-900 hover:text-emerald-700">Home</a></li>
+                <li><a href="#section2" class="text-lg font-semibold text-gray-900 hover:text-emerald-700">About</a>
                 </li>
-                <li><a href="#section3" class="text-lg font-semibold text-gray-800 dark:text-gray-200 hover:text-teal-600 dark:hover:text-teal-400">Skills</a>
+                <li><a href="#section3" class="text-lg font-semibold text-gray-900 hover:text-emerald-700">Skills</a>
                 </li>
                 <li><a href="#section_projects"
-                        class="text-lg font-semibold text-gray-800 dark:text-gray-200 hover:text-teal-600 dark:hover:text-teal-400">Projects</a>
+                        class="text-lg font-semibold text-gray-900 hover:text-emerald-700">Projects</a>
                 </li>
-                <li><a href="#section4" class="text-lg font-semibold text-gray-800 dark:text-gray-200 hover:text-teal-600 dark:hover:text-teal-400">Education</a>
+                <li><a href="#section4" class="text-lg font-semibold text-gray-900 hover:text-emerald-700">Education</a>
                 </li>
-                <li><a href="#section5" class="text-lg font-semibold text-gray-800 dark:text-gray-200 hover:text-teal-600 dark:hover:text-teal-400">Experience</a>
+                <li><a href="#section5" class="text-lg font-semibold text-gray-900 hover:text-emerald-700">Experience</a>
                 </li>
-                <li><a href="#section6" class="text-lg font-semibold text-gray-800 dark:text-gray-200 hover:text-teal-600 dark:hover:text-teal-400">Contact</a>
+                <li><a href="#section6" class="text-lg font-semibold text-gray-900 hover:text-emerald-700">Contact</a>
                 </li>
             </ul>
         </div>
@@ -164,46 +158,55 @@
 
 
 
-    <main id="main-content" class="main1"> <!-- Added id="main-content" -->
-        <section data-aos="fade-up"
-            class="w-[90vw] max-w-[1300px] mx-auto flex flex-col-reverse md:flex-row justify-between items-center text-center md:text-left gap-8 px-4 sm:px-8 mt-24 md:mt-32 lg:mt-40">
-            <!-- Left Text Section -->
-            <div class="flex-none md:flex-1 w-full mt-8 md:mt-0">
-                <div class="text-teal-600 dark:text-teal-400 text-3xl sm:text-4xl md:text-5xl lg:text-[4.5rem] font-semibold mb-4">
-                    Hello, I'm Ritesh Brahmachari
-                </div>
-                <div class="text-gray-700 dark:text-gray-300 text-base sm:text-lg md:text-xl font-medium my-2">
-                    Full Stack Developer & UI/UX Designer passionate about
-                </div>
-                <div class="text-gray-700 dark:text-gray-300 text-base sm:text-lg md:text-xl font-medium my-2">
-                    creating beautiful, functional web experiences that make a
-                    difference.
-                </div>
+    <main class="main1">
+<section
+  class="w-[90vw] max-w-[1300px] mx-auto py-10 flex flex-col-reverse md:flex-row items-center text-center md:text-left gap-12 lg:gap-20 px-4 sm:px-8 scroll-animate min-h-[calc(100vh-52px)]">
 
-                <div class="flex flex-wrap justify-center md:justify-start gap-4 mt-8">
-                    <a href="#section_projects"
-                        class="px-6 py-2 sm:px-10 sm:py-3 rounded border border-teal-500 bg-teal-600 dark:bg-teal-700 text-white text-sm sm:text-base font-medium transition-all duration-300 hover:bg-teal-700 dark:hover:bg-teal-800">
-                        View My Work
-                    </a>
-                    <a href="#section6"
-                        class="px-6 py-2 sm:px-10 sm:py-3 rounded border border-gray-400 dark:border-gray-600 bg-transparent text-teal-600 dark:text-teal-400 text-sm sm:text-base font-medium transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800">
-                        Get in Touch
-                    </a>
-                </div>
-            </div>
+  <!-- Left Text Section -->
+  <div class="flex-none md:flex-1 w-full md:mt-0 flex-grow">
+    <div class="text-emerald-700 text-3xl sm:text-4xl md:text-5xl lg:text-[4.5rem] font-semibold mb-4">
+      Hello, I'm Ritesh Brahmachari
+    </div>
+    <div class="text-base sm:text-lg md:text-xl font-medium my-2">
+      Full Stack Developer & UI/UX Designer passionate about
+    </div>
+    <div class="text-base sm:text-lg md:text-xl font-medium my-2">
+      creating beautiful, functional web experiences that make a
+      difference.
+    </div>
 
-            <!-- Right Hero Image -->
-            <div class="flex-none md:flex-1 flex justify-center items-center w-full md:w-auto">
-                <img src="./image/hero_section _image/me_as_a_computer_guy.png" alt="Coding illustration"
-                    class="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-[450px] lg:h-[450px] object-cover rounded-full shadow-lg transition-transform duration-300 hover:scale-105" />
-            </div>
-        </section>
+    <div class="flex flex-wrap justify-center md:justify-start gap-4 mt-8">
+      <a href="#section_projects"
+        class="px-6 py-2 sm:px-10 sm:py-3 rounded border border-emerald-600 bg-emerald-600 text-white text-base sm:text-lg font-medium transition-all duration-300 hover:bg-emerald-700">
+        View My Work
+      </a>
+      <a href="#section6"
+        class="px-6 py-2 sm:px-10 sm:py-3 rounded border border-gray-400 bg-transparent text-emerald-700 text-base sm:text-lg font-medium transition-all duration-300 hover:bg-gray-100">
+        Get in Touch
+      </a>
+    </div>
+  </div>
+
+  <!-- Right Hero Image -->
+  <div class="flex-none md:flex-1 flex justify-center items-center w-full md:w-auto flex-grow">
+    <picture>
+      <source
+        srcset="./assets/hero_section_image/programmer.webp 300w, ./assets/hero_section_image/programmer.webp 450w, ./assets/hero_section_image/programmer.webp 600w"
+        sizes="(max-width: 640px) 224px, (max-width: 768px) 288px, (max-width: 1024px) 320px, 450px"
+        type="image/webp">
+      <img src="./assets/hero_section_image/programmer.webp" alt="Coding illustration"
+        class="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-[450px] lg:h-[450px] object-cover rounded-full shadow-lg transition-transform duration-300 hover:scale-105" />
+    </picture>
+  </div>
+</section>
 
 
 
-        <section id="section2" data-aos="fade-up"
-            class="mt-24 md:mt-32 px-4 sm:px-8 py-8 text-center font-normal h-auto pb-16 w-full bg-gray-50 dark:bg-gray-800 scroll-mt-24">
-            <p class="mt-16 text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 text-gray-900 dark:text-gray-50">
+
+
+        <section id="section2"
+            class="mt-24 md:mt-32 px-4 sm:px-8 py-8 text-center font-normal h-auto pb-16 w-full bg-gray-50 scroll-mt-24 scroll-animate">
+            <p class="mt-16 text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 text-gray-900">
                 About Me
             </p>
 
@@ -211,13 +214,13 @@
                 class="flex flex-col md:flex-row justify-center items-center md:items-start gap-8 md:gap-12 mt-10 max-w-[1200px] mx-auto">
                 <!-- Left Section (Text and Stats) -->
                 <div class="flex-1 w-full max-w-lg md:max-w-none md:w-[29rem]">
-                    <p class="mt-4 text-sm sm:text-base text-gray-700 dark:text-gray-300 font-medium text-justify">
+                    <p class="mt-4 text-base sm:text-lg text-gray-900 font-medium text-justify">
                         I'm a passionate full-stack developer with over 5 years of
                         experience creating digital solutions that bridge the gap between
                         design and functionality. I love turning complex problems into
                         simple, beautiful designs.
                     </p>
-                    <p class="mt-4 text-sm sm:text-base text-gray-700 dark:text-gray-300 font-medium text-justify">
+                    <p class="mt-4 text-base sm:text-lg text-gray-900 font-medium text-justify">
                         When I'm not coding, you can find me exploring new technologies,
                         contributing to open-source projects, or sharing knowledge with
                         the developer community.
@@ -225,224 +228,296 @@
 
                     <!-- Project Stats - Now positioned relative and flows naturally -->
                     <div
-                        class="mt-8 flex flex-wrap justify-center md:justify-start gap-4 sm:gap-8 text-gray-800 dark:text-gray-200 w-full">
+                        class="mt-8 flex flex-wrap justify-center md:justify-start gap-4 sm:gap-8 text-gray-900 w-full">
                         <div
-                            class="h-auto w-full max-w-[12rem] px-4 py-4 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-[10px] shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl">
-                            <p class="text-teal-600 dark:text-teal-400 text-xl sm:text-2xl font-normal pt-2" id="project-count-display">
+                            class="h-auto w-full max-w-[12rem] px-4 py-4 bg-gray-100 text-gray-900 rounded-[10px] shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                            <p class="text-emerald-700 text-xl sm:text-2xl font-normal pt-2" id="project-count-display">
                                 2+
                             </p>
-                            <p class="font-medium text-sm sm:text-base">Project Complete</p>
+                            <p class="font-medium text-base sm:text-lg">Project Complete</p>
                         </div>
                         <div
-                            class="h-auto w-full max-w-[12rem] px-4 py-4 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-[10px] shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl">
-                            <p class="text-teal-600 dark:text-teal-400 text-xl sm:text-2xl font-normal pt-2" id="years-experience-display">
+                            class="h-auto w-full max-w-[12rem] px-4 py-4 bg-gray-100 text-gray-900 rounded-[10px] shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                            <p class="text-emerald-700 text-xl sm:text-2xl font-normal pt-2" id="years-experience-display">
                                 0.0+
                             </p>
-                            <p class="font-medium text-sm sm:text-base">Years Experience</p>
+                            <p class="font-medium text-base sm:text-lg">Years Experience</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Image Section -->
+                <!-- Right Image Section (Profile Image) -->
                 <div
-                    class="mt-8 md:mt-0 bg-teal-200 h-64 w-64 sm:h-80 sm:w-80 md:h-[27rem] md:w-[28rem] relative rounded-[20px] overflow-hidden mx-auto md:mx-0 flex-shrink-0">
-                    <img src="./image/Profile_image/pic.jpg" alt="Profile"
-                        class="absolute top-4 left-4 h-[calc(100%-2rem)] w-[calc(100%-2rem)] object-cover rounded-[20px]" />
+                    class="mt-8 md:mt-0 bg-emerald-100 w-full aspect-square max-w-[200px] sm:max-w-[250px] md:max-w-[28rem] relative rounded-[20px] overflow-hidden mx-auto flex-shrink-0">
+                    <picture>
+                        <source
+                            srcset="./assets/Profile_image/pic.webp 250w, ./assets/Profile_image/pic.webp 400w, ./assets/Profile_image/pic.webp 550w"
+                            sizes="(max-width: 640px) 200px, (max-width: 768px) 250px, 448px" type="image/webp">
+                        <img src="./assets/Profile_image/pic.webp" alt="Profile"
+                            class="absolute top-4 left-4 h-[calc(100%-2rem)] w-[calc(100%-2rem)] object-cover rounded-[20px]" />
+                    </picture>
                 </div>
             </div>
         </section>
 
 
-        <section id="section3" data-aos="fade-up" class="mt-16 px-4 sm:px-8 py-8 text-center font-normal w-full h-auto scroll-mt-24">
-            <p class="mt-16 text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 text-gray-900 dark:text-gray-50">
+        <section id="section3"
+            class="mt-16 px-4 sm:px-8 py-8 text-center font-normal w-full h-auto scroll-mt-24 scroll-animate">
+            <p class="mt-16 text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 text-gray-900">
                 Skills
             </p>
 
             <div class="flex justify-center flex-wrap gap-4 sm:gap-6 md:gap-8">
                 <!-- Box 1: Frontend -->
-                <div data-aos="fade-up" data-aos-delay="100"
-                    class="w-full max-w-sm sm:w-[23rem] bg-gray-100 dark:bg-gray-800 rounded-[10px] px-4 py-6 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300">
-                    <p class="text-xl sm:text-2xl text-gray-900 dark:text-gray-50 mb-5">Frontend</p>
+                <div
+                    class="w-full max-w-sm sm:w-[23rem] bg-gray-100 rounded-[10px] px-4 py-6 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300">
+                    <p class="text-xl sm:text-2xl text-gray-900 mb-5">Frontend</p>
                     <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Frontend/html.png" alt="HTML"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 mt-2">HTML</p>
+                            <picture>
+                                <source srcset="./assets/icon/Frontend/html.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Frontend/html.webp" alt="HTML"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base text-gray-900 mt-2">HTML</p>
                         </div>
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Frontend/css.png" alt="CSS"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 mt-2">CSS</p>
+                            <picture>
+                                <source srcset="./assets/icon/Frontend/css.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Frontend/css.webp" alt="CSS"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base text-gray-900 mt-2">CSS</p>
                         </div>
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Frontend/sass.png" alt="SCSS"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 mt-2">SCSS</p>
+                            <picture>
+                                <source srcset="./assets/icon/Frontend/sass.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Frontend/sass.webp" alt="SCSS"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base text-gray-900 mt-2">SCSS</p>
                         </div>
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Frontend/tailwind_css.png" alt="Tailwind CSS"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 mt-2">
+                            <picture>
+                                <source srcset="./assets/icon/Frontend/tailwind_css.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Frontend/tailwind_css.webp" alt="Tailwind CSS"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base text-gray-900 mt-2">
                                 Tailwind CSS
                             </p>
                         </div>
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Frontend/Javascript.png" alt="JavaScript"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 mt-2">JavaScript</p>
+                            <picture>
+                                <source srcset="./assets/icon/Frontend/Javascript.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Frontend/Javascript.webp" alt="JavaScript"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base text-gray-900 mt-2">JavaScript</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Box 2: Frameworks -->
-                <div data-aos="fade-up" data-aos-delay="200"
-                    class="w-full max-w-sm sm:w-[23rem] bg-gray-100 dark:bg-gray-800 rounded-[10px] px-4 py-6 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300">
-                    <p class="text-xl sm:text-2xl text-gray-900 dark:text-gray-50 mb-5">Frameworks</p>
+                <div
+                    class="w-full max-w-sm sm:w-[23rem] bg-gray-100 rounded-[10px] px-4 py-6 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300">
+                    <p class="text-xl sm:text-2xl text-gray-900 mb-5">Frameworks</p>
                     <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Framework/reactjs.png" alt="React JS"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 mt-2">Reactjs</p>
+                            <picture>
+                                <source srcset="./assets/icon/Framework/reactjs.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Framework/reactjs.webp" alt="React JS"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base text-gray-900 mt-2">Reactjs</p>
                         </div>
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Framework/django.png" alt="Django"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 mt-2">Django</p>
+                            <picture>
+                                <source srcset="./assets/icon/Framework/django.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Framework/django.webp" alt="Django"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base text-gray-900 mt-2">Django</p>
                         </div>
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Framework/flask.png " alt="Flask"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 mt-2">Flask</p>
+                            <picture>
+                                <source srcset="./assets/icon/Framework/flask.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Framework/flask.webp" alt="Flask"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base text-gray-900 mt-2">Flask</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Box 3: Backend & Database -->
-                <div data-aos="fade-up" data-aos-delay="300"
-                    class="w-full max-w-sm sm:w-[23rem] bg-gray-100 dark:bg-gray-800 rounded-[10px] px-4 py-6 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300">
-                    <p class="text-xl sm:text-2xl text-gray-900 dark:text-gray-50 mb-5">
+                <div
+                    class="w-full max-w-sm sm:w-[23rem] bg-gray-100 rounded-[10px] px-4 py-6 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300">
+                    <p class="text-xl sm:text-2xl text-gray-900 mb-5">
                         Backend & Database
                     </p>
                     <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Backend_and_Database/python.png" alt="Python"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 mt-2">Python</p>
+                            <picture>
+                                <source srcset="./assets/icon/Backend_and_Database/python.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Backend_and_Database/python.webp" alt="Python"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base text-gray-900 mt-2">Python</p>
                         </div>
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Backend_and_Database/sql.png" alt="SQL"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 mt-2">SQL</p>
+                            <picture>
+                                <source srcset="./assets/icon/Backend_and_Database/sql.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Backend_and_Database/sql.webp" alt="SQL"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base text-gray-900 mt-2">SQL</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- New Box: Libraries -->
-                <div data-aos="fade-up" data-aos-delay="400"
-                    class="w-full max-w-sm sm:w-[23rem] bg-gray-100 dark:bg-gray-800 rounded-[10px] px-4 py-6 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300">
-                    <p class="text-xl sm:text-2xl text-gray-900 dark:text-gray-50 mb-5">Libraries</p>
+                <div
+                    class="w-full max-w-sm sm:w-[23rem] bg-gray-100 rounded-[10px] px-4 py-6 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300">
+                    <p class="text-xl sm:text-2xl text-gray-900 mb-5">Libraries</p>
                     <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
                         <div
-                            class="flex flex-col items-center w-16 sm:w-20 text-gray-700 dark:text-gray-300 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Libraries/numpy.png" alt="Numpy"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm mt-2">Numpy</p>
+                            class="flex flex-col items-center w-16 sm:w-20 text-gray-900 transition-transform duration-300 hover:-translate-y-1">
+                            <picture>
+                                <source srcset="./assets/icon/Libraries/numpy.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Libraries/numpy.webp" alt="Numpy"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base mt-2">Numpy</p>
                         </div>
                         <div
-                            class="flex flex-col items-center w-16 sm:w-20 text-gray-700 dark:text-gray-300 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Libraries/pandas.png" alt="Pandas"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm mt-2">Pandas</p>
+                            class="flex flex-col items-center w-16 sm:w-20 text-gray-900 transition-transform duration-300 hover:-translate-y-1">
+                            <picture>
+                                <source srcset="./assets/icon/Libraries/pandas.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Libraries/pandas.webp" alt="Pandas"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base mt-2">Pandas</p>
                         </div>
                         <div
-                            class="flex flex-col items-center w-16 sm:w-20 text-gray-700 dark:text-gray-300 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Libraries/matplotlib.png" alt="Matplotlib"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm mt-2">Matplotlib</p>
+                            class="flex flex-col items-center w-16 sm:w-20 text-gray-900 transition-transform duration-300 hover:-translate-y-1">
+                            <picture>
+                                <source srcset="./assets/icon/Libraries/matplotlib.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Libraries/matplotlib.webp" alt="Matplotlib"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base mt-2">Matplotlib</p>
                         </div>
                         <div
-                            class="flex flex-col items-center w-16 sm:w-20 text-gray-700 dark:text-gray-300 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Libraries/seaborn.png" alt="Seaborn"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm mt-2">Seaborn</p>
+                            class="flex flex-col items-center w-16 sm:w-20 text-gray-900 transition-transform duration-300 hover:-translate-y-1">
+                            <picture>
+                                <source srcset="./assets/icon/Libraries/seaborn.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Libraries/seaborn.webp" alt="Seaborn"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base mt-2">Seaborn</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- New Box: Data Analysis Tools -->
-                <div data-aos="fade-up" data-aos-delay="500"
-                    class="w-full max-w-sm sm:w-[23rem] bg-gray-100 dark:bg-gray-800 rounded-[10px] px-4 py-6 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300">
-                    <p class="text-xl sm:text-2xl text-gray-900 dark:text-gray-50 mb-5">
+                <div
+                    class="w-full max-w-sm sm:w-[23rem] bg-gray-100 rounded-[10px] px-4 py-6 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300">
+                    <p class="text-xl sm:text-2xl text-gray-900 mb-5">
                         Data Analysis Tools
                     </p>
                     <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
                         <div
-                            class="flex flex-col items-center w-16 sm:w-20 text-gray-700 dark:text-gray-300 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Data_Analysis_Tools/excel.png" alt="Excel"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm mt-2">Excel</p>
+                            class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <picture>
+                                <source srcset="./assets/icon/Data_Analysis_Tools/excel.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Data_Analysis_Tools/excel.webp" alt="Excel"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base mt-2">Excel</p>
                         </div>
                         <div
-                            class="flex flex-col items-center w-16 sm:w-20 text-gray-700 dark:text-gray-300 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Data_Analysis_Tools/power-bi.png" alt="PowerBI"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm mt-2">PowerBI</p>
+                            class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <picture>
+                                <source srcset="./assets/icon/Data_Analysis_Tools/power-bi.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Data_Analysis_Tools/power-bi.webp" alt="PowerBI"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base mt-2">PowerBI</p>
                         </div>
                         <div
-                            class="flex flex-col items-center w-16 sm:w-20 text-gray-700 dark:text-gray-300 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Data_Analysis_Tools/tableau.png" alt="Tableau"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm mt-2">Tableau</p>
+                            class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <picture>
+                                <source srcset="./assets/icon/Data_Analysis_Tools/tableau.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Data_Analysis_Tools/tableau.webp" alt="Tableau"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base mt-2">Tableau</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Box 4: Tools -->
-                <div data-aos="fade-up" data-aos-delay="600"
-                    class="w-full max-w-sm sm:w-[23rem] bg-gray-100 dark:bg-gray-800 rounded-[10px] px-4 py-6 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300">
-                    <p class="text-xl sm:text-2xl text-gray-900 dark:text-gray-50 mb-5">Tools</p>
+                <div
+                    class="w-full max-w-sm sm:w-[23rem] bg-gray-100 rounded-[10px] px-4 py-6 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300">
+                    <p class="text-xl sm:text-2xl text-gray-900 mb-5">Tools</p>
                     <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Tools/github.png" alt="GitHub"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 mt-2">GitHub</p>
+                            <picture>
+                                <source srcset="./assets/icon/Tools/github.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Tools/github.webp" alt="GitHub"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base text-gray-900 mt-2">GitHub</p>
                         </div>
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Tools/git.png" alt="Git"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 mt-2">Git</p>
+                            <picture>
+                                <source srcset="./assets/icon/Tools/git.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Tools/git.webp" alt="Git"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base text-gray-900 mt-2">Git</p>
                         </div>
                         <div
-                            class="flex flex-col items-center w-16 sm:w-20 text-gray-700 dark:text-gray-300 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Tools/aws.png" alt="AWS"
-                                onerror="this.onerror=null;this.src='/path/to/default-aws.png';"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm mt-2">AWS</p>
+                            class="flex flex-col items-center w-16 sm:w-20 text-gray-900 transition-transform duration-300 hover:-translate-y-1">
+                            <picture>
+                                <source srcset="./assets/icon/Tools/aws.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Tools/aws.webp" alt="AWS"
+                                    onerror="this.onerror=null;this.src='./assets/icon/Tools/aws.png';"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base mt-2">AWS</p>
                         </div>
                         <div
-                            class="flex flex-col items-center w-16 sm:w-20 text-gray-700 dark:text-gray-300 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Tools/postgresql.png" alt="PostgreSQL"
-                                onerror="this.onerror=null;this.src='/path/to/default-postgresql.png';"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 mt-2">PostgreSQL</p>
+                            class="flex flex-col items-center w-16 sm:w-20 text-gray-900 transition-transform duration-300 hover:-translate-y-1">
+                            <picture>
+                                <source srcset="./assets/icon/Tools/postgresql.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Tools/postgresql.webp" alt="PostgreSQL"
+                                    onerror="this.onerror=null;this.src='./assets/icon/Tools/postgresql.png';"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base mt-2">PostgreSQL</p>
                         </div>
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
-                            <img src="/image/icon/Tools/mysql.png" alt="MySQL"
-                                class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
-                            <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 mt-2">MySQL</p>
+                            <picture>
+                                <source srcset="./assets/icon/Tools/mysql.webp 80w" type="image/webp">
+                                <img src="./assets/icon/Tools/mysql.webp" alt="MySQL"
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                            </picture>
+                            <p class="text-sm sm:text-base text-gray-900 mt-2">MySQL</p>
                         </div>
                     </div>
                 </div>
@@ -450,86 +525,120 @@
         </section>
 
 
-        <!-- New Projects Section -->
-        <section id="section_projects" data-aos="fade-up"
-            class="mt-24 md:mt-32 px-4 sm:px-8 py-8 text-center font-normal bg-gray-50 dark:bg-gray-800 scroll-mt-24">
-            <p class="mt-16 text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 text-gray-900 dark:text-gray-50">
-                My Projects
-            </p>
+       <!-- New Projects Section -->
+        <section id="section_projects"
+            class="mt-24 md:mt-32 px-4 sm:px-8 py-12 bg-gray-50 scroll-mt-24 scroll-animate">
+            
+            <!-- Section Title -->
+            <div class="text-center mb-12">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
+                    My Projects
+                </h2>
+                <p class="mt-3 text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
+                    A showcase of my practical projects built with modern technologies
+                </p>
+            </div>
 
-            <div class="flex justify-center flex-wrap gap-6 sm:gap-8 md:gap-10">
-                <!-- Project 1: Fraud Detection System -->
-                <div id="project1-box" data-aos="fade-up" data-aos-delay="100"
-                    class="w-full max-w-sm sm:w-[28rem] bg-gray-100 dark:bg-gray-700 rounded-[10px] p-6 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300 text-left">
+            <!-- Project Cards Wrapper -->
+            <div class="flex justify-center flex-wrap gap-8">
+                
+                <!-- Project Card -->
+                <div id="project1-box"
+                    class="w-full max-w-sm sm:w-[28rem] bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 text-left">
+                    
                     <a href="https://fraud-detection-system-rf.streamlit.app/" target="_blank" rel="noopener noreferrer"
-                        class="block w-full h-48 sm:h-56 overflow-hidden rounded-[8px] mb-4 group">
-                        <img src="./image/projects/fraud_detection.png" alt="Fraud Detection System Screenshot"
-                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer" />
+                        class="block w-full h-44 sm:h-52 overflow-hidden group">
+                        <img src="./assets/Project_Images/Fraud-Detection-System.webp"
+                            alt="Fraud Detection System Screenshot"
+                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
                     </a>
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-50 mb-2">Fraud Detection System</h3>
-                    <p class="text-sm sm:text-base text-gray-700 dark:text-gray-300 mb-4 project-description" id="project1-desc">
-                        Developed a self-learning ML system using the Random Forest Algorithm to detect fraudulent URLs and QR codes, with applications in secure online payments. Implemented a Flask + MySQL backend exposing REST APIs for predictions, storage, and retrieval. Added an interactive data visualization dashboard for analyzing fraud patterns.
-                    </p>
-                    <button class="text-teal-600 dark:text-teal-400 text-sm font-medium hover:underline show-more-btn"
-                        data-target="project1-desc">Show More</button>
+
+                    <div class="p-6">
+                        <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
+                            Fraud Detection System
+                        </h3>
+                        <p class="text-sm sm:text-base text-gray-700 mb-4 project-description" id="project1-desc">
+                            Developed a self-learning ML system using the Random Forest Algorithm to detect fraudulent URLs
+                            and QR codes, with applications in secure online payments. Built with Flask, MySQL, and Streamlit dashboard.
+                        </p>
+                        <button class="text-emerald-700 text-xs sm:text-sm font-medium hover:underline show-more-btn"
+                            data-target="project1-desc">Show More</button>
+                    </div>
                 </div>
 
-                <!-- Project 2: Cafe Management System -->
-                <div id="project2-box" data-aos="fade-up" data-aos-delay="200"
-                    class="w-full max-w-sm sm:w-[28rem] bg-gray-100 dark:bg-gray-700 rounded-[10px] p-6 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300 text-left">
+                <!-- Project 2 -->
+                <div id="project2-box"
+                    class="w-full max-w-sm sm:w-[28rem] bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 text-left">
+                    
                     <a href="https://dill-khus-cafe.streamlit.app/" target="_blank" rel="noopener noreferrer"
-                        class="block w-full h-48 sm:h-56 overflow-hidden rounded-[8px] mb-4 group">
-                        <img src="./image/Project Images/Cafe-Managment-System.png" alt="Cafe Management System Screenshot"
-                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer" />
+                        class="block w-full h-44 sm:h-52 overflow-hidden group">
+                        <img src="./assets/Project_Images/Cafe-Managment-System.webp"
+                            alt="Cafe Management System Screenshot"
+                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
                     </a>
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-50 mb-2">Cafe Management System</h3>
-                    <p class="text-sm sm:text-base text-gray-700 dark:text-gray-300 mb-4 project-description" id="project2-desc">
-                        Built a full-stack café management application with dynamic time-based menus, real-time order processing, and automated PDF bill generation. Integrated JSON-based menu storage for flexibility and session management for personalized orders. Enabled discounts, tax calculations, and dual (day/evening) menu support for enhanced customer experience.
-                    </p>
-                    <button class="text-teal-600 dark:text-teal-400 text-sm font-medium hover:underline show-more-btn"
-                        data-target="project2-desc">Show More</button>
+
+                    <div class="p-6">
+                        <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
+                            Cafe Management System
+                        </h3>
+                        <p class="text-sm sm:text-base text-gray-700 mb-4 project-description" id="project2-desc">
+                            A full-stack café management app with time-based menus, real-time order processing, and PDF bill generation. Includes discounts, tax calculation, and dual menu support.
+                        </p>
+                        <button class="text-emerald-700 text-xs sm:text-sm font-medium hover:underline show-more-btn"
+                            data-target="project2-desc">Show More</button>
+                    </div>
                 </div>
 
-                <!-- Project 3: Banking Management System -->
-                <div id="project3-box" data-aos="fade-up" data-aos-delay="300"
-                    class="w-full max-w-sm sm:w-[28rem] bg-gray-100 dark:bg-gray-700 rounded-[10px] p-6 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300 text-left">
+                <!-- Project 3 -->
+                <div id="project3-box"
+                    class="w-full max-w-sm sm:w-[28rem] bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 text-left">
+                    
                     <a href="https://bankingapp-ritesh456.streamlit.app/" target="_blank" rel="noopener noreferrer"
-                        class="block w-full h-48 sm:h-56 overflow-hidden rounded-[8px] mb-4 group">
-                        <img src="./image/Project Images/Banking-Management-System.png" alt="Banking Management System Screenshot"
-                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer" />
+                        class="block w-full h-44 sm:h-52 overflow-hidden group">
+                        <img src="./assets/Project_Images/Banking-Management-System.webp"
+                            alt="Banking Management System Screenshot"
+                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
                     </a>
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-50 mb-2">Banking Management System</h3>
-                    <p class="text-sm sm:text-base text-gray-700 dark:text-gray-300 mb-4 project-description" id="project3-desc">
-                        Engineered a GUI-based banking solution using Tkinter and SQL database, following strict OOP principles. Implemented secure PIN-based login and operations including deposits, withdrawals, balance checks, and profile updates. Focused on secure database integration and scalable design.
-                    </p>
-                    <button class="text-teal-600 dark:text-teal-400 text-sm font-medium hover:underline show-more-btn"
-                        data-target="project3-desc">Show More</button>
+
+                    <div class="p-6">
+                        <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
+                            Banking Management System
+                        </h3>
+                        <p class="text-sm sm:text-base text-gray-700 mb-4 project-description" id="project3-desc">
+                            GUI-based banking app with Tkinter and SQL, featuring secure PIN login and operations like deposits, withdrawals, and balance checks — built with OOP principles.
+                        </p>
+                        <button class="text-emerald-700 text-xs sm:text-sm font-medium hover:underline show-more-btn"
+                            data-target="project3-desc">Show More</button>
+                    </div>
                 </div>
+
             </div>
         </section>
 
+            
+        <section id="section4"
+            class="mt-24 md:mt-32 px-4 sm:px-8 py-12 text-center font-normal bg-gray-50 scroll-mt-24 scroll-animate">
 
-        <section id="section4" data-aos="fade-up"
-            class="mt-24 md:mt-32 px-4 sm:px-8 py-8 text-center font-normal bg-gray-50 dark:bg-gray-800 scroll-mt-24">
-            <p class="mt-16 text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 text-gray-900 dark:text-gray-50">
+            <!-- Section Title -->
+            <p class="mt-12 text-2xl sm:text-3xl md:text-4xl font-bold mb-8 text-gray-900">
                 Education
             </p>
 
             <!-- Education Entries -->
-            <div data-aos="fade-up" data-aos-delay="100"
-                class="w-full max-w-[60rem] mx-auto mt-8 md:mt-16 p-6 sm:p-8 text-left rounded-[10px] text-gray-800 dark:text-gray-200 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300 bg-gray-100 dark:bg-gray-700">
-                <div class="flex flex-col sm:flex-row sm:justify-between mb-4 text-center sm:text-left">
-                    <p class="font-bold text-base sm:text-lg">
+            <div
+                class="w-full max-w-[60rem] mx-auto mt-8 md:mt-12 p-6 sm:p-8 text-left rounded-2xl text-gray-900 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300 bg-white">
+                <div class="flex flex-col sm:flex-row sm:justify-between mb-3 text-center sm:text-left">
+                    <p class="font-semibold text-base sm:text-lg md:text-xl">
                         B.Tech in Computer Science and Engineering
                     </p>
-                    <p class="font-bold text-sm sm:text-base mt-2 sm:mt-0">
+                    <p class="font-medium text-sm sm:text-base md:text-lg mt-2 sm:mt-0">
                         2021 - 2025
                     </p>
                 </div>
-                <p class="text-teal-600 dark:text-teal-400 text-sm sm:text-base mt-[-0.5rem] sm:mt-[-1rem]">
+                <p class="text-emerald-700 text-sm sm:text-base md:text-lg -mt-1">
                     Biju Patnaik University of Technology
                 </p>
-                <p class="text-gray-700 dark:text-gray-300 mt-4 sm:mt-10 text-sm md:text-base"> <!-- Text size increased -->
+                <p class="text-gray-700 mt-4 sm:mt-6 text-sm sm:text-base leading-relaxed">
                     <strong>Coursework</strong>: <br />C, Java, Python, Object Oriented Programming, Data
                     Structure Algorithm, Database Management Systems, Cloud Computing,
                     Compiler Design, Theory of Computation, Operating Systems,
@@ -538,265 +647,239 @@
                 </p>
             </div>
 
-            <div data-aos="fade-up" data-aos-delay="200"
-                class="w-full max-w-[60rem] mx-auto mt-8 md:mt-16 p-6 sm:p-8 text-left rounded-[10px] text-gray-800 dark:text-gray-200 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300 bg-gray-100 dark:bg-gray-700">
-                <div class="flex flex-col sm:flex-row sm:justify-between mb-4 text-center sm:text-left">
-                    <p class="font-bold text-base sm:text-lg">
-                        Intermediate or 12<sup>th</sup> Science (PCM / IT)
+            <div
+                class="w-full max-w-[60rem] mx-auto mt-8 md:mt-12 p-6 sm:p-8 text-left rounded-2xl text-gray-900 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300 bg-white">
+                <div class="flex flex-col sm:flex-row sm:justify-between mb-3 text-center sm:text-left">
+                    <p class="font-semibold text-base sm:text-lg md:text-xl">
+                        Intermediate (12<sup>th</sup>) Science (PCM / IT)
                     </p>
-                    <p class="font-bold text-sm sm:text-base mt-2 sm:mt-0">
-                        2019 -2021
+                    <p class="font-medium text-sm sm:text-base md:text-lg mt-2 sm:mt-0">
+                        2019 - 2021
                     </p>
                 </div>
-                <p class="text-teal-600 dark:text-teal-400 text-sm sm:text-base mt-[-0.5rem] sm:mt-[-1rem]">
+                <p class="text-emerald-700 text-sm sm:text-base md:text-lg -mt-1">
                     Newton Higher Secondary School
                 </p>
-                <p class="text-gray-700 dark:text-gray-300 mt-4 sm:mt-10 text-sm md:text-base"> <!-- Text size increased -->
+                <p class="text-gray-700 mt-4 sm:mt-6 text-sm sm:text-base leading-relaxed">
                     <strong>Coursework</strong>: Physics, Chemistry, and Mathematics with IT
                     Specialization
                 </p>
             </div>
 
-            <div data-aos="fade-up" data-aos-delay="300"
-                class="w-full max-w-[60rem] mx-auto mt-8 md:mt-16 p-6 sm:p-8 text-left rounded-[10px] text-gray-800 dark:text-gray-200 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300 bg-gray-100 dark:bg-gray-700">
-                <div class="flex flex-col sm:flex-row sm:justify-between mb-4 text-center sm:text-left">
-                    <p class="font-bold text-base sm:text-lg">
-                        Metric or 10<sup>th</sup> in General Topics
+            <div
+                class="w-full max-w-[60rem] mx-auto mt-8 md:mt-12 p-6 sm:p-8 text-left rounded-2xl text-gray-900 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300 bg-white">
+                <div class="flex flex-col sm:flex-row sm:justify-between mb-3 text-center sm:text-left">
+                    <p class="font-semibold text-base sm:text-lg md:text-xl">
+                        Matriculation (10<sup>th</sup>) in General Topics
                     </p>
-                    <p class="font-bold text-sm sm:text-base mt-2 sm:mt-0">2019</p>
+                    <p class="font-medium text-sm sm:text-base md:text-lg mt-2 sm:mt-0">
+                        2019
+                    </p>
                 </div>
-                <p class="text-teal-600 dark:text-teal-400 text-sm sm:text-base mt-[-0.5rem] sm:mt-[-1rem]">
+                <p class="text-emerald-700 text-sm sm:text-base md:text-lg -mt-1">
                     Panchayat High School
                 </p>
-                <p class="text-gray-700 dark:text-gray-300 mt-4 sm:mt-10 text-sm md:text-base"> <!-- Text size increased -->
+                <p class="text-gray-700 mt-4 sm:mt-6 text-sm sm:text-base leading-relaxed">
                     <strong>Coursework</strong>: General Topics
                 </p>
             </div>
 
             <!-- Certifications -->
-            <div data-aos="fade-up" data-aos-delay="400"
-                class="w-full max-w-[60rem] mx-auto mt-8 md:mt-16 p-6 sm:p-8 text-left bg-gray-100 dark:bg-gray-700 rounded-[10px] shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300">
-                <p class="text-xl sm:text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-50">
+            <div
+                class="w-full max-w-[60rem] mx-auto mt-8 md:mt-12 p-6 sm:p-8 text-left bg-white rounded-2xl shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300">
+                <p class="text-lg sm:text-xl md:text-2xl font-semibold mb-6 text-gray-900">
                     Certifications
                 </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div
-                        class="bg-gray-200 dark:bg-gray-600 px-4 py-3 rounded-[8px] text-sm font-medium text-gray-800 dark:text-gray-200 flex items-center gap-2 hover:-translate-y-1 hover:shadow-lg transition duration-300">
+                        class="bg-gray-100 px-4 py-3 rounded-xl text-sm sm:text-base font-medium text-gray-900 flex items-center gap-2 hover:-translate-y-1 hover:shadow-lg transition duration-300">
                         ✦ AWS Certified Solutions Architect
                     </div>
                     <div
-                        class="bg-gray-200 dark:bg-gray-600 px-4 py-3 rounded-[8px] text-sm font-medium text-gray-800 dark:text-gray-200 flex items-center gap-2 hover:-translate-y-1 hover:shadow-lg transition duration-300">
+                        class="bg-gray-100 px-4 py-3 rounded-xl text-sm sm:text-base font-medium text-gray-900 flex items-center gap-2 hover:-translate-y-1 hover:shadow-lg transition duration-300">
                         ✦ Google Cloud Professional Developer
                     </div>
                     <div
-                        class="bg-gray-200 dark:bg-gray-600 px-4 py-3 rounded-[8px] text-sm font-medium text-gray-800 dark:text-gray-200 flex items-center gap-2 hover:-translate-y-1 hover:shadow-lg transition duration-300">
+                        class="bg-gray-100 px-4 py-3 rounded-xl text-sm sm:text-base font-medium text-gray-900 flex items-center gap-2 hover:-translate-y-1 hover:shadow-lg transition duration-300">
                         ✦ Meta JavaScript Developer Certificate
                     </div>
                     <div
-                        class="bg-gray-200 dark:bg-gray-600 px-4 py-3 rounded-[8px] text-sm font-medium text-gray-800 dark:text-gray-200 flex items-center gap-2 hover:-translate-y-1 hover:shadow-lg transition duration-300">
+                        class="bg-gray-100 px-4 py-3 rounded-xl text-sm sm:text-base font-medium text-gray-900 flex items-center gap-2 hover:-translate-y-1 hover:shadow-lg transition duration-300">
                         ✦ Google Crash Course in Python
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="section5" data-aos="fade-up"
-            class="mt-24 md:mt-32 px-4 sm:px-8 py-8 text-center font-normal bg-gray-50 dark:bg-gray-900 scroll-mt-24">
-            <p class="mt-16 text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 text-gray-900 dark:text-gray-50">
+
+        <section id="section5"
+            class="bg-gray-50 mt-24 md:mt-32 px-4 sm:px-8 py-12 text-center font-normal scroll-mt-24 scroll-animate">
+
+            <!-- Section Title -->
+            <p class="mt-12 text-2xl sm:text-3xl md:text-4xl font-bold mb-8 text-gray-900">
                 Experience
             </p>
 
+            <!-- Experience Entry -->
             <div
-                class="w-full max-w-[60rem] mx-auto my-8 md:my-16 p-6 sm:p-8 text-left bg-gray-100 dark:bg-gray-800 rounded-[10px] shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300">
-                <div class="flex flex-col sm:flex-row sm:justify-between mb-4 text-center sm:text-left">
-                    <p class="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-50">
+                class="w-full max-w-[60rem] mx-auto my-8 md:my-12 p-6 sm:p-8 text-left bg-white rounded-2xl shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300">
+
+                <!-- Role & Duration -->
+                <div class="flex flex-col sm:flex-row sm:justify-between mb-3 text-center sm:text-left">
+                    <p class="text-base sm:text-lg md:text-xl font-semibold text-gray-900 flex items-center gap-2">
+                        <i data-lucide="briefcase" class="w-4 h-4 text-emerald-600"></i>
                         Software Developer Trainee
                     </p>
-                    <p class="experience-duration-display font-medium text-gray-500 dark:text-gray-400 text-sm sm:text-base mt-2 sm:mt-0"
+                    <p class="experience-duration-display font-medium text-gray-500 text-sm sm:text-base md:text-lg mt-2 sm:mt-0 flex items-center gap-1"
                         data-start-date="2025-05-01">
-                        <!-- Content will be updated by JavaScript -->
+                        <i data-lucide="calendar" class="w-4 h-4 text-gray-400"></i>
+                        <!-- JS will insert duration -->
                     </p>
                 </div>
 
-                <p class="text-teal-600 dark:text-teal-400 font-medium text-sm sm:text-base my-[-0.5rem] mb-4">
+                <!-- Company -->
+                <p class="text-emerald-700 font-medium text-sm sm:text-base md:text-lg -mt-1 mb-4 flex items-center gap-2">
+                    <i data-lucide="map-pin" class="w-4 h-4 text-emerald-600"></i>
                     PySpider, Bhubaneswar Odisha
                 </p>
 
-                <p class="text-gray-700 dark:text-gray-300 text-sm md:text-base mb-6"> <!-- Text size increased -->
-                    • Designed and maintained RESTful APIs using Flask for frontend-ML
-                    model integration. Implemented middleware for authentication,
-                    validation, and request handling. <br>
-                    • Applied OOP principles and clean
-                    coding standards. Worke with MySQL for queries, schema design, and
-                    API persistence. Wrote unit tests (PyTest, Unittest) for
-                    reliability.Collaborated using Git workflows (branching, merging,
-                    PRs).
+                <!-- Description -->
+                <p class="text-gray-700 text-sm sm:text-base leading-relaxed mb-6">
+                    • Designed and maintained RESTful APIs using Flask for frontend-ML model integration. 
+                    Implemented middleware for authentication, validation, and request handling. <br>
+                    • Applied OOP principles and clean coding standards. Worked with MySQL for queries, schema design, and 
+                    API persistence. <br>
+                    • Wrote unit tests (PyTest, Unittest) for reliability. Collaborated using Git workflows (branching, merging, PRs).
                 </p>
 
+                <!-- Skills / Tools -->
                 <div class="flex flex-wrap gap-2">
-                    <span
-                        class="bg-teal-100 dark:bg-teal-800 text-teal-800 dark:text-teal-100 px-3 py-1 rounded-full text-xs sm:text-sm font-medium">HTML5</span>
-                    <span
-                        class="bg-teal-100 dark:bg-teal-800 text-teal-800 dark:text-teal-100 px-3 py-1 rounded-full text-xs sm:text-sm font-medium">CSS3</span>
-                    <span
-                        class="bg-teal-100 dark:bg-teal-800 text-teal-800 dark:text-teal-100 px-3 py-1 rounded-full text-xs sm:text-sm font-medium">Javascript</span>
-                    <span
-                        class="bg-teal-100 dark:bg-teal-800 text-teal-800 dark:text-teal-100 px-3 py-1 rounded-full text-xs sm:text-sm font-medium">Reactjs</span>
-                    <span
-                        class="bg-teal-100 dark:bg-teal-800 text-teal-800 dark:text-teal-100 px-3 py-1 rounded-full text-xs sm:text-sm font-medium">Python</span>
-                    <span
-                        class="bg-teal-100 dark:bg-teal-800 text-teal-800 dark:text-teal-100 px-3 py-1 rounded-full text-xs sm:text-sm font-medium">Django</span>
-                    <span
-                        class="bg-teal-100 dark:bg-teal-800 text-teal-800 dark:text-teal-100 px-3 py-1 rounded-full text-xs sm:text-sm font-medium">SQL</span>
+                    <span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-xs sm:text-sm md:text-base font-medium">HTML5</span>
+                    <span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-xs sm:text-sm md:text-base font-medium">CSS3</span>
+                    <span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-xs sm:text-sm md:text-base font-medium">JavaScript</span>
+                    <span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-xs sm:text-sm md:text-base font-medium">React.js</span>
+                    <span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-xs sm:text-sm md:text-base font-medium">Python</span>
+                    <span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-xs sm:text-sm md:text-base font-medium">Django</span>
+                    <span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-xs sm:text-sm md:text-base font-medium">SQL</span>
                 </div>
             </div>
-
-            <!-- Example of a past position -->
-            <div data-aos="fade-up" data-aos-delay="100"
-                class="w-full max-w-[60rem] mx-auto my-8 md:my-16 p-6 sm:p-8 text-left bg-gray-100 dark:bg-gray-800 rounded-[10px] shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300">
-                <div class="flex flex-col sm:flex-row sm:justify-between mb-4 text-center sm:text-left">
-                    <p class="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-50">
-                        Junior Web Developer
-                    </p>
-                    <p class="experience-duration-display font-medium text-gray-500 dark:text-gray-400 text-sm sm:text-base mt-2 sm:mt-0"
-                        data-start-date="2024-01-15" data-end-date="2024-12-31">
-                        <!-- Content will be updated by JavaScript -->
-                    </p>
-                </div>
-
-                <p class="text-teal-600 dark:text-teal-400 font-medium text-sm sm:text-base my-[-0.5rem] mb-4">
-                    ABC Solutions, Delhi
-                </p>
-
-                <p class="text-gray-700 dark:text-gray-300 text-sm md:text-base mb-6"> <!-- Text size increased -->
-                    • Contributed to the development of responsive web interfaces using HTML, CSS, and JavaScript. <br>
-                    • Assisted in backend development with Node.js and MongoDB.
-                </p>
-
-                <div class="flex flex-wrap gap-2">
-                    <span
-                        class="bg-teal-100 dark:bg-teal-800 text-teal-800 dark:text-teal-100 px-3 py-1 rounded-full text-xs sm:text-sm font-medium">HTML5</span>
-                    <span
-                        class="bg-teal-100 dark:bg-teal-800 text-teal-800 dark:text-teal-100 px-3 py-1 rounded-full text-xs sm:text-sm font-medium">CSS3</span>
-                    <span
-                        class="bg-teal-100 dark:bg-teal-800 text-teal-800 dark:text-teal-100 px-3 py-1 rounded-full text-xs sm:text-sm font-medium">Javascript</span>
-                    <span
-                        class="bg-teal-100 dark:bg-teal-800 text-teal-800 dark:text-teal-100 px-3 py-1 rounded-full text-xs sm:text-sm font-medium">Node.js</span>
-                    <span
-                        class="bg-teal-100 dark:bg-teal-800 text-teal-800 dark:text-teal-100 px-3 py-1 rounded-full text-xs sm:text-sm font-medium">MongoDB</span>
-                </div>
-            </div>
-
         </section>
 
-        <section id="section6" data-aos="fade-up"
-            class="mt-24 md:mt-32 font-normal bg-gray-50 dark:bg-gray-800 overflow-hidden px-4 sm:px-6 py-12 scroll-mt-24">
-            <h2 class="text-center text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 text-gray-900 dark:text-gray-50">
+        <!-- Load Lucide Icons -->
+        <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+        <script>
+            lucide.createIcons();
+        </script>
+
+
+
+        <section id="section6"
+            class="mt-24 md:mt-32 font-normal bg-gray-50 overflow-hidden px-4 sm:px-6 py-12 scroll-mt-24 scroll-animate">
+            <h2 class="text-center text-3xl sm:text-4xl md:text-5xl font-bold mb-10 text-gray-900">
                 Get In Touch
             </h2>
 
             <div class="flex flex-col md:flex-row justify-between gap-8 max-w-[1200px] mx-auto">
                 <!-- Left Side -->
                 <div class="flex-auto w-full md:flex-1 text-center md:text-left">
-                    <h3 class="text-xl sm:text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-50">
+                    <h3 class="text-2xl sm:text-3xl font-semibold mb-4 text-gray-900">
                         Let's work together
                     </h3>
-                    <p class="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed text-sm sm:text-base">
+                    <p class="text-lg sm:text-xl mb-6 leading-relaxed text-gray-700">
                         I'm always interested in new opportunities and interesting
                         projects. Whether you have a question or just want to say hi, feel
                         free to reach out!
                     </p>
 
                     <ul class="list-none p-0 flex flex-col items-center md:items-start">
-                        <li class="flex items-center text-gray-800 dark:text-gray-200 mb-3 text-sm sm:text-base break-all">
-                            <span class="inline-block w-2 h-2 bg-teal-600 dark:bg-teal-400 rounded-full mr-2"></span>
+                        <li class="flex items-center text-gray-900 mb-3 text-lg sm:text-xl">
+                            <span class="inline-block w-2 h-2 bg-emerald-700 rounded-full mr-2"></span>
                             brahmachariritesh508805@gmail.com
                         </li>
-                        <li class="flex items-center text-gray-800 dark:text-gray-200 mb-3 text-sm sm:text-base break-all">
-                            <span class="inline-block w-2 h-2 bg-teal-600 dark:bg-teal-400 rounded-full mr-2"></span>
+                        <li class="flex items-center text-gray-900 mb-3 text-lg sm:text-xl">
+                            <span class="inline-block w-2 h-2 bg-emerald-700 rounded-full mr-2"></span>
                             +91 96923 82203
                         </li>
-                        <li class="flex items-center text-gray-800 dark:text-gray-200 mb-3 text-sm sm:text-base break-all">
-                            <span class="inline-block w-2 h-2 bg-teal-600 dark:bg-teal-400 rounded-full mr-2"></span>
+                        <li class="flex items-center text-gray-900 mb-3 text-lg sm:text-xl">
+                            <span class="inline-block w-2 h-2 bg-emerald-700 rounded-full mr-2"></span>
                             Bhubaneswar, Odisha
                         </li>
                     </ul>
                 </div>
 
                 <!-- Right Side (Form) -->
-                <form id="contact-form" action="https://formspree.io/f/yourformid" method="POST"
-                    class="flex-auto w-full md:flex-1 flex flex-col gap-4">
+                <form class="flex-auto w-full md:flex-1 flex flex-col gap-4">
                     <input type="text" placeholder="Your Name" required
-                        class="p-3 border border-gray-300 dark:border-gray-600 rounded-md text-sm sm:text-base font-[inherit] bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400" />
+                        class="p-3 border border-gray-300 rounded-md text-lg sm:text-xl bg-white text-gray-900 placeholder-gray-500" />
                     <input type="email" placeholder="Your Email" required
-                        class="p-3 border border-gray-300 dark:border-gray-600 rounded-md text-sm sm:text-base font-[inherit] bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400" />
+                        class="p-3 border border-gray-300 rounded-md text-lg sm:text-xl bg-white text-gray-900 placeholder-gray-500" />
                     <textarea placeholder="Your Message" rows="5" required
-                        class="p-3 border border-gray-300 dark:border-gray-600 rounded-md text-sm sm:text-base font-[inherit] bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"></textarea>
+                        class="p-3 border border-gray-300 rounded-md text-lg sm:text-xl bg-white text-gray-900 placeholder-gray-500"></textarea>
                     <button type="submit"
-                        class="bg-teal-600 dark:bg-teal-700 hover:bg-teal-700 dark:hover:bg-teal-800 text-white py-3 rounded-md font-semibold transition duration-300 text-sm sm:text-base">
+                        class="bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-md font-semibold transition duration-300 text-lg sm:text-xl">
                         Send Message
                     </button>
-                    <div id="form-message" class="mt-2 text-sm text-center"></div>
                 </form>
             </div>
         </section>
+
     </main>
 
     <!-- The HR is moved here, between main and footer -->
-    <hr class="mt-16 mx-auto border-t border-gray-200 dark:border-gray-700 w-full max-w-[1200px]" />
+    <hr class="mt-16 mx-auto border-t border-gray-200 w-full max-w-[1200px]" />
 
-    <footer id="footer" data-aos="fade-up"
-        class="bg-gray-50 dark:bg-gray-800 px-4 sm:px-8 pt-12 md:pt-20 pb-8 font-normal text-left scroll-mt-24">
+    <footer id="footer"
+        class="bg-gray-50 px-4 sm:px-8 pt-12 md:pt-20 pb-8 font-normal text-left scroll-mt-24 scroll-animate">
         <div
             class="footer-main flex flex-col sm:flex-row flex-wrap justify-between gap-8 max-w-[1200px] mx-auto text-center sm:text-left">
 
             <!-- Section 1 -->
             <div class="footer-section flex-auto w-full md:flex-1">
-                <h3 class="text-teal-600 dark:text-teal-400 mb-4 text-lg sm:text-xl">
+                <h3 class="text-emerald-700 mb-4 text-lg sm:text-xl">
                     Ritesh Brahmachari
                 </h3>
-                <p class="text-gray-700 dark:text-gray-300 leading-[1.5] mb-2 text-sm sm:text-base">
+                <p class="text-base sm:text-lg leading-[1.5] mb-2">
                     Full Stack Developer & UI/UX Designer
                 </p>
-                <p class="text-gray-700 dark:text-gray-300 leading-[1.5] mb-2 text-sm sm:text-base">
+                <p class="text-base sm:text-lg leading-[1.5] mb-2">
                     Nayapali, Bhubaneswar<br />Khordha, Odisha<br />INDIA
                 </p>
             </div>
 
             <!-- Section 2 -->
             <div class="footer-section flex-auto w-full md:flex-1">
-                <h4 class="font-semibold mb-4 text-gray-900 dark:text-gray-50">Quick Links</h4>
+                <h4 class="font-semibold mb-4 text-gray-900 text-lg sm:text-xl">Quick Links</h4>
                 <div class="footer-links flex justify-center sm:justify-start gap-4 sm:gap-8">
                     <ul class="list-none p-0">
                         <li class="mb-2">
                             <a href="#"
-                                class="text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-sm sm:text-base">Home</a>
+                                class="text-gray-900 hover:text-emerald-700 transition-colors text-base sm:text-lg">Home</a>
                         </li>
                         <li class="mb-2">
                             <a href="#section3"
-                                class="text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-sm sm:text-base">Skills</a>
+                                class="text-gray-900 hover:text-emerald-700 transition-colors text-base sm:text-lg">Skills</a>
                         </li>
                         <li class="mb-2">
                             <a href="#section_projects"
-                                class="text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-sm sm:text-base">Projects</a>
+                                class="text-gray-900 hover:text-emerald-700 transition-colors text-base sm:text-lg">Projects</a>
                         </li>
                         <li class="mb-2">
                             <a href="#section5"
-                                class="text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-sm sm:text-base">Experience</a>
+                                class="text-gray-900 hover:text-emerald-700 transition-colors text-base sm:text-lg">Experience</a>
                         </li>
                     </ul>
                     <ul class="list-none p-0">
                         <li class="mb-2">
                             <a href="#section2"
-                                class="text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-sm sm:text-base">About</a>
+                                class="text-gray-900 hover:text-emerald-700 transition-colors text-base sm:text-lg">About</a>
                         </li>
                         <li class="mb-2">
                             <a href="#section4"
-                                class="text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-sm sm:text-base">Education</a>
+                                class="text-gray-900 hover:text-emerald-700 transition-colors text-base sm:text-lg">Education</a>
                         </li>
                         <li class="mb-2">
                             <a href="#section6"
-                                class="text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-sm sm:text-base">Contact</a>
+                                class="text-gray-900 hover:text-emerald-700 transition-colors text-base sm:text-lg">Contact</a>
                         </li>
                     </ul>
                 </div>
@@ -804,29 +887,29 @@
 
             <!-- Section 3 -->
             <div class="footer-section flex-auto w-full md:flex-1">
-                <h4 class="font-semibold mb-4 text-gray-900 dark:text-gray-50">Connect With Me</h4>
+                <h4 class="font-semibold mb-4 text-gray-900 text-lg sm:text-xl">Connect With Me</h4>
                 <ul class="list-none p-0">
                     <li class="mb-2">
-                        <a target="_blank" href="https://github.com/Ritesh-456"
-                            class="text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-sm sm:text-base">GitHub</a>
+                        <a href="https://github.com/Ritesh-456" target="_blank" rel="noopener noreferrer"
+                            class="text-gray-900 hover:text-emerald-700 transition-colors text-base sm:text-lg">GitHub</a>
                     </li>
                     <li class="mb-2">
-                        <a target="_blank" href="https://www.linkedin.com/in/ritesh-brahmachari-1b7b84278/"
-                            class="text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-sm sm:text-base">LinkedIn</a>
+                        <a href="https://www.linkedin.com/in/ritesh-brahmachari-1b7b84278/" target="_blank"
+                            rel="noopener noreferrer"
+                            class="text-gray-900 hover:text-emerald-700 transition-colors text-base sm:text-lg">LinkedIn</a>
                     </li>
                 </ul>
             </div>
         </div>
 
-        <hr class="my-8 mx-auto border-t border-gray-200 dark:border-gray-700 w-full max-w-[1200px]" />
+        <hr class="my-8 mx-auto border-t border-gray-200 max-w-[1200px]" />
 
-        <p class="text-center text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-2">
-            © <a href="https://github.com/Ritesh-456">Ritesh-456</a>. All rights reserved.
+        <p class="text-center text-sm sm:text-base text-gray-600 mt-2">
+            © 2025 <a href="https://github.com/Ritesh-456" target="_blank" rel="noopener noreferrer">Ritesh-456</a>. All
+            rights reserved.
         </p>
     </footer>
 
-    <!-- AOS Library JS -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="./Script.js"></script>
 </body>
 
