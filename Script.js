@@ -155,7 +155,13 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 durationText = `${startMonthYear} - ${displayEndDateString} (approx. ${monthsDiff} Months)`;
             }
-            element.textContent = durationText;
+            
+            const durationPlaceholder = element.querySelector('.duration-placeholder');
+            if (durationPlaceholder) {
+                durationPlaceholder.textContent = durationText;
+            } else {
+                element.textContent = durationText; // Fallback
+            }
         });
 
         if (yearsExperienceDisplay) {
@@ -167,15 +173,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Mobile Menu Toggle ---
     mobileMenuButton.addEventListener('click', () => {
+        const headerHeight = mainHeader.offsetHeight; // Get current header height
+        mobileMenu.style.top = `${headerHeight}px`; // Set mobile menu to start below the header
+        mobileMenu.style.height = `calc(100vh - ${headerHeight}px)`; // Adjust height to fill remaining viewport
+
         mobileMenu.classList.remove('translate-x-full');
         mobileMenu.classList.add('translate-x-0');
         document.body.style.overflow = 'hidden';
+        mobileMenuButton.classList.add('hidden'); // Hide the hamburger button
     });
 
     closeMobileMenuButton.addEventListener('click', () => {
         mobileMenu.classList.remove('translate-x-0');
         mobileMenu.classList.add('translate-x-full');
         document.body.style.overflow = '';
+        mobileMenuButton.classList.remove('hidden'); // Show the hamburger button
+        // Optional: Reset top and height after the menu slides out to clean up styles.
+        setTimeout(() => {
+            mobileMenu.style.top = ''; 
+            mobileMenu.style.height = '';
+        }, 300); 
     });
 
     // Close mobile menu and update active link when a navigation link is clicked
@@ -184,6 +201,12 @@ document.addEventListener('DOMContentLoaded', () => {
             mobileMenu.classList.remove('translate-x-0');
             mobileMenu.classList.add('translate-x-full');
             document.body.style.overflow = '';
+            mobileMenuButton.classList.remove('hidden'); // Show the hamburger button
+            // Optional: Reset top and height after the menu slides out.
+            setTimeout(() => {
+                mobileMenu.style.top = ''; 
+                mobileMenu.style.height = '';
+            }, 300);
             const targetId = link.getAttribute('href').substring(1);
             setTimeout(() => setActiveNavLink(targetId), 300);
         });
@@ -231,9 +254,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const observerCallback = (entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
+                // Apply data-animation-delay if present
+                const delay = entry.target.dataset.animationDelay;
+                if (delay) {
+                    entry.target.style.transitionDelay = delay;
+                }
                 entry.target.classList.add('is-visible');
-                // Optional: Stop observing after animation to run only once
-                observer.unobserve(entry.target);
+                // We keep observing so that elements can animate in again if they scroll out and back in
+                // If you want it to animate only once, uncomment: observer.unobserve(entry.target);
+            } else {
+                // Optional: reset animation state when element scrolls out of view
+                // This makes the animation replay if the user scrolls it back into view
+                entry.target.classList.remove('is-visible');
+                entry.target.style.transitionDelay = ''; // Clear delay
             }
         });
     };
@@ -241,6 +274,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
     animatedElements.forEach(element => {
+        // Clear any previous transitionDelay for elements that might be re-observed or for initial state
+        element.style.transitionDelay = ''; 
         observer.observe(element);
     });
 
