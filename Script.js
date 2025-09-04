@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 durationText = `${startMonthYear} - ${displayEndDateString} (approx. ${monthsDiff} Months)`;
             }
-            
+
             const durationPlaceholder = element.querySelector('.duration-placeholder');
             if (durationPlaceholder) {
                 durationPlaceholder.textContent = durationText;
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = '';
         mobileMenuButton.classList.remove('hidden');
         setTimeout(() => {
-            mobileMenu.style.top = ''; 
+            mobileMenu.style.top = '';
             mobileMenu.style.height = '';
         }, 300);
     });
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = '';
             mobileMenuButton.classList.remove('hidden');
             setTimeout(() => {
-                mobileMenu.style.top = ''; 
+                mobileMenu.style.top = '';
                 mobileMenu.style.height = '';
             }, 300);
             const targetId = link.getAttribute('href').substring(1);

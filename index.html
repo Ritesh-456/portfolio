@@ -7,9 +7,12 @@
     <title>Ritesh Brahmachari | Full Stack Developer & UI/UX Designer Portfolio</title>
     <meta name="description" content="Ritesh Brahmachari's official portfolio showcasing expertise in Full Stack Development and UI/UX Design. Explore projects in Flask, Django, React.js, Python, and data analysis.">
     <meta name="keywords" content="Ritesh Brahmachari, Full Stack Developer, UI/UX Designer, Python, Flask, Django, React.js, Web Development, Portfolio, Data Analysis, SQL, AWS, Frontend, Backend, Machine Learning">
-    <!-- Add your Tailwind CSS CDN or build output link here -->
-    <!-- For demonstration, assume Tailwind is properly configured -->
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Preconnect to Google Fonts domain to speed up font loading -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Preload Poppins stylesheet to make it available sooner -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" as="style">
+    <link rel="shortcut icon" href="./assets/favicon_io/favicon.ico" type="image/x-icon">
     <style>
         /* Custom font import if not using Tailwind's default */
         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
@@ -95,7 +98,6 @@
 <body class="overflow-x-hidden bg-white text-gray-900 break-words">
     <header id="mainHeader"
         class="fixed top-0 left-0 w-full z-[990] px-4 py-3 sm:py-4 flex items-center bg-gray-50 shadow-md transition-all duration-300 scroll-animate">
-        <!-- Portfolio title now fixed to text-xs directly in HTML -->
         <p id="portfolioTitle" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });"
             class="text-emerald-700 font-semibold text-xs flex-shrink-0 cursor-pointer transition-all duration-300">
             Portfolio
@@ -113,42 +115,34 @@
         </div>
 
         <!-- Desktop Navigation -->
-        <!-- desktopNav starts right-aligned by default, then JavaScript centers it on scroll -->
         <nav id="desktop-nav"
             class="hidden lg:flex lg:flex-grow md:justify-end items-center space-x-4 lg:space-x-8 transition-all duration-300 ml-auto custom-desktop-nav">
             <ul class="flex space-x-2 sm:space-x-4">
                 <li class="nav-item">
-                    <!-- Nav links now fixed to text-xs directly in HTML -->
                     <a href="#"
                         class="inline-block px-1 py-1 text-xs font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Home</a>
                 </li>
                 <li class="nav-item">
-                    <!-- Nav links now fixed to text-xs directly in HTML -->
                     <a href="#section2"
                         class="inline-block px-1 py-1 text-xs font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">About</a>
                 </li>
                 <li class="nav-item">
-                    <!-- Nav links now fixed to text-xs directly in HTML -->
                     <a href="#section3"
                         class="inline-block px-1 py-1 text-xs font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Skills</a>
                 </li>
                 <li class="nav-item">
-                    <!-- Nav links now fixed to text-xs directly in HTML -->
                     <a href="#section_projects"
                         class="inline-block px-1 py-1 text-xs font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Projects</a>
                 </li>
                 <li class="nav-item">
-                    <!-- Nav links now fixed to text-xs directly in HTML -->
                     <a href="#section4"
                         class="inline-block px-1 py-1 text-xs font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Education</a>
                 </li>
                 <li class="nav-item">
-                    <!-- Nav links now fixed to text-xs directly in HTML -->
                     <a href="#section5"
                         class="inline-block px-1 py-1 text-xs font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Experience</a>
                 </li>
                 <li class="nav-item">
-                    <!-- Nav links now fixed to text-xs directly in HTML -->
                     <a href="#section6"
                         class="inline-block px-1 py-1 text-xs font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Contact</a>
                 </li>
@@ -194,12 +188,11 @@
 
             <!-- Left Text Section -->
             <div class="flex-none md:flex-1 w-full md:mt-0 flex-grow">
-                
+
                 <div class="text-emerald-700 text-2xl sm:text-3xl md:text-4xl lg:text-[4rem] font-semibold mb-4 scroll-animate" data-animation-delay="0.05s">
                     <span class="block leading-none">Hello, I'm Ritesh</span>
                     <span class="block leading-none mt-1 sm:mt-2 md:mt-3 lg:mt-4">Brahmachari</span>
                 </div>
-                <!-- Reduced text size for these paragraphs in the hero section -->
                 <div class="text-xs sm:text-sm font-medium my-2 scroll-animate" data-animation-delay="0.1s">
                     Full Stack Developer & UI/UX Designer passionate about
                 </div>
@@ -229,8 +222,10 @@
                         srcset="./assets/hero_section_image/programmer.webp 300w, ./assets/hero_section_image/programmer.webp 450w, ./assets/hero_section_image/programmer.webp 600w"
                         sizes="(max-width: 640px) 224px, (max-width: 768px) 288px, (max-width: 1024px) 320px, 450px"
                         type="image/webp">
+                    <!-- Added explicit width and height for CLS, using largest defined size as intrinsic -->
                     <img src="./assets/hero_section_image/programmer.webp" alt="Ritesh Brahmachari working as a full stack developer at a computer"
-                        class="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-[450px] lg:h-[450px] object-cover rounded-full shadow-lg transition-transform duration-300 hover:scale-105" />
+                        class="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-[450px] lg:h-[450px] object-cover rounded-full shadow-lg transition-transform duration-300 hover:scale-105"
+                        width="450" height="450" loading="eager" />
                 </picture>
             </div>
         </section>
@@ -286,8 +281,10 @@
                         <source
                             srcset="./assets/Profile_image/pic.webp 250w, ./assets/Profile_image/pic.webp 400w, ./assets/Profile_image/pic.webp 550w"
                             sizes="(max-width: 640px) 200px, (max-width: 768px) 250px, 448px" type="image/webp">
+                        <!-- Added explicit width and height for CLS, using largest defined size as intrinsic -->
                         <img src="./assets/Profile_image/pic.webp" alt="Ritesh Brahmachari professional headshot"
-                            class="absolute top-4 left-4 h-[calc(100%-2rem)] w-[calc(100%-2rem)] object-cover rounded-[20px]" />
+                            class="absolute top-4 left-4 h-[calc(100%-2rem)] w-[calc(100%-2rem)] object-cover rounded-[20px]"
+                            width="448" height="448" loading="lazy" />
                     </picture>
                 </div>
             </div>
@@ -308,37 +305,41 @@
                     <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Frontend/html.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Frontend/html.webp" alt="HTML logo"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">HTML</p>
                         </div>
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Frontend/css.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Frontend/css.webp" alt="CSS logo"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">CSS</p>
                         </div>
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Frontend/sass.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Frontend/sass.webp" alt="SCSS logo"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">SCSS</p>
                         </div>
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Frontend/tailwind_css.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Frontend/tailwind_css.webp" alt="Tailwind CSS logo"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">
                                 Tailwind CSS
@@ -346,10 +347,11 @@
                         </div>
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Frontend/Javascript.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Frontend/Javascript.webp" alt="JavaScript logo"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">JavaScript</p>
                         </div>
@@ -363,28 +365,31 @@
                     <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Framework/reactjs.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Framework/reactjs.webp" alt="React JS logo"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">Reactjs</p>
                         </div>
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Framework/django.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Framework/django.webp" alt="Django framework logo"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">Django</p>
                         </div>
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Framework/flask.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Framework/flask.webp" alt="Flask framework logo"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">Flask</p>
                         </div>
@@ -400,19 +405,21 @@
                     <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Backend_and_Database/python.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Backend_and_Database/python.webp" alt="Python logo"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">Python</p>
                         </div>
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Backend_and_Database/sql.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Backend_and_Database/sql.webp" alt="SQL database logo"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">SQL</p>
                         </div>
@@ -425,38 +432,42 @@
                     <p class="text-lg sm:text-xl text-gray-900 mb-5">Libraries</p>
                     <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
                         <div
-                            class="flex flex-col items-center w-16 sm:w-20 text-gray-900 transition-transform duration-300 hover:-translate-y-1">
+                            class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Libraries/numpy.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Libraries/numpy.webp" alt="Numpy library logo"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm mt-2">Numpy</p>
                         </div>
                         <div
-                            class="flex flex-col items-center w-16 sm:w-20 text-gray-900 transition-transform duration-300 hover:-translate-y-1">
+                            class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Libraries/pandas.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Libraries/pandas.webp" alt="Pandas library logo"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm mt-2">Pandas</p>
                         </div>
                         <div
-                            class="flex flex-col items-center w-16 sm:w-20 text-gray-900 transition-transform duration-300 hover:-translate-y-1">
+                            class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Libraries/matplotlib.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Libraries/matplotlib.webp" alt="Matplotlib library logo"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm mt-2">Matplotlib</p>
                         </div>
                         <div
-                            class="flex flex-col items-center w-16 sm:w-20 text-gray-900 transition-transform duration-300 hover:-translate-y-1">
+                            class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Libraries/seaborn.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Libraries/seaborn.webp" alt="Seaborn library logo"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm mt-2">Seaborn</p>
                         </div>
@@ -472,28 +483,31 @@
                     <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Data_Analysis_Tools/excel.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Data_Analysis_Tools/excel.webp" alt="Microsoft Excel logo"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm mt-2">Excel</p>
                         </div>
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Data_Analysis_Tools/power-bi.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Data_Analysis_Tools/power-bi.webp" alt="Power BI logo"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm mt-2">PowerBI</p>
                         </div>
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Data_Analysis_Tools/tableau.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Data_Analysis_Tools/tableau.webp" alt="Tableau logo"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm mt-2">Tableau</p>
                         </div>
@@ -507,53 +521,152 @@
                     <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Tools/github.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Tools/github.webp" alt="GitHub logo"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">GitHub</p>
                         </div>
                         <div
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Tools/git.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Tools/git.webp" alt="Git version control logo"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">Git</p>
                         </div>
                         <div
-                            class="flex flex-col items-center w-16 sm:w-20 text-gray-900 transition-transform duration-300 hover:-translate-y-1">
+                            class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Tools/aws.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Tools/aws.webp" alt="AWS cloud services logo"
                                     onerror="this.onerror=null;this.src='./assets/icon/Tools/aws.png';"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm mt-2">AWS</p>
                         </div>
                         <div
-                            class="flex flex-col items-center w-16 sm:w-20 text-gray-900 transition-transform duration-300 hover:-translate-y-1">
+                            class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Tools/postgresql.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Tools/postgresql.webp" alt="PostgreSQL database logo"
                                     onerror="this.onerror=null;this.src='./assets/icon/Tools/postgresql.png';"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm mt-2">PostgreSQL</p>
                         </div>
                         <div
-                            class="flex flex-col items-center w-16 sm:w-20 text-gray-900 transition-transform duration-300 hover:-translate-y-1">
+                            class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
+                            <!-- Added explicit width and height for CLS -->
                             <picture>
                                 <source srcset="./assets/icon/Tools/mysql.webp 80w" type="image/webp">
                                 <img src="./assets/icon/Tools/mysql.webp" alt="MySQL database logo"
-                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
+                                    class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" width="50" height="50" loading="lazy" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">MySQL</p>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+
+       <!-- New Projects Section -->
+        <section id="section_projects"
+            class="mt-24 md:mt-32 px-4 sm:px-8 py-12 bg-gray-50 scroll-mt-24 scroll-animate" data-animation-delay="0s">
+
+            <!-- Section Title -->
+            <div class="text-center mb-12">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 scroll-animate" data-animation-delay="0.05s">
+                    My Projects
+                </h2>
+                <p class="mt-3 text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto scroll-animate" data-animation-delay="0.1s">
+                    A showcase of my practical projects built with modern technologies
+                </p>
+            </div>
+
+            <!-- Project Cards Wrapper -->
+            <div class="flex justify-center flex-wrap gap-8">
+
+                <!-- Project Card 1 -->
+                <div id="project1-box"
+                    class="w-full max-w-sm sm:w-[28rem] bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 text-left scroll-animate" data-animation-delay="0.15s">
+
+                    <a href="https://fraud-detection-system-rf.streamlit.app/" target="_blank" rel="noopener noreferrer"
+                        class="block w-full h-44 sm:h-52 overflow-hidden group">
+                        <!-- Added explicit width and height for CLS -->
+                        <img src="./assets/Project_Images/Fraud-Detection-System.webp"
+                            alt="Screenshot of a Fraud Detection System dashboard"
+                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" width="448" height="208" loading="lazy" />
+                    </a>
+
+                    <div class="p-6">
+                        <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-2">
+                            Fraud Detection System
+                        </h3>
+                        <p class="text-xs sm:text-sm text-gray-700 mb-4 project-description" id="project1-desc">
+                            Developed a self-learning ML system using the Random Forest Algorithm to detect fraudulent URLs
+                            and QR codes, with applications in secure online payments. Built with Flask, MySQL, and Streamlit dashboard.
+                        </p>
+                        <button class="text-emerald-700 text-xs sm:text-sm font-medium hover:underline show-more-btn"
+                            data-target="project1-desc">Show More</button>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div id="project2-box"
+                    class="w-full max-w-sm sm:w-[28rem] bg-white rounded-2xl overflow-hidden shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300 text-left scroll-animate" data-animation-delay="0.2s">
+
+                    <a href="https://dill-khus-cafe.streamlit.app/" target="_blank" rel="noopener noreferrer"
+                        class="block w-full h-44 sm:h-52 overflow-hidden group">
+                        <!-- Added explicit width and height for CLS -->
+                        <img src="./assets/Project_Images/Cafe-Managment-System.webp"
+                            alt="Screenshot of a Cafe Management System interface"
+                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" width="448" height="208" loading="lazy" />
+                    </a>
+
+                    <div class="p-6">
+                        <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-2">
+                            Cafe Management System
+                        </h3>
+                        <p class="text-xs sm:text-sm text-gray-700 mb-4 project-description" id="project2-desc">
+                            A full-stack café management app with time-based menus, real-time order processing, and PDF bill generation. Includes discounts, tax calculation, and dual menu support.
+                        </p>
+                        <button class="text-emerald-700 text-xs sm:text-sm font-medium hover:underline show-more-btn"
+                            data-target="project2-desc">Show More</button>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div id="project3-box"
+                    class="w-full max-w-sm sm:w-[28rem] bg-white rounded-2xl overflow-hidden shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300 text-left scroll-animate" data-animation-delay="0.25s">
+
+                    <a href="https://bankingapp-ritesh456.streamlit.app/" target="_blank" rel="noopener noreferrer"
+                        class="block w-full h-44 sm:h-52 overflow-hidden group">
+                        <!-- Added explicit width and height for CLS -->
+                        <img src="./assets/Project_Images/Banking-Management-System.webp"
+                            alt="Screenshot of a GUI Banking Management System application"
+                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" width="448" height="208" loading="lazy" />
+                    </a>
+
+                    <div class="p-6">
+                        <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-2">
+                            Banking Management System
+                        </h3>
+                        <p class="text-xs sm:text-sm text-gray-700 mb-4 project-description" id="project3-desc">
+                            GUI-based banking app with Tkinter and SQL, featuring secure PIN login and operations like deposits, withdrawals, and balance checks — built with OOP principles.
+                        </p>
+                        <button class="text-emerald-700 text-xs sm:text-sm font-medium hover:underline show-more-btn"
+                            data-target="project3-desc">Show More</button>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -706,7 +819,8 @@
         </section>
 
         <!-- Load Lucide Icons -->
-        <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+        <!-- Added 'defer' attribute to speed up initial page load -->
+        <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
         <script>
             lucide.createIcons();
         </script>
@@ -714,50 +828,50 @@
         <!-- Contact Section -->
         <section id="section6"
             class="mt-24 md:mt-32 font-normal bg-gray-50 overflow-hidden px-4 sm:px-6 py-12 scroll-mt-24 scroll-animate" data-animation-delay="0s">
-            <h2 class="text-center text-xl sm:text-2xl md:text-3xl font-bold mb-8 text-gray-900 scroll-animate" data-animation-delay="0.05s"> <!-- Reduced font size -->
+            <h2 class="text-center text-xl sm:text-2xl md:text-3xl font-bold mb-8 text-gray-900 scroll-animate" data-animation-delay="0.05s">
                 Get In Touch
             </h2>
 
-            <div class="flex flex-col md:flex-row justify-between gap-8 max-w-[1000px] mx-auto py-8 px-4"> <!-- Reduced max-w, adjusted gap and padding -->
+            <div class="flex flex-col md:flex-row justify-between gap-8 max-w-[1000px] mx-auto py-8 px-4">
                 <!-- Left Side -->
                 <div class="flex-auto w-full md:flex-1 text-center md:text-left">
-                    <h3 class="text-lg sm:text-xl font-semibold mb-4 text-gray-900 scroll-animate" data-animation-delay="0.1s"> <!-- Reduced font size -->
+                    <h3 class="text-lg sm:text-xl font-semibold mb-4 text-gray-900 scroll-animate" data-animation-delay="0.1s">
                         Let's work together
                     </h3>
-                    <p class="text-sm leading-relaxed text-gray-700 scroll-animate" data-animation-delay="0.15s"> <!-- Reduced font size -->
+                    <p class="text-sm leading-relaxed text-gray-700 scroll-animate" data-animation-delay="0.15s">
                         I'm always interested in new opportunities and interesting
                         projects. Whether you have a question or just want to say hi, feel
                         free to reach out!
                     </p>
 
-                    <ul class="list-none p-0 flex flex-col items-center md:items-start mt-6"> <!-- Adjusted margin-top -->
-                        <li class="flex items-center text-gray-900 text-sm mb-4 leading-relaxed scroll-animate" data-animation-delay="0.2s"> <!-- Reduced font size, mb -->
+                    <ul class="list-none p-0 flex flex-col items-center md:items-start mt-6">
+                        <li class="flex items-center text-gray-900 text-sm mb-4 leading-relaxed scroll-animate" data-animation-delay="0.2s">
                             <span class="inline-block w-2 h-2 bg-emerald-700 rounded-full mr-2"></span>
                             brahmachariritesh508805@gmail.com
                         </li>
-                        <li class="flex items-center text-gray-900 text-sm mb-4 leading-relaxed scroll-animate" data-animation-delay="0.25s"> <!-- Reduced font size, mb -->
+                        <li class="flex items-center text-gray-900 text-sm mb-4 leading-relaxed scroll-animate" data-animation-delay="0.25s">
                             <span class="inline-block w-2 h-2 bg-emerald-700 rounded-full mr-2"></span>
                             +91 96923 82203
                         </li>
-                        <li class="flex items-center text-gray-900 text-sm mb-4 leading-relaxed scroll-animate" data-animation-delay="0.3s"> <!-- Reduced font size, mb -->
+                        <li class="flex items-center text-gray-900 text-sm mb-4 leading-relaxed scroll-animate" data-animation-delay="0.3s">
                             <span class="inline-block w-2 h-2 bg-emerald-700 rounded-full mr-2"></span>
                             Bhubaneswar, Odisha
                         </li>
                     </ul>
                 </div>
 
-                <!-- Right Side (Form) - UPDATED FOR FORMSPREE -->
+                <!-- Right Side (Form) -->
                 <form class="flex-auto w-full md:flex-1 flex flex-col gap-4"
                       action="https://formbold.com/s/3dkGb"
                       method="POST">
                     <input type="text" name="name" placeholder="Your Name" required
-                        class="p-2 border border-gray-300 rounded-md text-sm bg-white text-gray-900 placeholder-gray-500 scroll-animate" data-animation-delay="0.35s" /> <!-- Reduced padding, font size -->
+                        class="p-2 border border-gray-300 rounded-md text-sm bg-white text-gray-900 placeholder-gray-500 scroll-animate" data-animation-delay="0.35s" />
                     <input type="email" name="email" placeholder="Your Email" required
-                        class="p-2 border border-gray-300 rounded-md text-sm bg-white text-gray-900 placeholder-gray-500 scroll-animate" data-animation-delay="0.4s" /> <!-- Reduced padding, font size -->
+                        class="p-2 border border-gray-300 rounded-md text-sm bg-white text-gray-900 placeholder-gray-500 scroll-animate" data-animation-delay="0.4s" />
                     <textarea name="message" placeholder="Your Message" rows="4" required
-                        class="p-2 border border-gray-300 rounded-md text-sm bg-white text-gray-900 placeholder-gray-500 scroll-animate" data-animation-delay="0.45s"></textarea> <!-- Reduced padding, font size, rows -->
+                        class="p-2 border border-gray-300 rounded-md text-sm bg-white text-gray-900 placeholder-gray-500 scroll-animate" data-animation-delay="0.45s"></textarea>
                     <button type="submit"
-                        class="bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-md font-semibold transition duration-300 text-sm scroll-animate" data-animation-delay="0.5s"> <!-- Reduced padding, font size -->
+                        class="bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-md font-semibold transition duration-300 text-sm scroll-animate" data-animation-delay="0.5s">
                         Send Message
                     </button>
                 </form>
@@ -770,19 +884,19 @@
     <hr class="mt-16 mx-auto border-t border-gray-200 w-full max-w-[1200px] scroll-animate" data-animation-delay="0.05s" />
 
     <footer id="footer"
-        class="bg-gray-50 px-4 sm:px-8 pt-12 md:pt-16 pb-8 font-normal text-left scroll-mt-24 scroll-animate" data-animation-delay="0s"> <!-- Adjusted pt on md -->
+        class="bg-gray-50 px-4 sm:px-8 pt-12 md:pt-16 pb-8 font-normal text-left scroll-mt-24 scroll-animate" data-animation-delay="0s">
         <div
             class="footer-main flex flex-col md:flex-row flex-wrap justify-between gap-8 max-w-[1200px] mx-auto text-center sm:text-left">
 
             <!-- Section 1 -->
             <div class="footer-section flex-auto w-full md:flex-1 scroll-animate" data-animation-delay="0.1s">
-                <h3 class="text-base mb-3 text-emerald-700"> <!-- Reduced font size, mb -->
+                <h3 class="text-base mb-3 text-emerald-700">
                     Ritesh Brahmachari
                 </h3>
-                <p class="text-sm leading-[1.5] mb-1"> <!-- Reduced font size, mb -->
+                <p class="text-sm leading-[1.5] mb-1">
                     Full Stack Developer & UI/UX Designer
                 </p>
-                <p class="text-sm leading-[1.5] mb-1"> <!-- Reduced font size, mb -->
+                <p class="text-sm leading-[1.5] mb-1">
                     Nayapali, Bhubaneswar<br />Khordha, Odisha<br />INDIA
                 </p>
             </div>
@@ -790,71 +904,75 @@
             <!-- New Wrapper for Quick Links and Connect With Me - Always side-by-side -->
             <div class="flex flex-row flex-wrap justify-center sm:justify-start gap-8 w-full md:flex-1">
                 <!-- Section 2: Quick Links -->
-                <div class="footer-section flex-auto min-w-[100px] max-w-[200px]"> <!-- Added min/max width for better distribution -->
-                    <h4 class="font-semibold mb-3 text-gray-900 text-base">Quick Links</h4> <!-- Reduced font size, mb -->
-                    <div class="footer-links flex flex-col gap-1"> <!-- Changed to flex-col for vertical links, reduced gap -->
+                <div class="footer-section flex-auto min-w-[100px] max-w-[200px]">
+                    <h4 class="font-semibold mb-3 text-gray-900 text-base">Quick Links</h4>
+                    <div class="footer-links flex flex-col gap-1">
                         <ul class="list-none p-0">
                             <li class="mb-1">
                                 <a href="#"
-                                    class="text-sm text-gray-900 hover:text-emerald-700 transition-colors">Home</a> <!-- Reduced font size -->
+                                    class="text-sm text-gray-900 hover:text-emerald-700 transition-colors">Home</a>
                             </li>
                             <li class="mb-1">
                                 <a href="#section3"
-                                    class="text-sm text-gray-900 hover:text-emerald-700 transition-colors">Skills</a> <!-- Reduced font size -->
+                                    class="text-sm text-gray-900 hover:text-emerald-700 transition-colors">Skills</a>
                             </li>
                             <li class="mb-1">
                                 <a href="#section_projects"
-                                    class="text-sm text-gray-900 hover:text-emerald-700 transition-colors">Projects</a> <!-- Reduced font size -->
+                                    class="text-sm text-gray-900 hover:text-emerald-700 transition-colors">Projects</a>
                             </li>
                             <li class="mb-1">
                                 <a href="#section5"
-                                    class="text-sm text-gray-900 hover:text-emerald-700 transition-colors">Experience</a> <!-- Reduced font size -->
+                                    class="text-sm text-gray-900 hover:text-emerald-700 transition-colors">Experience</a>
                             </li>
                         </ul>
                         <ul class="list-none p-0">
                             <li class="mb-1">
                                 <a href="#section2"
-                                    class="text-sm text-gray-900 hover:text-emerald-700 transition-colors">About</a> <!-- Reduced font size -->
+                                    class="text-sm text-gray-900 hover:text-emerald-700 transition-colors">About</a>
                             </li>
                             <li class="mb-1">
                                 <a href="#section4"
-                                    class="text-sm text-gray-900 hover:text-emerald-700 transition-colors">Education</a> <!-- Reduced font size -->
+                                    class="text-sm text-gray-900 hover:text-emerald-700 transition-colors">Education</a>
                             </li>
                             <li class="mb-1">
                                 <a href="#section6"
-                                    class="text-sm text-gray-900 hover:text-emerald-700 transition-colors">Contact</a> <!-- Reduced font size -->
+                                    class="text-sm text-gray-900 hover:text-emerald-700 transition-colors">Contact</a>
                             </li>
                         </ul>
                     </div>
                 </div>
 
                 <!-- Section 3: Connect With Me -->
-                <div class="footer-section flex-auto min-w-[100px] max-w-[200px]"> <!-- Added min/max width -->
-                    <h4 class="font-semibold mb-3 text-gray-900 text-base">Connect With Me</h4> <!-- Reduced font size, mb -->
+                <div class="footer-section flex-auto min-w-[100px] max-w-[200px]">
+                    <h4 class="font-semibold mb-3 text-gray-900 text-base">Connect With Me</h4>
                     <ul class="list-none p-0">
                         <li class="mb-1">
                             <a href="https://github.com/Ritesh-456" target="_blank" rel="noopener noreferrer"
-                                class="text-sm text-gray-900 hover:text-emerald-700 transition-colors">GitHub</a> <!-- Reduced font size -->
-                            </li>
+                                class="text-sm text-gray-900 hover:text-emerald-700 transition-colors">GitHub</a>
+                        </li>
                         <li class="mb-1">
                             <a href="https://www.linkedin.com/in/ritesh-brahmachari-1b7b84278/" target="_blank"
                                 rel="noopener noreferrer"
-                                class="text-sm text-gray-900 hover:text-emerald-700 transition-colors">LinkedIn</a> <!-- Reduced font size -->
+                                class="text-sm text-gray-900 hover:text-emerald-700 transition-colors">LinkedIn</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <hr class="my-6 mx-auto border-t border-gray-200 max-w-[1200px]" /> <!-- Reduced my -->
+        <hr class="my-6 mx-auto border-t border-gray-200 max-w-[1200px]" />
 
-        <p class="text-center text-xs text-gray-600 mt-1 scroll-animate" data-animation-delay="0.25s"> <!-- Reduced font size, mt -->
+        <p class="text-center text-xs text-gray-600 mt-1 scroll-animate" data-animation-delay="0.25s">
             © 2025 <a href="https://github.com/Ritesh-456" target="_blank" rel="noopener noreferrer">Ritesh-456</a>. All
             rights reserved.
         </p>
     </footer>
 
+    <!-- Tailwind CSS CDN should be loaded as late as possible to avoid render blocking CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Your custom script should load after Tailwind CSS and Lucide Icons -->
     <script src="./Script.js"></script>
+
 </body>
 
 </html>
