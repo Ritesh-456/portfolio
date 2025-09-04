@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenu = document.getElementById('mobile-menu');
     const desktopNav = document.getElementById('desktop-nav');
     const mainHeader = document.getElementById('mainHeader');
-    const portfolioTitle = document.getElementById('portfolioTitle'); // Get reference to the new p tag
-    const navLinks = document.querySelectorAll('#desktop-nav ul li a'); // Target desktop nav links specifically
+    const portfolioTitle = document.getElementById('portfolioTitle');
+    const navLinks = document.querySelectorAll('#desktop-nav ul li a');
     const sections = document.querySelectorAll('main section[id], footer[id]');
     const projectCountDisplay = document.getElementById('project-count-display');
     const yearsExperienceDisplay = document.getElementById('years-experience-display');
@@ -46,17 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const headerHeight = mainHeader.offsetHeight;
         let currentActiveSectionId = '';
 
-        // Check if we are at the very top of the page, above the first section
-        // This is important for activating the 'Home' link correctly
-        if (window.scrollY < sections[0].offsetTop - headerHeight - 100) { // Added buffer
+        if (window.scrollY < sections[0].offsetTop - headerHeight - 100) {
             currentActiveSectionId = ''; // Represents the "Home" section
         } else {
             for (let i = sections.length - 1; i >= 0; i--) {
                 const section = sections[i];
-                // Ensure section has an ID to prevent errors
                 if (!section.id) continue;
 
-                const sectionTop = section.offsetTop - headerHeight - 100; // Adjusted for fixed header and buffer
+                const sectionTop = section.offsetTop - headerHeight - 100;
 
                 if (window.scrollY >= sectionTop) {
                     currentActiveSectionId = section.id;
@@ -67,39 +64,31 @@ document.addEventListener('DOMContentLoaded', () => {
         setActiveNavLink(currentActiveSectionId);
     };
 
-    // Function to handle header/nav styling on scroll (centering, padding, font size)
+    // Function to handle header/nav styling on scroll (centering, padding)
+    // Font sizes are now fixed in HTML for nav links and portfolio title
     const handleScrollNavStyling = () => {
         if (window.scrollY > 50) {
+            // Reintroduced: Centering nav links on scroll
             desktopNav.classList.remove('md:justify-end');
             desktopNav.classList.add('md:justify-center');
+
             // Shrink header padding on scroll
             mainHeader.classList.remove('py-3', 'sm:py-4');
             mainHeader.classList.add('py-2', 'sm:py-3');
 
-            // Shrink nav link font sizes on scroll
-            navLinks.forEach(link => {
-                link.classList.remove('text-base', 'sm:text-lg');
-                link.classList.add('text-sm', 'sm:text-base');
-            });
-            // Shrink portfolio title font size on scroll
-            portfolioTitle.classList.remove('text-base', 'sm:text-lg');
-            portfolioTitle.classList.add('text-sm', 'sm:text-base');
-
+            // Removed font size changes for navLinks and portfolioTitle
+            // They are now set directly in HTML to text-xs
         } else {
+            // Reintroduced: Right-aligning nav links when not scrolled
             desktopNav.classList.remove('md:justify-center');
             desktopNav.classList.add('md:justify-end');
+
             // Restore initial larger header padding
             mainHeader.classList.remove('py-2', 'sm:py-3');
             mainHeader.classList.add('py-3', 'sm:py-4');
 
-            // Restore initial larger nav link font sizes
-            navLinks.forEach(link => {
-                link.classList.remove('text-sm', 'sm:text-base');
-                link.classList.add('text-base', 'sm:text-lg');
-            });
-            // Restore initial larger portfolio title font size
-            portfolioTitle.classList.remove('text-sm', 'sm:text-base');
-            portfolioTitle.classList.add('text-base', 'sm:text-lg');
+            // Removed font size changes for navLinks and portfolioTitle
+            // They are now set directly in HTML to text-xs
         }
     };
 
@@ -170,29 +159,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-
     // --- Mobile Menu Toggle ---
     mobileMenuButton.addEventListener('click', () => {
-        const headerHeight = mainHeader.offsetHeight; // Get current header height
-        mobileMenu.style.top = `${headerHeight}px`; // Set mobile menu to start below the header
-        mobileMenu.style.height = `calc(100vh - ${headerHeight}px)`; // Adjust height to fill remaining viewport
+        const headerHeight = mainHeader.offsetHeight;
+        mobileMenu.style.top = `${headerHeight}px`;
+        mobileMenu.style.height = `calc(100vh - ${headerHeight}px)`;
 
         mobileMenu.classList.remove('translate-x-full');
         mobileMenu.classList.add('translate-x-0');
         document.body.style.overflow = 'hidden';
-        mobileMenuButton.classList.add('hidden'); // Hide the hamburger button
+        mobileMenuButton.classList.add('hidden');
     });
 
     closeMobileMenuButton.addEventListener('click', () => {
         mobileMenu.classList.remove('translate-x-0');
         mobileMenu.classList.add('translate-x-full');
         document.body.style.overflow = '';
-        mobileMenuButton.classList.remove('hidden'); // Show the hamburger button
-        // Optional: Reset top and height after the menu slides out to clean up styles.
+        mobileMenuButton.classList.remove('hidden');
         setTimeout(() => {
             mobileMenu.style.top = ''; 
             mobileMenu.style.height = '';
-        }, 300); 
+        }, 300);
     });
 
     // Close mobile menu and update active link when a navigation link is clicked
@@ -201,8 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
             mobileMenu.classList.remove('translate-x-0');
             mobileMenu.classList.add('translate-x-full');
             document.body.style.overflow = '';
-            mobileMenuButton.classList.remove('hidden'); // Show the hamburger button
-            // Optional: Reset top and height after the menu slides out.
+            mobileMenuButton.classList.remove('hidden');
             setTimeout(() => {
                 mobileMenu.style.top = ''; 
                 mobileMenu.style.height = '';
@@ -229,7 +215,6 @@ document.addEventListener('DOMContentLoaded', () => {
             descriptionElement.classList.remove('expanded');
             button.textContent = 'Show More';
         }
-        // Recalculate active nav link after content change
         setTimeout(updateActiveLinkOnScroll, 300);
     };
 
@@ -246,27 +231,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const animatedElements = document.querySelectorAll('.scroll-animate');
 
     const observerOptions = {
-        root: null, // viewport
+        root: null,
         rootMargin: '0px',
-        threshold: 0.1 // 10% of the element must be visible
+        threshold: 0.1
     };
 
     const observerCallback = (entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Apply data-animation-delay if present
                 const delay = entry.target.dataset.animationDelay;
                 if (delay) {
                     entry.target.style.transitionDelay = delay;
                 }
                 entry.target.classList.add('is-visible');
-                // We keep observing so that elements can animate in again if they scroll out and back in
-                // If you want it to animate only once, uncomment: observer.unobserve(entry.target);
             } else {
-                // Optional: reset animation state when element scrolls out of view
-                // This makes the animation replay if the user scrolls it back into view
                 entry.target.classList.remove('is-visible');
-                entry.target.style.transitionDelay = ''; // Clear delay
+                entry.target.style.transitionDelay = '';
             }
         });
     };
@@ -274,13 +254,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
     animatedElements.forEach(element => {
-        // Clear any previous transitionDelay for elements that might be re-observed or for initial state
-        element.style.transitionDelay = ''; 
+        element.style.transitionDelay = '';
         observer.observe(element);
     });
 
     // Initial calls on load
-    handleScrollNavStyling(); // Call initially to set correct state
+    handleScrollNavStyling();
     updateActiveLinkOnScroll();
     updateProjectCount();
     updateAllExperienceDurationsAndSummaries();

@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio</title>
+    <title>Ritesh Brahmachari | Full Stack Developer & UI/UX Designer Portfolio</title>
+    <meta name="description" content="Ritesh Brahmachari's official portfolio showcasing expertise in Full Stack Development and UI/UX Design. Explore projects in Flask, Django, React.js, Python, and data analysis.">
+    <meta name="keywords" content="Ritesh Brahmachari, Full Stack Developer, UI/UX Designer, Python, Flask, Django, React.js, Web Development, Portfolio, Data Analysis, SQL, AWS, Frontend, Backend, Machine Learning">
     <!-- Add your Tailwind CSS CDN or build output link here -->
     <!-- For demonstration, assume Tailwind is properly configured -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -20,28 +22,21 @@
             font-family: "Poppins", sans-serif;
         }
 
-        /* All styling is now directly applied with Tailwind classes. */
-
-        /* Custom styles for project description show/hide smooth transition */
         .project-description {
             max-height: 4.5rem;
-            /* Approximately 3 lines of text with default leading-normal (1.5 * 1.5rem = 2.25rem line-height, 3 lines = 4.5rem) */
             overflow: hidden;
             transition: max-height 0.3s ease-in-out;
-            /* Smooth transition for max-height */
         }
 
         .project-description.expanded {
             max-height: 500px;
-            /* A large enough value to show all content without explicitly calculating scrollHeight */
         }
 
        /* --- Scroll Animation Styles --- */
         .scroll-animate {
             opacity: 0;
-            transform: translateY(40px); /* Slightly more distance for fluid motion */
-            transition: opacity 0.7s ease-out, transform 0.7s ease-out; /* Keep current faster effect */
-            /* transition-delay will be set by JS */
+            transform: translateY(40px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
         }
 
         .scroll-animate.is-visible {
@@ -52,7 +47,7 @@
         /* --- Desktop Nav Link Entrance Animation --- */
         #desktop-nav .nav-item {
             opacity: 0;
-            transform: translateX(25px); /* a bit more offset */
+            transform: translateX(25px); 
             transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
         }
 
@@ -70,19 +65,44 @@
         #mainHeader.is-visible #desktop-nav .nav-item:nth-child(6) { transition-delay: 0.6s; }
         #mainHeader.is-visible #desktop-nav .nav-item:nth-child(7) { transition-delay: 0.7s; }
         /* --- End Desktop Nav Link Entrance Animation --- */
+
+        /* Custom styles to force hamburger/desktop nav visibility at 900px */
+        /* These media queries will override Tailwind's 'lg' breakpoint at 900px */
+
+        /* Styles for screen widths 900px and below */
+        @media (max-width: 900px) {
+            .custom-desktop-nav {
+                display: none !important; /* Hide desktop nav */
+            }
+            .custom-mobile-toggle-wrapper {
+                display: flex !important; /* Show hamburger button */
+            }
+            /* The mobile menu overlay itself already has lg:hidden, allowing it to function below 1024px */
+        }
+
+        /* Styles for screen widths strictly above 900px */
+        @media (min-width: 901px) {
+            .custom-desktop-nav {
+                display: flex !important; /* Show desktop nav */
+            }
+            .custom-mobile-toggle-wrapper {
+                display: none !important; /* Hide hamburger button */
+            }
+        }
     </style>
 </head>
 
 <body class="overflow-x-hidden bg-white text-gray-900 break-words">
     <header id="mainHeader"
         class="fixed top-0 left-0 w-full z-[990] px-4 py-3 sm:py-4 flex items-center bg-gray-50 shadow-md transition-all duration-300 scroll-animate">
+        <!-- Portfolio title now fixed to text-xs directly in HTML -->
         <p id="portfolioTitle" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });"
-            class="text-emerald-700 font-semibold text-base sm:text-lg flex-shrink-0 cursor-pointer transition-all duration-300">
+            class="text-emerald-700 font-semibold text-xs flex-shrink-0 cursor-pointer transition-all duration-300">
             Portfolio
         </p>
 
         <!-- Mobile Menu Button (Hamburger Icon) -->
-        <div class="md:hidden flex items-center ml-auto">
+        <div class="lg:hidden flex items-center ml-auto custom-mobile-toggle-wrapper">
             <button id="mobile-menu-button" class="text-gray-900 focus:outline-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
@@ -93,43 +113,51 @@
         </div>
 
         <!-- Desktop Navigation -->
+        <!-- desktopNav starts right-aligned by default, then JavaScript centers it on scroll -->
         <nav id="desktop-nav"
-            class="hidden md:flex md:flex-grow md:justify-end items-center space-x-4 lg:space-x-8 transition-all duration-300 ml-auto">
+            class="hidden lg:flex lg:flex-grow md:justify-end items-center space-x-4 lg:space-x-8 transition-all duration-300 ml-auto custom-desktop-nav">
             <ul class="flex space-x-2 sm:space-x-4">
                 <li class="nav-item">
+                    <!-- Nav links now fixed to text-xs directly in HTML -->
                     <a href="#"
-                        class="inline-block px-1 py-1 text-base sm:text-lg font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Home</a>
+                        class="inline-block px-1 py-1 text-xs font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Home</a>
                 </li>
                 <li class="nav-item">
+                    <!-- Nav links now fixed to text-xs directly in HTML -->
                     <a href="#section2"
-                        class="inline-block px-1 py-1 text-base sm:text-lg font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">About</a>
+                        class="inline-block px-1 py-1 text-xs font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">About</a>
                 </li>
                 <li class="nav-item">
+                    <!-- Nav links now fixed to text-xs directly in HTML -->
                     <a href="#section3"
-                        class="inline-block px-1 py-1 text-base sm:text-lg font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Skills</a>
+                        class="inline-block px-1 py-1 text-xs font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Skills</a>
                 </li>
                 <li class="nav-item">
+                    <!-- Nav links now fixed to text-xs directly in HTML -->
                     <a href="#section_projects"
-                        class="inline-block px-1 py-1 text-base sm:text-lg font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Projects</a>
+                        class="inline-block px-1 py-1 text-xs font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Projects</a>
                 </li>
                 <li class="nav-item">
+                    <!-- Nav links now fixed to text-xs directly in HTML -->
                     <a href="#section4"
-                        class="inline-block px-1 py-1 text-base sm:text-lg font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Education</a>
+                        class="inline-block px-1 py-1 text-xs font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Education</a>
                 </li>
                 <li class="nav-item">
+                    <!-- Nav links now fixed to text-xs directly in HTML -->
                     <a href="#section5"
-                        class="inline-block px-1 py-1 text-base sm:text-lg font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Experience</a>
+                        class="inline-block px-1 py-1 text-xs font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Experience</a>
                 </li>
                 <li class="nav-item">
+                    <!-- Nav links now fixed to text-xs directly in HTML -->
                     <a href="#section6"
-                        class="inline-block px-1 py-1 text-base sm:text-lg font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Contact</a>
+                        class="inline-block px-1 py-1 text-xs font-semibold text-gray-900 hover:text-emerald-700 transition-transform duration-300 hover:scale-105">Contact</a>
                 </li>
             </ul>
         </nav>
 
         <!-- Mobile Menu Overlay (hidden by default, toggled by JS) -->
         <div id="mobile-menu"
-            class="md:hidden fixed left-0 w-full bg-white z-[1000] flex flex-col items-center justify-center space-y-6 transform translate-x-full transition-transform duration-300 ease-in-out">
+            class="lg:hidden fixed left-0 w-full bg-white z-[1000] flex flex-col items-center justify-center space-y-6 transform translate-x-full transition-transform duration-300 ease-in-out">
             <button id="close-mobile-menu" class="absolute top-4 right-4 text-gray-900 focus:outline-none">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
@@ -166,15 +194,16 @@
 
             <!-- Left Text Section -->
             <div class="flex-none md:flex-1 w-full md:mt-0 flex-grow">
-                <!-- Fix for overlapping name -->
+                
                 <div class="text-emerald-700 text-2xl sm:text-3xl md:text-4xl lg:text-[4rem] font-semibold mb-4 scroll-animate" data-animation-delay="0.05s">
                     <span class="block leading-none">Hello, I'm Ritesh</span>
                     <span class="block leading-none mt-1 sm:mt-2 md:mt-3 lg:mt-4">Brahmachari</span>
                 </div>
-                <div class="text-sm sm:text-base md:text-lg font-medium my-2 scroll-animate" data-animation-delay="0.1s">
+                <!-- Reduced text size for these paragraphs in the hero section -->
+                <div class="text-xs sm:text-sm font-medium my-2 scroll-animate" data-animation-delay="0.1s">
                     Full Stack Developer & UI/UX Designer passionate about
                 </div>
-                <div class="text-sm sm:text-base md:text-lg font-medium my-2 scroll-animate" data-animation-delay="0.15s">
+                <div class="text-xs sm:text-sm font-medium my-2 scroll-animate" data-animation-delay="0.15s">
                     creating beautiful, functional web experiences that make a
                     difference.
                 </div>
@@ -200,7 +229,7 @@
                         srcset="./assets/hero_section_image/programmer.webp 300w, ./assets/hero_section_image/programmer.webp 450w, ./assets/hero_section_image/programmer.webp 600w"
                         sizes="(max-width: 640px) 224px, (max-width: 768px) 288px, (max-width: 1024px) 320px, 450px"
                         type="image/webp">
-                    <img src="./assets/hero_section_image/programmer.webp" alt="Coding illustration"
+                    <img src="./assets/hero_section_image/programmer.webp" alt="Ritesh Brahmachari working as a full stack developer at a computer"
                         class="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-[450px] lg:h-[450px] object-cover rounded-full shadow-lg transition-transform duration-300 hover:scale-105" />
                 </picture>
             </div>
@@ -257,7 +286,7 @@
                         <source
                             srcset="./assets/Profile_image/pic.webp 250w, ./assets/Profile_image/pic.webp 400w, ./assets/Profile_image/pic.webp 550w"
                             sizes="(max-width: 640px) 200px, (max-width: 768px) 250px, 448px" type="image/webp">
-                        <img src="./assets/Profile_image/pic.webp" alt="Profile"
+                        <img src="./assets/Profile_image/pic.webp" alt="Ritesh Brahmachari professional headshot"
                             class="absolute top-4 left-4 h-[calc(100%-2rem)] w-[calc(100%-2rem)] object-cover rounded-[20px]" />
                     </picture>
                 </div>
@@ -281,7 +310,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Frontend/html.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Frontend/html.webp" alt="HTML"
+                                <img src="./assets/icon/Frontend/html.webp" alt="HTML logo"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">HTML</p>
@@ -290,7 +319,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Frontend/css.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Frontend/css.webp" alt="CSS"
+                                <img src="./assets/icon/Frontend/css.webp" alt="CSS logo"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">CSS</p>
@@ -299,7 +328,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Frontend/sass.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Frontend/sass.webp" alt="SCSS"
+                                <img src="./assets/icon/Frontend/sass.webp" alt="SCSS logo"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">SCSS</p>
@@ -308,7 +337,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Frontend/tailwind_css.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Frontend/tailwind_css.webp" alt="Tailwind CSS"
+                                <img src="./assets/icon/Frontend/tailwind_css.webp" alt="Tailwind CSS logo"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">
@@ -319,7 +348,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Frontend/Javascript.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Frontend/Javascript.webp" alt="JavaScript"
+                                <img src="./assets/icon/Frontend/Javascript.webp" alt="JavaScript logo"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">JavaScript</p>
@@ -336,7 +365,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Framework/reactjs.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Framework/reactjs.webp" alt="React JS"
+                                <img src="./assets/icon/Framework/reactjs.webp" alt="React JS logo"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">Reactjs</p>
@@ -345,7 +374,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Framework/django.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Framework/django.webp" alt="Django"
+                                <img src="./assets/icon/Framework/django.webp" alt="Django framework logo"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">Django</p>
@@ -354,7 +383,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Framework/flask.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Framework/flask.webp" alt="Flask"
+                                <img src="./assets/icon/Framework/flask.webp" alt="Flask framework logo"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">Flask</p>
@@ -373,7 +402,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Backend_and_Database/python.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Backend_and_Database/python.webp" alt="Python"
+                                <img src="./assets/icon/Backend_and_Database/python.webp" alt="Python logo"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">Python</p>
@@ -382,7 +411,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Backend_and_Database/sql.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Backend_and_Database/sql.webp" alt="SQL"
+                                <img src="./assets/icon/Backend_and_Database/sql.webp" alt="SQL database logo"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">SQL</p>
@@ -399,7 +428,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 text-gray-900 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Libraries/numpy.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Libraries/numpy.webp" alt="Numpy"
+                                <img src="./assets/icon/Libraries/numpy.webp" alt="Numpy library logo"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
                             <p class="text-xs sm:text-sm mt-2">Numpy</p>
@@ -408,7 +437,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 text-gray-900 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Libraries/pandas.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Libraries/pandas.webp" alt="Pandas"
+                                <img src="./assets/icon/Libraries/pandas.webp" alt="Pandas library logo"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
                             <p class="text-xs sm:text-sm mt-2">Pandas</p>
@@ -417,7 +446,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 text-gray-900 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Libraries/matplotlib.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Libraries/matplotlib.webp" alt="Matplotlib"
+                                <img src="./assets/icon/Libraries/matplotlib.webp" alt="Matplotlib library logo"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
                             <p class="text-xs sm:text-sm mt-2">Matplotlib</p>
@@ -426,7 +455,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 text-gray-900 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Libraries/seaborn.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Libraries/seaborn.webp" alt="Seaborn"
+                                <img src="./assets/icon/Libraries/seaborn.webp" alt="Seaborn library logo"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
                             <p class="text-xs sm:text-sm mt-2">Seaborn</p>
@@ -445,7 +474,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Data_Analysis_Tools/excel.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Data_Analysis_Tools/excel.webp" alt="Excel"
+                                <img src="./assets/icon/Data_Analysis_Tools/excel.webp" alt="Microsoft Excel logo"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
                             <p class="text-xs sm:text-sm mt-2">Excel</p>
@@ -454,7 +483,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Data_Analysis_Tools/power-bi.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Data_Analysis_Tools/power-bi.webp" alt="PowerBI"
+                                <img src="./assets/icon/Data_Analysis_Tools/power-bi.webp" alt="Power BI logo"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
                             <p class="text-xs sm:text-sm mt-2">PowerBI</p>
@@ -463,7 +492,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Data_Analysis_Tools/tableau.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Data_Analysis_Tools/tableau.webp" alt="Tableau"
+                                <img src="./assets/icon/Data_Analysis_Tools/tableau.webp" alt="Tableau logo"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
                             <p class="text-xs sm:text-sm mt-2">Tableau</p>
@@ -480,7 +509,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Tools/github.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Tools/github.webp" alt="GitHub"
+                                <img src="./assets/icon/Tools/github.webp" alt="GitHub logo"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">GitHub</p>
@@ -489,7 +518,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Tools/git.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Tools/git.webp" alt="Git"
+                                <img src="./assets/icon/Tools/git.webp" alt="Git version control logo"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">Git</p>
@@ -498,7 +527,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 text-gray-900 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Tools/aws.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Tools/aws.webp" alt="AWS"
+                                <img src="./assets/icon/Tools/aws.webp" alt="AWS cloud services logo"
                                     onerror="this.onerror=null;this.src='./assets/icon/Tools/aws.png';"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
@@ -508,7 +537,7 @@
                             class="flex flex-col items-center w-16 sm:w-20 text-gray-900 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Tools/postgresql.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Tools/postgresql.webp" alt="PostgreSQL"
+                                <img src="./assets/icon/Tools/postgresql.webp" alt="PostgreSQL database logo"
                                     onerror="this.onerror=null;this.src='./assets/icon/Tools/postgresql.png';"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
@@ -518,104 +547,13 @@
                             class="flex flex-col items-center w-16 sm:w-20 text-gray-900 transition-transform duration-300 hover:-translate-y-1">
                             <picture>
                                 <source srcset="./assets/icon/Tools/mysql.webp 80w" type="image/webp">
-                                <img src="./assets/icon/Tools/mysql.webp" alt="MySQL"
+                                <img src="./assets/icon/Tools/mysql.webp" alt="MySQL database logo"
                                     class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] object-contain" />
                             </picture>
                             <p class="text-xs sm:text-sm text-gray-900 mt-2">MySQL</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-
-       <!-- New Projects Section -->
-        <section id="section_projects"
-            class="mt-24 md:mt-32 px-4 sm:px-8 py-12 bg-gray-50 scroll-mt-24 scroll-animate" data-animation-delay="0s">
-
-            <!-- Section Title -->
-            <div class="text-center mb-12">
-                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 scroll-animate" data-animation-delay="0.05s">
-                    My Projects
-                </h2>
-                <p class="mt-3 text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto scroll-animate" data-animation-delay="0.1s">
-                    A showcase of my practical projects built with modern technologies
-                </p>
-            </div>
-
-            <!-- Project Cards Wrapper -->
-            <div class="flex justify-center flex-wrap gap-8">
-
-                <!-- Project Card 1 -->
-                <div id="project1-box"
-                    class="w-full max-w-sm sm:w-[28rem] bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 text-left scroll-animate" data-animation-delay="0.15s">
-
-                    <a href="https://fraud-detection-system-rf.streamlit.app/" target="_blank" rel="noopener noreferrer"
-                        class="block w-full h-44 sm:h-52 overflow-hidden group">
-                        <img src="./assets/Project_Images/Fraud-Detection-System.webp"
-                            alt="Fraud Detection System Screenshot"
-                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
-                    </a>
-
-                    <div class="p-6">
-                        <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-2">
-                            Fraud Detection System
-                        </h3>
-                        <p class="text-xs sm:text-sm text-gray-700 mb-4 project-description" id="project1-desc">
-                            Developed a self-learning ML system using the Random Forest Algorithm to detect fraudulent URLs
-                            and QR codes, with applications in secure online payments. Built with Flask, MySQL, and Streamlit dashboard.
-                        </p>
-                        <button class="text-emerald-700 text-xs sm:text-sm font-medium hover:underline show-more-btn"
-                            data-target="project1-desc">Show More</button>
-                    </div>
-                </div>
-
-                <!-- Project 2 -->
-                <div id="project2-box"
-                    class="w-full max-w-sm sm:w-[28rem] bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 text-left scroll-animate" data-animation-delay="0.2s">
-
-                    <a href="https://dill-khus-cafe.streamlit.app/" target="_blank" rel="noopener noreferrer"
-                        class="block w-full h-44 sm:h-52 overflow-hidden group">
-                        <img src="./assets/Project_Images/Cafe-Managment-System.webp"
-                            alt="Cafe Management System Screenshot"
-                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
-                    </a>
-
-                    <div class="p-6">
-                        <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-2">
-                            Cafe Management System
-                        </h3>
-                        <p class="text-xs sm:text-sm text-gray-700 mb-4 project-description" id="project2-desc">
-                            A full-stack café management app with time-based menus, real-time order processing, and PDF bill generation. Includes discounts, tax calculation, and dual menu support.
-                        </p>
-                        <button class="text-emerald-700 text-xs sm:text-sm font-medium hover:underline show-more-btn"
-                            data-target="project2-desc">Show More</button>
-                    </div>
-                </div>
-
-                <!-- Project 3 -->
-                <div id="project3-box"
-                    class="w-full max-w-sm sm:w-[28rem] bg-white rounded-2xl overflow-hidden shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300 text-left scroll-animate" data-animation-delay="0.25s">
-
-                    <a href="https://bankingapp-ritesh456.streamlit.app/" target="_blank" rel="noopener noreferrer"
-                        class="block w-full h-44 sm:h-52 overflow-hidden group">
-                        <img src="./assets/Project_Images/Banking-Management-System.webp"
-                            alt="Banking Management System Screenshot"
-                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
-                    </a>
-
-                    <div class="p-6">
-                        <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-2">
-                            Banking Management System
-                        </h3>
-                        <p class="text-xs sm:text-sm text-gray-700 mb-4 project-description" id="project3-desc">
-                            GUI-based banking app with Tkinter and SQL, featuring secure PIN login and operations like deposits, withdrawals, and balance checks — built with OOP principles.
-                        </p>
-                        <button class="text-emerald-700 text-xs sm:text-sm font-medium hover:underline show-more-btn"
-                            data-target="project3-desc">Show More</button>
-                    </div>
-                </div>
-
             </div>
         </section>
 
@@ -628,7 +566,6 @@
                 Education
             </p>
 
-            <!-- Education Entries -->
             <div
                 class="w-full max-w-[70rem] mx-auto mt-8 md:mt-12 p-6 sm:p-8 text-left rounded-2xl text-gray-900 shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300 bg-white scroll-animate" data-animation-delay="0.1s">
                 <div class="flex flex-col sm:flex-row sm:justify-between mb-3 text-center sm:text-left">
@@ -724,7 +661,6 @@
                 Experience
             </p>
 
-            <!-- Experience Entry -->
             <div
                 class="w-full max-w-[70rem] mx-auto my-8 md:my-12 p-6 sm:p-8 text-left bg-white rounded-2xl shadow-md hover:-translate-y-1 hover:shadow-xl transition duration-300 scroll-animate" data-animation-delay="0.1s">
 
@@ -812,7 +748,7 @@
 
                 <!-- Right Side (Form) - UPDATED FOR FORMSPREE -->
                 <form class="flex-auto w-full md:flex-1 flex flex-col gap-4"
-                      action="https://formspree.io/f/xkgvbvpv"
+                      action="https://formbold.com/s/3dkGb"
                       method="POST">
                     <input type="text" name="name" placeholder="Your Name" required
                         class="p-2 border border-gray-300 rounded-md text-sm bg-white text-gray-900 placeholder-gray-500 scroll-animate" data-animation-delay="0.35s" /> <!-- Reduced padding, font size -->
@@ -899,7 +835,7 @@
                         <li class="mb-1">
                             <a href="https://github.com/Ritesh-456" target="_blank" rel="noopener noreferrer"
                                 class="text-sm text-gray-900 hover:text-emerald-700 transition-colors">GitHub</a> <!-- Reduced font size -->
-                        </li>
+                            </li>
                         <li class="mb-1">
                             <a href="https://www.linkedin.com/in/ritesh-brahmachari-1b7b84278/" target="_blank"
                                 rel="noopener noreferrer"
