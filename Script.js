@@ -18,6 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.querySelector('#section6 form');
     const contactSubmitButton = document.getElementById('contact-submit-button');
 
+    // NEW: Get references to the form input fields
+    const contactNameInput = contactForm.querySelector('input[name="name"]');
+    const contactEmailInput = contactForm.querySelector('input[name="email"]');
+    const contactMessageTextarea = contactForm.querySelector('textarea[name="message"]');
+
+
     // Debounce function
     function debounce(func, delay) {
         let timeout;
@@ -265,23 +271,27 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(element);
     });
 
-    // --- NEW: Download Resume on Contact Form Submit ---
+    // --- NEW: Download Resume on Contact Form Submit & Clear Form ---
     if (contactSubmitButton && contactForm) {
         contactSubmitButton.addEventListener('click', (event) => {
             // Check if the browser's native form validation passes
-            // This ensures fields are filled before trying to download
             if (contactForm.checkValidity()) {
-                const resumeUrl = './assets/Ritesh_Brahmachari_Resume.pdf'; 
+                const resumeUrl = './assets/Ritesh_Brahmachari_Resume.pdf'; // <<< ADJUST THIS PATH TO YOUR RESUME PDF
                 const a = document.createElement('a');
                 a.href = resumeUrl;
-                a.download = 'Ritesh_Brahmachari_Resume.pdf';
-                document.body.appendChild(a); 
-                a.click(); 
-                document.body.removeChild(a); 
+                a.download = 'Ritesh_Brahmachari_Resume.pdf'; // <<< THIS IS THE FILENAME FOR THE DOWNLOADED FILE
+                document.body.appendChild(a); // Append to body to make it programmatically clickable
+                a.click(); // Programmatically click the link to trigger download
+                document.body.removeChild(a); // Clean up the temporary link
+
+                // Clear form fields after successful submission and download trigger
+                if (contactNameInput) contactNameInput.value = '';
+                if (contactEmailInput) contactEmailInput.value = '';
+                if (contactMessageTextarea) contactMessageTextarea.value = '';
             }
             // The form will still submit to Formbold due to its 'action' attribute.
             // If Formbold has its own server-side validation, it will handle that.
-            // This script only triggers the download if client-side validation passes.
+            // This script only triggers the download and clears the form if client-side validation passes.
         });
     }
 
