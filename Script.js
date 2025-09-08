@@ -1,4 +1,7 @@
+// --- START OF FILE Script.js ---
+
 document.addEventListener('DOMContentLoaded', () => {
+    // ... existing variable declarations ...
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const closeMobileMenuButton = document.getElementById('close-mobile-menu');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -10,6 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const projectCountDisplay = document.getElementById('project-count-display');
     const yearsExperienceDisplay = document.getElementById('years-experience-display');
     const experienceDurationElements = document.querySelectorAll('.experience-duration-display');
+
+    // NEW: Get references to the contact form and submit button
+    const contactForm = document.querySelector('#section6 form');
+    const contactSubmitButton = document.getElementById('contact-submit-button');
 
     // Debounce function
     function debounce(func, delay) {
@@ -258,6 +265,27 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(element);
     });
 
+    // --- NEW: Download Resume on Contact Form Submit ---
+    if (contactSubmitButton && contactForm) {
+        contactSubmitButton.addEventListener('click', (event) => {
+            // Check if the browser's native form validation passes
+            // This ensures fields are filled before trying to download
+            if (contactForm.checkValidity()) {
+                const resumeUrl = './assets/Ritesh_Brahmachari_Resume.pdf'; 
+                const a = document.createElement('a');
+                a.href = resumeUrl;
+                a.download = 'Ritesh_Brahmachari_Resume.pdf';
+                document.body.appendChild(a); 
+                a.click(); 
+                document.body.removeChild(a); 
+            }
+            // The form will still submit to Formbold due to its 'action' attribute.
+            // If Formbold has its own server-side validation, it will handle that.
+            // This script only triggers the download if client-side validation passes.
+        });
+    }
+
+
     // Initial calls on load
     handleScrollNavStyling();
     updateActiveLinkOnScroll();
@@ -273,3 +301,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update experience duration once every 24 hours (daily check)
     setInterval(updateAllExperienceDurationsAndSummaries, 1000 * 60 * 60 * 24);
 });
+// --- END OF FILE Script.js ---
