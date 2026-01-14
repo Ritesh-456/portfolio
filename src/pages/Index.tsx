@@ -304,9 +304,9 @@ const Index = () => {
             <div className="opacity-0 animate-scale-in" style={{ animationDelay: '100ms', animationFillMode: 'forwards' }}>
               <div className="neu-card p-3 rounded-full overflow-hidden">
                 <div className="w-48 h-48 md:w-64 md:h-64 rounded-full neu-card-inset flex items-center justify-center overflow-hidden">
-                  <img 
-                    src={profilePic} 
-                    alt="Ritesh Brahmachari" 
+                  <img
+                    src={profilePic}
+                    alt="Ritesh Brahmachari"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -349,12 +349,12 @@ const Index = () => {
                   label="GitHub"
                 />
                 <SocialLink
-                  href="https://linkedin.com/in/ritesh-brahmachari"
+                  href="https://www.linkedin.com/in/ritesh-brahmachari-1b7b84278/"
                   icon={<Linkedin className="w-5 h-5" />}
                   label="LinkedIn"
                 />
                 <SocialLink
-                  href="mailto:ritesh@example.com"
+                  href="mailto:brahmachariritesh508805@gmail.com"
                   icon={<Mail className="w-5 h-5" />}
                   label="Email"
                 />
@@ -364,7 +364,7 @@ const Index = () => {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-0 right-0 flex justify-center z-30 pointer-events-none">
+        <div className="absolute bottom-4 left-0 right-0 flex justify-center z-30 pointer-events-none">
           <a href="#skills" className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors animate-bounce pointer-events-auto">
             <span className="text-sm font-medium">Scroll Down</span>
             <svg
@@ -648,7 +648,7 @@ const Index = () => {
               label="GitHub"
             />
             <SocialLink
-              href="https://linkedin.com/in/ritesh-brahmachari"
+              href="https://www.linkedin.com/in/ritesh-brahmachari-1b7b84278/"
               icon={<Linkedin className="w-4 h-4" />}
               label="LinkedIn"
             />
