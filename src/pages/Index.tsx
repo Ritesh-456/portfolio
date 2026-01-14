@@ -298,7 +298,7 @@ const Index = () => {
 
       {/* Hero Section */}
       <section id="about" className="min-h-screen flex items-center justify-center relative px-6 py-20">
-        <div className="max-w-6xl mx-auto w-full pb-12 md:pb-0">
+        <div className="max-w-6xl mx-auto w-full pb-28 md:pb-0">
           <div className="flex flex-col lg:flex-row items-center gap-12 justify-center">
             {/* Profile Image */}
             <div className="opacity-0 animate-scale-in" style={{ animationDelay: '100ms', animationFillMode: 'forwards' }}>
@@ -330,12 +330,12 @@ const Index = () => {
               </p>
 
               {/* CTA Buttons */}
-              <div className="flex flex-wrap gap-4 justify-center lg:justify-start opacity-0 animate-fade-in-up" style={{ animationDelay: '600ms', animationFillMode: 'forwards' }}>
-                <NeumorphicButton variant="primary" href="#projects">
+              <div className="flex gap-3 sm:gap-4 justify-center lg:justify-start opacity-0 animate-fade-in-up" style={{ animationDelay: '600ms', animationFillMode: 'forwards' }}>
+                <NeumorphicButton variant="primary" href="#projects" className="flex-1 sm:flex-none">
                   <Briefcase className="w-5 h-5" />
                   View Projects
                 </NeumorphicButton>
-                <NeumorphicButton variant="secondary" href="#contact">
+                <NeumorphicButton variant="secondary" href="#contact" className="flex-1 sm:flex-none">
                   <Mail className="w-5 h-5" />
                   Contact Me
                 </NeumorphicButton>
@@ -364,7 +364,7 @@ const Index = () => {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-2 left-0 right-0 flex justify-center z-30 pointer-events-none">
+        <div className="absolute bottom-1 left-0 right-0 flex justify-center z-30 pointer-events-none">
           <a href="#skills" className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors animate-bounce pointer-events-auto">
             <span className="text-sm font-medium">Scroll Down</span>
             <svg
