@@ -9,6 +9,11 @@ import TimelineCard from "@/components/TimelineCard";
 import CertificateCard from "@/components/CertificateCard";
 import MobileNav from "@/components/MobileNav";
 import CustomCursor from "@/components/CustomCursor";
+import StartupSound from "@/components/StartupSound";
+import ProjectCard from "@/components/ProjectCard";
+import TypingEffect from "@/components/TypingEffect";
+import ibmCert from "../../assets/certificate_images/IBM_Data_Analyst_8T765S6252YO.webp";
+import msCert from "../../assets/certificate_images/Microsoft_Power_BI_Data Analyst_TI046W0BOP59.webp";
 import { useScrollHeader } from "@/hooks/useScrollHeader";
 import {
   Code2,
@@ -30,6 +35,7 @@ import { useToast } from "@/components/ui/use-toast";
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [startTyping, setStartTyping] = useState(false);
   const isHeaderVisible = useScrollHeader();
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
   const formRef = useRef<HTMLFormElement>(null);
@@ -72,6 +78,10 @@ const Index = () => {
         console.log("Form submission successful");
         setFormStatus('success');
         form.reset(); // Reset form fields
+
+        // Play submission sound
+        const audio = new Audio("/sounds/send-message-button-click-sound.mp3");
+        audio.play().catch(e => console.warn("Audio play failed", e));
 
         toast({
           title: "Message Sent!",
@@ -133,94 +143,79 @@ const Index = () => {
 
   const experience = [
     {
-      title: "Full Stack Developer",
-      organization: "Tech Solutions Inc.",
-      period: "2023 - Present",
-      description: "Building scalable web applications using React, Node.js, and cloud technologies. Leading frontend development and implementing CI/CD pipelines.",
-      type: "experience" as const,
-    },
-    {
-      title: "Data Analyst Intern",
-      organization: "Analytics Corp",
-      period: "2022 - 2023",
-      description: "Analyzed large datasets using Python and SQL. Created interactive dashboards with Power BI and automated reporting processes.",
-      type: "experience" as const,
-    },
-    {
-      title: "Freelance Web Developer",
-      organization: "Self-Employed",
-      period: "2021 - 2022",
-      description: "Developed custom websites and web applications for small businesses. Specialized in responsive design and e-commerce solutions.",
+      title: "Data Analyst Training Program (Scholarship Recipient)",
+      organization: "Test Yantra / PySpiders",
+      period: "2025 - Present",
+      description: "Intensive training program focused on advanced data analytics, SQL optimization, and Python-based data science workflows. Selected as a scholarship recipient for technical merit.",
       type: "experience" as const,
     },
   ];
 
   const education = [
     {
-      title: "Bachelor of Technology in Computer Science",
-      organization: "University of Technology",
-      period: "2019 - 2023",
-      description: "Specialized in Software Engineering and Data Science. Graduated with honors. Active member of the coding club and hackathon participant.",
+      title: "B.Tech in Computer Science Engineering",
+      organization: "Silicon Institute of Technology, Sambalpur, Odisha",
+      period: "2021 - 2025",
+      description: "Focused on computer science fundamentals, data structures, and database management systems. Graduated with a CGPA of 7.66.",
       type: "education" as const,
     },
     {
-      title: "Full Stack Web Development Certification",
-      organization: "Coursera / Meta",
-      period: "2022",
-      description: "Completed comprehensive training in React, Node.js, and modern web development practices.",
+      title: (
+        <>
+          12<sup>th</sup> / Intermediate (Science - PCM/IT)
+        </>
+      ),
+      organization: "Newton Higher Secondary School, Balasore, Odisha",
+      period: "2019 - 2021",
+      description: "Pursued science stream with a focus on Physics, Chemistry, Mathematics, and IT. Achieved a CGPA of 7.52.",
       type: "education" as const,
     },
     {
-      title: "Data Science Professional Certificate",
-      organization: "IBM",
-      period: "2023",
-      description: "Mastered Python, SQL, Machine Learning, and data visualization tools for professional data analysis.",
+      title: (
+        <>
+          10<sup>th</sup> / Metriculation (General Studies)
+        </>
+      ),
+      organization: "Phanchyat High School, Balasore, Odisha",
+      period: "2019",
+      description: "Completed secondary education with general studies. Achieved a CGPA of 6.92.",
       type: "education" as const,
     },
   ];
 
   const certifications = [
     {
-      title: "Google Data Analytics Professional Certificate",
-      issuer: "Google / Coursera",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop",
-      link: "#",
+      title: "IBM Data Analyst Professional Certificate",
+      issuer: "IBM / Coursera",
+      image: ibmCert,
+      link: "https://coursera.org/share/be542ed494a32cb99ceeacaec6322ff0",
     },
     {
-      title: "AWS Certified Cloud Practitioner",
-      issuer: "Amazon Web Services",
-      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=300&fit=crop",
-      link: "#",
-    },
-    {
-      title: "Meta Front-End Developer Certificate",
-      issuer: "Meta / Coursera",
-      image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=300&fit=crop",
-      link: "#",
-    },
-    {
-      title: "Python for Data Science",
-      issuer: "IBM",
-      image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=300&fit=crop",
-      link: "#",
+      title: "Microsoft Power BI Data Analyst Professional Certificate",
+      issuer: "Microsoft / Coursera",
+      image: msCert,
+      link: "https://coursera.org/share/21a9ca6b22b6c998bf800b0b6a0eaaa8",
     },
   ];
 
   const projects = [
     {
-      title: "E-Commerce Platform",
-      description: "Full-stack e-commerce solution with payment integration and inventory management.",
-      tech: ["React", "Node.js", "MongoDB"],
+      title: "Customer Shopping Behavior Analysis",
+      description: "Analyzed 3,900+ retail records to identify customer trends and engagement insights. Designed SQL queries and interactive Power BI dashboards.",
+      tech: ["Python", "PostgreSQL", "SQL", "Power BI"],
+      link: "https://github.com/Ritesh-456/customer_sales_data",
     },
     {
-      title: "Data Analytics Dashboard",
-      description: "Interactive dashboard for visualizing business metrics and KPIs in real-time.",
-      tech: ["Python", "Flask", "D3.js"],
+      title: "Gold Price & LTV Risk Analysis",
+      description: "Processed multi-year datasets for trend analysis and volatility assessment. Developed interactive dashboards for risk assessment.",
+      tech: ["Python", "Pandas", "Streamlit"],
+      link: "http://github.com/Ritesh-456/gold-price-ltv-analysis",
     },
     {
-      title: "Task Management App",
-      description: "Collaborative task management tool with real-time updates and team features.",
-      tech: ["React", "Firebase", "Tailwind"],
+      title: "Zepto Inventory SQL Data Analysis",
+      description: "Analyzed 3,700+ SKU records from a real-world e-commerce dataset for revenue insights and inventory optimization.",
+      tech: ["PostgreSQL", "SQL"],
+      link: "https://github.com/Ritesh-456/Zepto-Inventory-Analysis-using-SQL",
     },
   ];
 
@@ -257,6 +252,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <CustomCursor />
+      <StartupSound onComplete={() => setStartTyping(true)} />
 
       {/* Header */}
       <header
@@ -321,10 +317,10 @@ const Index = () => {
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 opacity-0 animate-fade-in-up" style={{ animationDelay: '300ms', animationFillMode: 'forwards' }}>
                 Ritesh Brahmachari
               </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground mb-6 opacity-0 animate-fade-in-up" style={{ animationDelay: '400ms', animationFillMode: 'forwards' }}>
-                Full Stack Developer & Data Analyst
-              </p>
-              <p className="text-muted-foreground mb-8 opacity-0 animate-fade-in-up" style={{ animationDelay: '500ms', animationFillMode: 'forwards' }}>
+              <div className="text-xl md:text-2xl text-muted-foreground mb-6 h-8">
+                <TypingEffect text="Full Stack Developer & Data Analyst" start={startTyping} />
+              </div>
+              <p className="text-muted-foreground mb-8 opacity-0 animate-fade-in-up" style={{ animationDelay: '2500ms', animationFillMode: 'forwards' }}>
                 Passionate about crafting elegant web solutions and transforming data into actionable insights.
                 Experienced in building scalable applications with modern technologies.
               </p>
@@ -432,7 +428,7 @@ const Index = () => {
 
           <div className="mt-8">
             {experience.map((item, index) => (
-              <TimelineCard key={item.title} item={item} index={index} />
+              <TimelineCard key={index} item={item} index={index} />
             ))}
           </div>
         </div>
@@ -456,7 +452,7 @@ const Index = () => {
 
           <div className="mt-8">
             {education.map((item, index) => (
-              <TimelineCard key={item.title} item={item} index={index} />
+              <TimelineCard key={index} item={item} index={index} />
             ))}
           </div>
         </div>
@@ -511,35 +507,14 @@ const Index = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project, index) => (
-              <div
+              <ProjectCard
                 key={project.title}
-                className="neu-card p-6 opacity-0 animate-fade-in-up group"
-                style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'forwards' }}
-              >
-                <div className="neu-card-inset rounded-xl h-40 mb-4 flex items-center justify-center">
-                  <Layout className="w-12 h-12 text-muted-foreground group-hover:text-primary transition-colors" />
-                </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">
-                  {project.title}
-                </h3>
-                <p className="text-muted-foreground text-sm mb-4">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2 py-1 text-xs font-medium rounded-md bg-primary/10 text-primary"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <NeumorphicButton variant="secondary" size="sm">
-                  <ExternalLink className="w-4 h-4" />
-                  View Project
-                </NeumorphicButton>
-              </div>
+                title={project.title}
+                description={project.description}
+                tech={project.tech}
+                link={project.link}
+                index={index}
+              />
             ))}
           </div>
         </div>
