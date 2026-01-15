@@ -9,9 +9,7 @@ import TimelineCard from "@/components/TimelineCard";
 import CertificateCard from "@/components/CertificateCard";
 import MobileNav from "@/components/MobileNav";
 import CustomCursor from "@/components/CustomCursor";
-import StartupSound from "@/components/StartupSound";
 import ProjectCard from "@/components/ProjectCard";
-import TypingEffect from "@/components/TypingEffect";
 import ibmCert from "../../assets/certificate_images/IBM_Data_Analyst_8T765S6252YO.webp";
 import msCert from "../../assets/certificate_images/Microsoft_Power_BI_Data Analyst_TI046W0BOP59.webp";
 import { useScrollHeader } from "@/hooks/useScrollHeader";
@@ -35,7 +33,6 @@ import { useToast } from "@/components/ui/use-toast";
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [startTyping, setStartTyping] = useState(false);
   const isHeaderVisible = useScrollHeader();
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
   const formRef = useRef<HTMLFormElement>(null);
@@ -80,8 +77,7 @@ const Index = () => {
         form.reset(); // Reset form fields
 
         // Play submission sound
-        const audio = new Audio("/sounds/send-message-button-click-sound.mp3");
-        audio.play().catch(e => console.warn("Audio play failed", e));
+
 
         toast({
           title: "Message Sent!",
@@ -252,7 +248,6 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <CustomCursor />
-      <StartupSound onComplete={() => setStartTyping(true)} />
 
       {/* Header */}
       <header
@@ -293,13 +288,13 @@ const Index = () => {
       </header>
 
       {/* Hero Section */}
-      <section id="about" className="min-h-screen flex items-center justify-center relative px-6 py-20">
+      <section id="about" className="min-h-screen flex items-center justify-center relative px-6 py-20 pt-40 md:pt-20">
         <div className="max-w-6xl mx-auto w-full pb-28 md:pb-0">
           <div className="flex flex-col lg:flex-row items-center gap-12 justify-center">
             {/* Profile Image */}
             <div className="opacity-0 animate-scale-in" style={{ animationDelay: '100ms', animationFillMode: 'forwards' }}>
               <div className="neu-card p-3 rounded-full overflow-hidden">
-                <div className="w-48 h-48 md:w-64 md:h-64 rounded-full neu-card-inset flex items-center justify-center overflow-hidden">
+                <div className="w-40 h-40 md:w-64 md:h-64 rounded-full neu-card-inset flex items-center justify-center overflow-hidden">
                   <img
                     src={profilePic}
                     alt="Ritesh Brahmachari"
@@ -314,13 +309,13 @@ const Index = () => {
               <p className="text-primary font-medium mb-2 opacity-0 animate-fade-in-up" style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}>
                 Hello, I'm
               </p>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 opacity-0 animate-fade-in-up" style={{ animationDelay: '300ms', animationFillMode: 'forwards' }}>
+              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 opacity-0 animate-fade-in-up" style={{ animationDelay: '300ms', animationFillMode: 'forwards' }}>
                 Ritesh Brahmachari
               </h1>
-              <div className="text-xl md:text-2xl text-muted-foreground mb-6 h-8">
-                <TypingEffect text="Full Stack Developer & Data Analyst" start={startTyping} />
-              </div>
-              <p className="text-muted-foreground mb-8 opacity-0 animate-fade-in-up" style={{ animationDelay: '2500ms', animationFillMode: 'forwards' }}>
+              <p className="text-lg md:text-2xl text-muted-foreground mb-6 opacity-0 animate-fade-in-up" style={{ animationDelay: '400ms', animationFillMode: 'forwards' }}>
+                Full Stack Developer & Data Analyst
+              </p>
+              <p className="text-muted-foreground mb-8 opacity-0 animate-fade-in-up text-sm md:text-base" style={{ animationDelay: '2500ms', animationFillMode: 'forwards' }}>
                 Passionate about crafting elegant web solutions and transforming data into actionable insights.
                 Experienced in building scalable applications with modern technologies.
               </p>
