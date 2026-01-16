@@ -10,8 +10,10 @@ import CertificateCard from "@/components/CertificateCard";
 import MobileNav from "@/components/MobileNav";
 import CustomCursor from "@/components/CustomCursor";
 import ProjectCard from "@/components/ProjectCard";
-import ibmCert from "../../assets/certificate_images/IBM_Data_Analyst_8T765S6252YO.webp";
-import msCert from "../../assets/certificate_images/Microsoft_Power_BI_Data Analyst_TI046W0BOP59.webp";
+import ibmCert from "../../assets/certificate_images/data_analytics/IBM_Data_Analyst_8T765S6252YO.webp";
+import msCert from "../../assets/certificate_images/data_analytics/Microsoft_Power_BI_Data Analyst_TI046W0BOP59.webp";
+import googleCert from "../../assets/certificate_images/ai_engineering/Google_AI_Essentials_Specialization_CAB9X15MFQAR.webp";
+import { ChevronDown } from "lucide-react";
 import { useScrollHeader } from "@/hooks/useScrollHeader";
 import {
   Code2,
@@ -37,6 +39,8 @@ const Index = () => {
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
   const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
+  const [activeCategory, setActiveCategory] = useState<"Data Analytics" | "AI Engineering">("Data Analytics");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleContactSubmit = async (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
@@ -179,20 +183,36 @@ const Index = () => {
     },
   ];
 
-  const certifications = [
-    {
-      title: "IBM Data Analyst Professional Certificate",
-      issuer: "IBM / Coursera",
-      image: ibmCert,
-      link: "https://coursera.org/share/be542ed494a32cb99ceeacaec6322ff0",
-    },
-    {
-      title: "Microsoft Power BI Data Analyst Professional Certificate",
-      issuer: "Microsoft / Coursera",
-      image: msCert,
-      link: "https://coursera.org/share/21a9ca6b22b6c998bf800b0b6a0eaaa8",
-    },
-  ];
+  const certifications = {
+    "Data Analytics": [
+      {
+        title: "IBM Data Analyst Professional Certificate",
+        issuer: "IBM / Coursera",
+        image: ibmCert,
+        credentialId: "8T765S6252YO",
+        description: "Completed an extensive program covering data analysis, visualization, Python SQL, and Excel.",
+        link: "https://coursera.org/share/be542ed494a32cb99ceeacaec6322ff0",
+      },
+      {
+        title: "Microsoft Power BI Data Analyst Professional Certificate",
+        issuer: "Microsoft / Coursera",
+        image: msCert,
+        credentialId: "TI046W0BOP59",
+        description: "Mastered data modeling, visualization, and dashboard creation using Power BI for business intelligence.",
+        link: "https://coursera.org/share/21a9ca6b22b6c998bf800b0b6a0eaaa8",
+      },
+    ],
+    "AI Engineering": [
+      {
+        title: "Google AI Essentials Specialization",
+        issuer: "Google / Coursera",
+        image: googleCert,
+        credentialId: "CAB9X15MFQAR",
+        description: "Learned foundational AI concepts, generative AI applications, and ethical considerations in AI deployment.",
+        link: "https://coursera.org/share/7c669670731d102434674f7678523c04",
+      },
+    ]
+  };
 
   const projects = [
     {
@@ -469,13 +489,47 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {certifications.map((cert, index) => (
+          <div className="flex justify-start mb-8 relative z-20">
+            <div className="relative inline-block text-left">
+              <button
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="neu-button px-4 py-2 rounded-lg flex items-center justify-between gap-2 min-w-[200px] bg-background"
+              >
+                <span className="font-medium">{activeCategory}</span>
+                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {isDropdownOpen && (
+                <div className="absolute left-0 mt-2 w-full rounded-lg bg-background shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50 animate-fade-in-up origin-top-left border border-border/50">
+                  <div className="py-1">
+                    {(Object.keys(certifications) as Array<keyof typeof certifications>).map((category) => (
+                      <button
+                        key={category}
+                        onClick={() => {
+                          setActiveCategory(category);
+                          setIsDropdownOpen(false);
+                        }}
+                        className={`block w-full text-left px-4 py-2 text-sm transition-colors hover:bg-primary/10 ${activeCategory === category ? 'text-primary font-medium bg-primary/5' : 'text-foreground'
+                          }`}
+                      >
+                        {category}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {certifications[activeCategory].map((cert, index) => (
               <CertificateCard
                 key={cert.title}
                 title={cert.title}
                 issuer={cert.issuer}
                 image={cert.image}
+                credentialId={cert.credentialId}
+                description={cert.description}
                 link={cert.link}
                 delay={index * 100}
               />
