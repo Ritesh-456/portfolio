@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useTypewriter } from "@/hooks/useTypewriter";
 import LoadingScreen from "@/components/LoadingScreen";
 import profilePic from "../../assets/Profile_image/pic.webp";
 import NeumorphicButton from "@/components/NeumorphicButton";
@@ -41,6 +42,7 @@ const Index = () => {
   const { toast } = useToast();
   const [activeCategory, setActiveCategory] = useState<"Data Analytics" | "AI Engineering">("Data Analytics");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { displayedText, isDone: isNameTyped } = useTypewriter("Ritesh Brahmachari", 100, 1000);
 
   const handleContactSubmit = async (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
@@ -324,51 +326,57 @@ const Index = () => {
               </div>
             </div>
 
+
+
             {/* Hero Content */}
             <div className="flex-1 text-center lg:text-left max-w-2xl">
               <p className="text-primary font-medium mb-2 opacity-0 animate-fade-in-up" style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}>
                 Hello, I'm
               </p>
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 opacity-0 animate-fade-in-up" style={{ animationDelay: '300ms', animationFillMode: 'forwards' }}>
-                Ritesh Brahmachari
+              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 min-h-[1.2em]">
+                {displayedText}
+                <span className={`inline-block w-[3px] h-[1em] bg-primary ml-1 align-bottom ${isNameTyped ? 'hidden' : 'animate-pulse'}`}></span>
               </h1>
-              <p className="text-lg md:text-2xl text-muted-foreground mb-6 opacity-0 animate-fade-in-up" style={{ animationDelay: '400ms', animationFillMode: 'forwards' }}>
-                Full Stack Developer & Data Analyst
-              </p>
-              <p className="text-muted-foreground mb-8 opacity-0 animate-fade-in-up text-sm md:text-base" style={{ animationDelay: '2500ms', animationFillMode: 'forwards' }}>
-                Passionate about crafting elegant web solutions and transforming data into actionable insights.
-                Experienced in building scalable applications with modern technologies.
-              </p>
 
-              {/* CTA Buttons */}
-              <div className="flex gap-3 sm:gap-4 justify-center lg:justify-start opacity-0 animate-fade-in-up" style={{ animationDelay: '600ms', animationFillMode: 'forwards' }}>
-                <NeumorphicButton variant="primary" href="#projects" className="flex-1 sm:flex-none">
-                  <Briefcase className="w-5 h-5" />
-                  View Projects
-                </NeumorphicButton>
-                <NeumorphicButton variant="secondary" href="#contact" className="flex-1 sm:flex-none">
-                  <Mail className="w-5 h-5" />
-                  Contact Me
-                </NeumorphicButton>
-              </div>
+              <div className={`transition-all duration-700 ${isNameTyped ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                <p className="text-lg md:text-2xl text-muted-foreground mb-6">
+                  Full Stack Developer & Data Analyst
+                </p>
+                <p className="text-muted-foreground mb-8 text-sm md:text-base">
+                  Passionate about crafting elegant web solutions and transforming data into actionable insights.
+                  Experienced in building scalable applications with modern technologies.
+                </p>
 
-              {/* Social Links */}
-              <div className="flex gap-4 mt-8 justify-center lg:justify-start opacity-0 animate-fade-in-up" style={{ animationDelay: '700ms', animationFillMode: 'forwards' }}>
-                <SocialLink
-                  href="https://github.com/Ritesh-456"
-                  icon={<Github className="w-5 h-5" />}
-                  label="GitHub"
-                />
-                <SocialLink
-                  href="https://www.linkedin.com/in/ritesh-brahmachari-1b7b84278/"
-                  icon={<Linkedin className="w-5 h-5" />}
-                  label="LinkedIn"
-                />
-                <SocialLink
-                  href="mailto:brahmachariritesh508805@gmail.com"
-                  icon={<Mail className="w-5 h-5" />}
-                  label="Email"
-                />
+                {/* CTA Buttons */}
+                <div className="flex gap-3 sm:gap-4 justify-center lg:justify-start">
+                  <NeumorphicButton variant="primary" href="#projects" className="flex-1 sm:flex-none">
+                    <Briefcase className="w-5 h-5" />
+                    View Projects
+                  </NeumorphicButton>
+                  <NeumorphicButton variant="secondary" href="#contact" className="flex-1 sm:flex-none">
+                    <Mail className="w-5 h-5" />
+                    Contact Me
+                  </NeumorphicButton>
+                </div>
+
+                {/* Social Links */}
+                <div className="flex gap-4 mt-8 justify-center lg:justify-start">
+                  <SocialLink
+                    href="https://github.com/Ritesh-456"
+                    icon={<Github className="w-5 h-5" />}
+                    label="GitHub"
+                  />
+                  <SocialLink
+                    href="https://www.linkedin.com/in/ritesh-brahmachari-1b7b84278/"
+                    icon={<Linkedin className="w-5 h-5" />}
+                    label="LinkedIn"
+                  />
+                  <SocialLink
+                    href="mailto:brahmachariritesh508805@gmail.com"
+                    icon={<Mail className="w-5 h-5" />}
+                    label="Email"
+                  />
+                </div>
               </div>
             </div>
           </div>
