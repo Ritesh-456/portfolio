@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useTypewriter } from "@/hooks/useTypewriter";
 import LoadingScreen from "@/components/LoadingScreen";
 import profilePic from "../../assets/Profile_image/pic.webp";
@@ -14,8 +14,11 @@ import ProjectCard from "@/components/ProjectCard";
 import ibmCert from "../../assets/certificate_images/data_analytics/IBM_Data_Analyst_8T765S6252YO.webp";
 import msCert from "../../assets/certificate_images/data_analytics/Microsoft_Power_BI_Data Analyst_TI046W0BOP59.webp";
 import googleCert from "../../assets/certificate_images/ai_engineering/Google_AI_Essentials_Specialization_CAB9X15MFQAR.webp";
+import awsCert from "../../assets/certificate_images/cloud/AWS_Fundamentals_QVUENPT79SVA.webp";
+import ibmFullStackCert from "../../assets/certificate_images/software_developer/IBM_Full_Stack_Software_SHHZOCK27GBK.webp";
 import { ChevronDown } from "lucide-react";
 import { useScrollHeader } from "@/hooks/useScrollHeader";
+import useEmblaCarousel from "embla-carousel-react";
 import {
   Code2,
   Database,
@@ -34,234 +37,219 @@ import {
 
 import { useToast } from "@/components/ui/use-toast";
 
+const navItems = ["About", "Skills", "Experience", "Education", "Certifications", "Projects", "Contact"];
+
+const skills = [
+  {
+    icon: <Code2 className="w-6 h-6" />,
+    title: "Frontend Development",
+    skills: ["React.js", "TypeScript", "Tailwind CSS", "HTML/CSS", "JavaScript"],
+  },
+  {
+    icon: <Server className="w-6 h-6" />,
+    title: "Backend Development",
+    skills: ["Python", "Flask", "Django", "Node.js", "RESTful APIs"],
+  },
+  {
+    icon: <Database className="w-6 h-6" />,
+    title: "Database & Cloud",
+    skills: ["PostgreSQL", "MySQL", "MongoDB", "AWS", "Git"],
+  },
+  {
+    icon: <BarChart3 className="w-6 h-6" />,
+    title: "Data Analysis",
+    skills: ["Pandas", "NumPy", "Matplotlib", "Power BI", "Tableau"],
+  },
+];
+
+const experience = [
+  {
+    title: "Data Analyst Training Program (Scholarship Recipient)",
+    organization: "Test Yantra / PySpiders",
+    period: "2025 - Present",
+    description: "Intensive training program focused on advanced data analytics, SQL optimization, and Python-based data science workflows. Selected as a scholarship recipient for technical merit.",
+    type: "experience" as const,
+  },
+];
+
+const education = [
+  {
+    title: "B.Tech in Computer Science Engineering",
+    organization: "Silicon Institute of Technology, Sambalpur, Odisha",
+    period: "2021 - 2025",
+    description: "Focused on computer science fundamentals, data structures, and database management systems. Graduated with a CGPA of 7.66.",
+    type: "education" as const,
+  },
+  {
+    title: (
+      <>
+        12<sup>th</sup> / Intermediate (Science - PCM/IT)
+      </>
+    ),
+    organization: "Newton Higher Secondary School, Balasore, Odisha",
+    period: "2019 - 2021",
+    description: "Pursued science stream with a focus on Physics, Chemistry, Mathematics, and IT. Achieved a CGPA of 7.52.",
+    type: "education" as const,
+  },
+  {
+    title: (
+      <>
+        10<sup>th</sup> / Metriculation (General Studies)
+      </>
+    ),
+    organization: "Phanchyat High School, Balasore, Odisha",
+    period: "2019",
+    description: "Completed secondary education with general studies. Achieved a CGPA of 6.92.",
+    type: "education" as const,
+  },
+];
+
+const certifications = {
+  "Data Analytics": [
+    {
+      title: "IBM Data Analyst Professional Certificate",
+      issuer: "IBM / Coursera",
+      image: ibmCert,
+      credentialId: "8T765S6252YO",
+      description: "Completed an extensive program covering data analysis, visualization, Python SQL, and Excel.",
+      link: "https://coursera.org/share/be542ed494a32cb99ceeacaec6322ff0",
+    },
+    {
+      title: "Microsoft Power BI Data Analyst Professional Certificate",
+      issuer: "Microsoft / Coursera",
+      image: msCert,
+      credentialId: "TI046W0BOP59",
+      description: "Mastered data modeling, visualization, and dashboard creation using Power BI for business intelligence.",
+      link: "https://coursera.org/share/21a9ca6b22b6c998bf800b0b6a0eaaa8",
+    },
+  ],
+  "AI Engineering": [
+    {
+      title: "Google AI Essentials Specialization",
+      issuer: "Google / Coursera",
+      image: googleCert,
+      credentialId: "CAB9X15MFQAR",
+      description: "Learned foundational AI concepts, generative AI applications, and ethical considerations in AI deployment.",
+      link: "https://coursera.org/share/7c669670731d102434674f7678523c04",
+    },
+  ],
+  "Cloud Computing": [
+    {
+      title: "AWS Fundamentals Specialization",
+      issuer: "AWS / Coursera",
+      image: awsCert,
+      credentialId: "QVUENPT79SVA",
+      description: "Gained core AWS skills, security concepts, and cloud migration strategies.",
+      link: "https://coursera.org/verify/specialization/QVUENPT79SVA",
+    },
+  ],
+  "Software Development": [
+    {
+      title: "IBM Full Stack Software Developer Professional Certificate",
+      issuer: "IBM / Coursera",
+      image: ibmFullStackCert,
+      credentialId: "SHHZOCK27GBK",
+      description: "Mastered full-stack development with Cloud Native, Python, Django, React, and OpenShift.",
+      link: "https://coursera.org/verify/professional-cert/SHHZOCK27GBK",
+    },
+  ]
+};
+
+const projects = [
+  {
+    title: "Customer Shopping Behavior Analysis",
+    description: "Analyzed 3,900+ retail records to identify customer trends and engagement insights. Designed SQL queries and interactive Power BI dashboards.",
+    tech: ["Python", "PostgreSQL", "SQL", "Power BI"],
+    link: "https://github.com/Ritesh-456/customer_sales_data",
+  },
+  {
+    title: "Gold Price & LTV Risk Analysis",
+    description: "Processed multi-year datasets for trend analysis and volatility assessment. Developed interactive dashboards for risk assessment.",
+    tech: ["Python", "Pandas", "Streamlit"],
+    link: "http://github.com/Ritesh-456/gold-price-ltv-analysis",
+  },
+  {
+    title: "Zepto Inventory SQL Data Analysis",
+    description: "Analyzed 3,700+ SKU records from a real-world e-commerce dataset for revenue insights and inventory optimization.",
+    tech: ["PostgreSQL", "SQL"],
+    link: "https://github.com/Ritesh-456/Zepto-Inventory-Analysis-using-SQL",
+  },
+];
+
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
   const isHeaderVisible = useScrollHeader();
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
   const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
-  const [activeCategory, setActiveCategory] = useState<"Data Analytics" | "AI Engineering">("Data Analytics");
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<"Data Analytics" | "AI Engineering" | "Cloud Computing" | "Software Development">("Data Analytics");
   const { displayedText, isDone: isNameTyped } = useTypewriter("Ritesh Brahmachari", 100, 1000);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "center", dragFree: false, skipSnaps: false });
+  const [tweenValues, setTweenValues] = useState<number[]>([]);
 
-  const handleContactSubmit = async (e?: React.MouseEvent) => {
-    if (e) e.preventDefault();
-    console.log("Form submission triggered via button click");
+  const onScroll = useCallback(() => {
+    if (!emblaApi) return;
 
-    const form = formRef.current;
-    if (!form) return;
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      toast({
-        variant: "destructive",
-        title: "Validation Error",
-        description: "Please fill out all required fields.",
-      });
-      return;
-    }
+    const engine = emblaApi.internalEngine();
+    const scrollProgress = emblaApi.scrollProgress();
 
-    setFormStatus('submitting');
-    const formData = new FormData(form);
+    const styles = emblaApi.scrollSnapList().map((scrollSnap, index) => {
+      let diffToTarget = scrollSnap - scrollProgress;
 
-    // Create a controller for timeout
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
-
-    try {
-      console.log("Sending fetch request to Formbold...");
-      const response = await fetch("https://formbold.com/s/oyAWb", {
-        method: "POST",
-        body: formData,
-        signal: controller.signal
-      });
-
-      clearTimeout(timeoutId);
-
-      if (response.ok) {
-        console.log("Form submission successful");
-        setFormStatus('success');
-        form.reset(); // Reset form fields
-
-        // Play submission sound
-
-
-        toast({
-          title: "Message Sent!",
-          description: "Thanks for reaching out. I'll get back to you soon.",
+      // Handle loop
+      if (engine.options.loop) {
+        engine.slideLooper.loopPoints.forEach((loopItem) => {
+          const target = loopItem.target();
+          if (index === loopItem.index && target !== 0) {
+            const sign = Math.sign(target);
+            if (sign === -1) diffToTarget = scrollSnap - (1 + scrollProgress);
+            if (sign === 1) diffToTarget = scrollSnap + (1 - scrollProgress);
+          }
         });
-
-        // Hide success message after 3 seconds
-        setTimeout(() => {
-          setFormStatus('idle');
-        }, 3000);
-      } else {
-        console.error("Form submission failed with status:", response.status);
-        const text = await response.text();
-        console.error("Response body:", text);
-        throw new Error(`Form submission failed: ${response.status} ${text}`);
       }
 
-    } catch (error) {
-      clearTimeout(timeoutId);
-      console.error("Form submission error", error);
-      setFormStatus('idle');
+      const tweenValue = 1 - Math.abs(diffToTarget * 2); // Amplify the effect
+      return Math.max(0, Math.min(1, tweenValue));
+    });
 
-      const errorMessage = error instanceof Error && error.name === 'AbortError'
-        ? "Request timed out. Please check your internet connection."
-        : "Something went wrong. Please try again or email me directly.";
+    setTweenValues(styles);
+  }, [emblaApi]);
 
-      toast({
-        variant: "destructive",
-        title: "Error Sending Message",
-        description: errorMessage,
-      });
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    onScroll();
+    emblaApi.on("scroll", onScroll);
+    emblaApi.on("reInit", onScroll);
+
+    return () => {
+      emblaApi.off("scroll", onScroll);
+      emblaApi.off("reInit", onScroll);
+    };
+  }, [emblaApi, onScroll]);
+
+  const handleCategoryClick = (category: typeof activeCategory, index: number) => {
+    setActiveCategory(category);
+    if (emblaApi) {
+      emblaApi.scrollTo(index);
     }
   };
 
-  const navItems = ["About", "Skills", "Experience", "Education", "Certifications", "Projects", "Contact"];
-
-  const skills = [
-    {
-      icon: <Code2 className="w-6 h-6" />,
-      title: "Frontend Development",
-      skills: ["React.js", "TypeScript", "Tailwind CSS", "HTML/CSS", "JavaScript"],
-    },
-    {
-      icon: <Server className="w-6 h-6" />,
-      title: "Backend Development",
-      skills: ["Python", "Flask", "Django", "Node.js", "RESTful APIs"],
-    },
-    {
-      icon: <Database className="w-6 h-6" />,
-      title: "Database & Cloud",
-      skills: ["PostgreSQL", "MySQL", "MongoDB", "AWS", "Git"],
-    },
-    {
-      icon: <BarChart3 className="w-6 h-6" />,
-      title: "Data Analysis",
-      skills: ["Pandas", "NumPy", "Matplotlib", "Power BI", "Tableau"],
-    },
-  ];
-
-  const experience = [
-    {
-      title: "Data Analyst Training Program (Scholarship Recipient)",
-      organization: "Test Yantra / PySpiders",
-      period: "2025 - Present",
-      description: "Intensive training program focused on advanced data analytics, SQL optimization, and Python-based data science workflows. Selected as a scholarship recipient for technical merit.",
-      type: "experience" as const,
-    },
-  ];
-
-  const education = [
-    {
-      title: "B.Tech in Computer Science Engineering",
-      organization: "Silicon Institute of Technology, Sambalpur, Odisha",
-      period: "2021 - 2025",
-      description: "Focused on computer science fundamentals, data structures, and database management systems. Graduated with a CGPA of 7.66.",
-      type: "education" as const,
-    },
-    {
-      title: (
-        <>
-          12<sup>th</sup> / Intermediate (Science - PCM/IT)
-        </>
-      ),
-      organization: "Newton Higher Secondary School, Balasore, Odisha",
-      period: "2019 - 2021",
-      description: "Pursued science stream with a focus on Physics, Chemistry, Mathematics, and IT. Achieved a CGPA of 7.52.",
-      type: "education" as const,
-    },
-    {
-      title: (
-        <>
-          10<sup>th</sup> / Metriculation (General Studies)
-        </>
-      ),
-      organization: "Phanchyat High School, Balasore, Odisha",
-      period: "2019",
-      description: "Completed secondary education with general studies. Achieved a CGPA of 6.92.",
-      type: "education" as const,
-    },
-  ];
-
-  const certifications = {
-    "Data Analytics": [
-      {
-        title: "IBM Data Analyst Professional Certificate",
-        issuer: "IBM / Coursera",
-        image: ibmCert,
-        credentialId: "8T765S6252YO",
-        description: "Completed an extensive program covering data analysis, visualization, Python SQL, and Excel.",
-        link: "https://coursera.org/share/be542ed494a32cb99ceeacaec6322ff0",
-      },
-      {
-        title: "Microsoft Power BI Data Analyst Professional Certificate",
-        issuer: "Microsoft / Coursera",
-        image: msCert,
-        credentialId: "TI046W0BOP59",
-        description: "Mastered data modeling, visualization, and dashboard creation using Power BI for business intelligence.",
-        link: "https://coursera.org/share/21a9ca6b22b6c998bf800b0b6a0eaaa8",
-      },
-    ],
-    "AI Engineering": [
-      {
-        title: "Google AI Essentials Specialization",
-        issuer: "Google / Coursera",
-        image: googleCert,
-        credentialId: "CAB9X15MFQAR",
-        description: "Learned foundational AI concepts, generative AI applications, and ethical considerations in AI deployment.",
-        link: "https://coursera.org/share/7c669670731d102434674f7678523c04",
-      },
-    ]
-  };
-
-  const projects = [
-    {
-      title: "Customer Shopping Behavior Analysis",
-      description: "Analyzed 3,900+ retail records to identify customer trends and engagement insights. Designed SQL queries and interactive Power BI dashboards.",
-      tech: ["Python", "PostgreSQL", "SQL", "Power BI"],
-      link: "https://github.com/Ritesh-456/customer_sales_data",
-    },
-    {
-      title: "Gold Price & LTV Risk Analysis",
-      description: "Processed multi-year datasets for trend analysis and volatility assessment. Developed interactive dashboards for risk assessment.",
-      tech: ["Python", "Pandas", "Streamlit"],
-      link: "http://github.com/Ritesh-456/gold-price-ltv-analysis",
-    },
-    {
-      title: "Zepto Inventory SQL Data Analysis",
-      description: "Analyzed 3,700+ SKU records from a real-world e-commerce dataset for revenue insights and inventory optimization.",
-      tech: ["PostgreSQL", "SQL"],
-      link: "https://github.com/Ritesh-456/Zepto-Inventory-Analysis-using-SQL",
-    },
-  ];
-
+  // Sync active category with carousel scroll
   useEffect(() => {
-    const sections = document.querySelectorAll("section[id]");
-    const options = {
-      root: null,
-      rootMargin: "-20% 0px -70% 0px",
-      threshold: 0,
+    if (!emblaApi) return;
+
+    const onSelect = () => {
+      const index = emblaApi.selectedScrollSnap();
+      const categories = Object.keys(certifications) as Array<keyof typeof certifications>;
+      if (categories[index]) {
+        setActiveCategory(categories[index]);
+      }
     };
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const id = entry.target.getAttribute("id");
-          if (id) {
-            window.history.replaceState(null, "", `#${id}`);
-          }
-        }
-      });
-    }, options);
-
-    sections.forEach((section) => observer.observe(section));
-
-    return () => {
-      sections.forEach((section) => observer.unobserve(section));
-    };
-  }, []);
+    emblaApi.on("select", onSelect);
+    return () => emblaApi.off("select", onSelect);
+  }, [emblaApi, certifications]);
 
   if (isLoading) {
     return <LoadingScreen onComplete={() => setIsLoading(false)} />;
@@ -497,36 +485,46 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="flex justify-start mb-8 relative z-20">
-            <div className="relative inline-block text-left">
-              <button
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="neu-button px-4 py-2 rounded-lg flex items-center justify-between gap-2 min-w-[200px] bg-background"
-              >
-                <span className="font-medium">{activeCategory}</span>
-                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
-              </button>
+          {/* Certificate Navigation Carousel */}
+          <div className="mb-14 relative px-8 flex justify-center">
+            <div className="overflow-visible max-w-sm w-full" ref={emblaRef}>
+              <div className="flex touch-pan-y items-center h-24 perspective-1000">
+                {(Object.keys(certifications) as Array<keyof typeof certifications>).map((category, index) => {
+                  const tweenValue = tweenValues[index] || 0;
+                  const scale = 0.8 + (tweenValue * 0.4); // 0.8 to 1.2
+                  const opacity = 0.5 + (tweenValue * 0.5); // 0.5 to 1.0
+                  const rotateX = (1 - tweenValue) * 45; // 0 to 45 deg
 
-              {isDropdownOpen && (
-                <div className="absolute left-0 mt-2 w-full rounded-lg bg-background shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50 animate-fade-in-up origin-top-left border border-border/50">
-                  <div className="py-1">
-                    {(Object.keys(certifications) as Array<keyof typeof certifications>).map((category) => (
-                      <button
-                        key={category}
-                        onClick={() => {
-                          setActiveCategory(category);
-                          setIsDropdownOpen(false);
-                        }}
-                        className={`block w-full text-left px-4 py-2 text-sm transition-colors hover:bg-primary/10 ${activeCategory === category ? 'text-primary font-medium bg-primary/5' : 'text-foreground'
-                          }`}
-                      >
+                  return (
+                    <button
+                      key={category}
+                      onClick={() => handleCategoryClick(category, index)}
+                      className={`
+                        flex-[0_0_50%] min-w-0 px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 whitespace-nowrap
+                        flex items-center justify-center
+                        ${activeCategory === category
+                          ? 'text-primary'
+                          : 'text-muted-foreground'
+                        }
+                      `}
+                      style={{
+                        transform: `scale(${scale})`,
+                        opacity: opacity,
+                        zIndex: Math.round(tweenValue * 10),
+                      }}
+                    >
+                      <span className={`px-4 py-2 rounded-full ${activeCategory === category ? 'neu-card-pressed' : ''}`}>
                         {category}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
+
+            {/* Fade gradients for visual cue of scrollability */}
+            <div className="absolute left-0 top-0 bottom-0 w-1/4 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-1/4 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
