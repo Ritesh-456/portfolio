@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useTypewriter } from "@/hooks/useTypewriter";
+import SEO from "@/components/SEO";
 import LoadingScreen from "@/components/LoadingScreen";
 import profilePic from "../../assets/Profile_image/pic.webp";
 import NeumorphicButton from "@/components/NeumorphicButton";
@@ -232,6 +233,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Ritesh Brahmachari - Portfolio | Full Stack Developer & Data Analyst"
+        description="Portfolio of Ritesh Brahmachari, a Full Stack Developer and Data Analyst specializing in modern web technologies and data-driven insights."
+        keywords="Ritesh Brahmachari, Data Analyst, Full Stack Developer, Data Scientist, Python Developer, React Developer, Portfolio, Software Engineer, Web Development, Data Engineering, AI Engineering"
+      />
       <CustomCursor />
 
       {/* Header */}
