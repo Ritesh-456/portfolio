@@ -153,6 +153,16 @@ const certifications = {
       description: "Mastered full-stack development with Cloud Native, Python, Django, React, and OpenShift.",
       link: "https://coursera.org/verify/professional-cert/SHHZOCK27GBK",
     },
+  ],
+  "Data Science": [
+    {
+      title: "Data Science Professional Certificate",
+      issuer: "Coursera",
+      image: ibmCert, // Placeholder as requested
+      credentialId: "PENDING",
+      description: "Comprehensive data science training.",
+      link: "https://www.coursera.org/professional-certificates/ibm-data-science",
+    },
   ]
 };
 
@@ -183,7 +193,7 @@ const Index = () => {
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
   const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
-  const [activeCategory, setActiveCategory] = useState<"Data Analytics" | "AI Engineering" | "Cloud Computing" | "Software Development">("Data Analytics");
+  const [activeCategory, setActiveCategory] = useState<"Data Analytics" | "AI Engineering" | "Cloud Computing" | "Software Development" | "Data Science">("Data Analytics");
   const { displayedText, isDone: isNameTyped } = useTypewriter("Ritesh Brahmachari", 100, 1000);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "center", dragFree: false, skipSnaps: false });
 
