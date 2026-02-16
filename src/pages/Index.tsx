@@ -18,6 +18,7 @@ import awsCert from "../../assets/certificate_images/cloud/AWS_Fundamentals_QVUE
 import ibmFullStackCert from "../../assets/certificate_images/software_developer/IBM_Full_Stack_Software_SHHZOCK27GBK.webp";
 import { ChevronDown } from "lucide-react";
 import { useScrollHeader } from "@/hooks/useScrollHeader";
+import { useIsMobile } from "@/hooks/use-mobile";
 import useEmblaCarousel from "embla-carousel-react";
 import {
   Code2,
@@ -185,48 +186,10 @@ const Index = () => {
   const [activeCategory, setActiveCategory] = useState<"Data Analytics" | "AI Engineering" | "Cloud Computing" | "Software Development">("Data Analytics");
   const { displayedText, isDone: isNameTyped } = useTypewriter("Ritesh Brahmachari", 100, 1000);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "center", dragFree: false, skipSnaps: false });
-  const [tweenValues, setTweenValues] = useState<number[]>([]);
 
-  const onScroll = useCallback(() => {
-    if (!emblaApi) return;
-
-    const engine = emblaApi.internalEngine();
-    const scrollProgress = emblaApi.scrollProgress();
-
-    const styles = emblaApi.scrollSnapList().map((scrollSnap, index) => {
-      let diffToTarget = scrollSnap - scrollProgress;
-
-      // Handle loop
-      if (engine.options.loop) {
-        engine.slideLooper.loopPoints.forEach((loopItem) => {
-          const target = loopItem.target();
-          if (index === loopItem.index && target !== 0) {
-            const sign = Math.sign(target);
-            if (sign === -1) diffToTarget = scrollSnap - (1 + scrollProgress);
-            if (sign === 1) diffToTarget = scrollSnap + (1 - scrollProgress);
-          }
-        });
-      }
-
-      const tweenValue = 1 - Math.abs(diffToTarget * 2); // Amplify the effect
-      return Math.max(0, Math.min(1, tweenValue));
-    });
-
-    setTweenValues(styles);
-  }, [emblaApi]);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-
-    onScroll();
-    emblaApi.on("scroll", onScroll);
-    emblaApi.on("reInit", onScroll);
-
-    return () => {
-      emblaApi.off("scroll", onScroll);
-      emblaApi.off("reInit", onScroll);
-    };
-  }, [emblaApi, onScroll]);
+  const categories = Object.keys(certifications) as Array<keyof typeof certifications>;
+  // Duplicate categories to ensure smooth looping
+  const duplicatedCategories = [...categories, ...categories, ...categories];
 
   const handleCategoryClick = (category: typeof activeCategory, index: number) => {
     setActiveCategory(category);
@@ -240,10 +203,12 @@ const Index = () => {
     if (!emblaApi) return;
 
     const onSelect = () => {
+      if (!emblaApi) return;
       const index = emblaApi.selectedScrollSnap();
-      const categories = Object.keys(certifications) as Array<keyof typeof certifications>;
-      if (categories[index]) {
-        setActiveCategory(categories[index]);
+      // Calculate true index based on original categories length
+      const trueIndex = index % categories.length;
+      if (categories[trueIndex]) {
+        setActiveCategory(categories[trueIndex]);
       }
     };
 
@@ -487,33 +452,20 @@ const Index = () => {
 
           {/* Certificate Navigation Carousel */}
           <div className="mb-14 relative px-8 flex justify-center">
-            <div className="overflow-visible max-w-sm w-full" ref={emblaRef}>
-              <div className="flex touch-pan-y items-center h-24 perspective-1000">
-                {(Object.keys(certifications) as Array<keyof typeof certifications>).map((category, index) => {
-                  const tweenValue = tweenValues[index] || 0;
-                  const scale = 0.8 + (tweenValue * 0.4); // 0.8 to 1.2
-                  const opacity = 0.5 + (tweenValue * 0.5); // 0.5 to 1.0
-                  const rotateX = (1 - tweenValue) * 45; // 0 to 45 deg
-
+            <div className="overflow-hidden w-full max-w-4xl" ref={emblaRef}>
+              <div className="flex touch-pan-y items-center gap-4">
+                {duplicatedCategories.map((category, index) => {
                   return (
                     <button
-                      key={category}
-                      onClick={() => handleCategoryClick(category, index)}
+                      key={`${category}-${index}`}
+                      onClick={() => emblaApi && emblaApi.scrollTo(index)}
                       className={`
-                        flex-[0_0_50%] min-w-0 px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 whitespace-nowrap
+                        flex-[0_0_auto] min-w-0 px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 whitespace-nowrap
                         flex items-center justify-center
-                        ${activeCategory === category
-                          ? 'text-primary'
-                          : 'text-muted-foreground'
-                        }
+                        ${activeCategory === category ? 'text-primary scale-105' : 'text-muted-foreground hover:text-foreground'}
                       `}
-                      style={{
-                        transform: `scale(${scale})`,
-                        opacity: opacity,
-                        zIndex: Math.round(tweenValue * 10),
-                      }}
                     >
-                      <span className={`px-4 py-2 rounded-full ${activeCategory === category ? 'neu-card-pressed' : ''}`}>
+                      <span className={`px-4 py-2 rounded-full whitespace-nowrap shadow-sm ${activeCategory === category ? 'neu-card-pressed' : 'neu-card-flat'}`}>
                         {category}
                       </span>
                     </button>
@@ -523,8 +475,8 @@ const Index = () => {
             </div>
 
             {/* Fade gradients for visual cue of scrollability */}
-            <div className="absolute left-0 top-0 bottom-0 w-1/4 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-1/4 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+            <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
