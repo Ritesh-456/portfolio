@@ -19,7 +19,7 @@ export default function SEO({
         "@context": "https://schema.org",
         "@type": "Person",
         "name": name,
-        "url": window.location.href, // or hardcode if preferred
+        "url": "https://riteshbrahmachariportfolio.vercel.app/", // or hardcode if preferred
         "jobTitle": ["Full Stack Developer", "Data Analyst"],
         "sameAs": [
             "https://github.com/Ritesh-456",
